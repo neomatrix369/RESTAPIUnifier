@@ -1,0 +1,19 @@
+Story: implement any API in my project easily
+As a developer
+I would like to be extend my API library
+So that I can implement any new or existing API into my API aggregator framework
+
+Scenario: implement a new or existing API into the framework
+Given I have access to a new or existing API
+When I add the functions/methods available in the API
+Then I should be able to integrate and extend the API framework without breaking the design and tests
+
+Story: use and integrate any API in my project easily
+As a developer
+I would like to be able to access and use any API
+So that I can integrate them with the functionalities of my project
+
+Scenario: access an API
+Given I have an API Key
+When I call a generic API function (from the framework)
+Then I should get access to one or more functions
