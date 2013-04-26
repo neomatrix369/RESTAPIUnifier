@@ -18,7 +18,7 @@ public class BaseAPIClass {
 	public static final String CONST_PARAM_START = "?";
 	public static final String CONST_URL_SEPARATOR = "/";
 	public static final String CONST_PARAM_SEPARATOR = "&";
-	
+
 	private List<String> lastHttpResult = new ArrayList<String>();
 	private Map<String, String> paramList = new HashMap<String, String>();
 	private Document lastHttpResultXML;
@@ -28,43 +28,43 @@ public class BaseAPIClass {
 	public void updateURLText(String urlText) {
 		this.urlText = urlText;
 	}
-	
+
 	public void updateLastHttpResult(List<String> lastHttpResult) {
 		this.lastHttpResult = lastHttpResult;
 	}
-	
+
 	public void updatelastHttpResultXML(Document lastHttpResultXML) {
 		this.lastHttpResultXML = lastHttpResultXML;
 	}
-	
+
 	public void updatelastHttpResultJSON(String lastHttpResultJSON) {
 		this.lastHttpResultJSON = lastHttpResultJSON;
 	}
-	
+
 	void clearAlllastHttpResults() {
 		lastHttpResult.clear();
 		lastHttpResultXML = null;
 		lastHttpResultJSON = "";
 	}
-	
+
 	protected String buildURL(String baseURL, String apiCommand,
 			String[] params, String[] arrayURLParamCodes,
 			String[] arrayURLParamDefaultValues, Map<String, String> paramList) {
 		this.paramList = paramList;
-		
+
 		String[] localParams = initParamList(params, arrayURLParamDefaultValues);
 		localParams = buildParamList(localParams, arrayURLParamCodes);
 
 		String localURLText = buildURL(baseURL, apiCommand);
 		localURLText = addParamsToURL(localURLText, paramList);
-		
+
 		this.urlText = localURLText;
 		return localURLText;
 	}
 
 	private String addParamsToURL(String inURLText,
 			Map<String, String> paramList) {
-		this.paramList = paramList; 
+		this.paramList = paramList;
 		String localURLText = buildURL(inURLText, CONST_PARAM_START);
 		for (Map.Entry<String, String> eachParam : paramList.entrySet()) {
 			String eachParamToken = eachParam.getKey() + "="
@@ -111,57 +111,70 @@ public class BaseAPIClass {
 
 	public void displayHttpReqResult(ResultType format) {
 		if (urlText == null) {
-			System.out.format(STRING_WITH_NEW_LINE_FEED, NO_HTTP_CONNECTIONS_MADE);
+			System.out.format(STRING_WITH_NEW_LINE_FEED,
+					NO_HTTP_CONNECTIONS_MADE);
 			return;
 		}
 
 		switch (format) {
 		case rtXML: {
-			if (lastHttpResultXML == null) {
-				System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
-				return;
-			}
-			displayMessageAboutLastRetrieval(urlText);
-
-			System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResultXML.toString());
+			displayResultsForResultTypeXML();
 			break;
 		}
 		case rtJSON: {
-			if (lastHttpResultJSON == null) {
-				System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
-				return;
-			}
-			displayMessageAboutLastRetrieval(urlText);
-
-			System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResultJSON);
+			displayResultsForResultTypeJSON();
 			break;
 		}
 		case rtNone:
 		default: {
-			if ((lastHttpResult == null) || (lastHttpResult.size() == 0)) {
-				System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
-				return;
-			}
-			displayMessageAboutLastRetrieval(urlText);
-
-			for (String eachLine : lastHttpResult) {
-				System.out.format(STRING_WITH_NEW_LINE_FEED, eachLine);
-			}
+			displayResultsForAllOtherResultTypes();
 			break;
 		}
 		}
 	}
 
+	private void displayResultsForAllOtherResultTypes() {
+		if ((lastHttpResult == null) || (lastHttpResult.size() == 0)) {
+			System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
+			return;
+		}
+		displayMessageAboutLastRetrieval(urlText);
+
+		for (String eachLine : lastHttpResult) {
+			System.out.format(STRING_WITH_NEW_LINE_FEED, eachLine);
+		}
+	}
+
+	private void displayResultsForResultTypeJSON() {
+		if (lastHttpResultJSON == null) {
+			System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
+			return;
+		}
+		displayMessageAboutLastRetrieval(urlText);
+
+		System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResultJSON);
+	}
+
+	private void displayResultsForResultTypeXML() {
+		if (lastHttpResultXML == null) {
+			System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
+			return;
+		}
+		displayMessageAboutLastRetrieval(urlText);
+
+		System.out.format(STRING_WITH_NEW_LINE_FEED,
+				lastHttpResultXML.toString());
+	}
+
 	private void displayMessageAboutLastRetrieval(String urlText) {
-		System.out.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL,
-				urlText);
+		System.out.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL, urlText);
 	}
 
 	protected void updateAllLastHttpResults() {
 		lastHttpResultXML = stringToXML(lastHttpResult.toString());
-		lastHttpResultJSON = lastHttpResult.toString();		
+		lastHttpResultJSON = lastHttpResult.toString();
 	}
-	
+
 	public Document stringToXML(String string) {
 		String localString = string.substring(1, string.length() - 1);
 		localString = localString.replaceAll(">,", ">");
