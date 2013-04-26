@@ -1,7 +1,9 @@
 APIUnifier
 ==========
 
-APIUnifier - brings together all the APIs of various formats under one roof!
+APIUnifier - lightweight Java libarary that brings together all the APIs of various formats under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc...
+
+``Feel free to fork the repo and create a version for your own development environment.``
 
 
 Examples implemented using APIUnifier
