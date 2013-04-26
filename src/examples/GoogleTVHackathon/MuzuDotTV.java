@@ -72,7 +72,7 @@ class BaseMuzuAPI extends APIReader {
 		int paramCtr = 0;
 		for (String eachValue : params) {
 			addAURLParameter(arrayURLParamCodes[paramCtr++],
-					encodeToken(eachValue));
+					UtilityFunctions.encodeToken(eachValue));
 		}
 
 		try {

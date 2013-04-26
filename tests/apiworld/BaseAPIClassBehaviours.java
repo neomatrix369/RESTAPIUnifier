@@ -7,8 +7,8 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class BaseAPIClassBehaviours {
-	private static final String MUZUID_VALUE = "[MUZU_ID]";
 	private static final String MUZUID_KEY = "muzuid";
+	private static final String MUZUID_VALUE = "[MUZU_ID]";
 	private static final String MUZU_BASE_URL = "http://www.muzu.tv/api/";
 	private static final String MUZU_URL_WITH_BROWSE_AND_MUZU_ID = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]";
 	private static final String MUZU_BASE_URL_WITH_BROWSE_COMMAND = "http://www.muzu.tv/api/browse?";
@@ -92,7 +92,7 @@ public class BaseAPIClassBehaviours {
 	public void shouldReturnURLWithEncodedParam() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		baseAPIClass.addCommand(API_BROWSE_COMMAND);
 		baseAPIClass.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
-		baseAPIClass.addAURLParameter("key", baseAPIClass.encodeToken("string with space"));
+		baseAPIClass.addAURLParameter("key", UtilityFunctions.encodeToken("string with space"));
 		baseAPIClass.build();
 		String actual = baseAPIClass.getAPIReadyURL(); 
 		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key=string+with+space";

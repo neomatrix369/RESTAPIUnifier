@@ -1,10 +1,13 @@
 package apiworld;
 
-import java.net.URLEncoder;
-import java.util.ArrayList;
+import static apiworld.UtilityFunctions.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import apiworld.APIKeyNotAssignedException;
+import apiworld.BaseURLNotAssignedException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,16 +25,15 @@ public class BaseAPIClass {
 	public static final String COMMAND_URL_SEPARATOR = "/";
 	public static final String URL_SEPARATOR = "/";
 	public static final String PARAM_SEPARATOR = "&";
-
-	private List<String> lastHttpResult = new ArrayList<String>();
+	private String urlText;
+	private List<String> lastHttpResult;
 	private Document lastHttpResultXML;
 	private String lastHttpResultJSON;
-	private String urlText;
 	private String baseURL;
-	private String finalURL;
-	private String commandString;
-	private Map<String, String> urlParameters = new HashMap<String, String>();
 	private String apiKey;
+	private String commandString;
+	private String finalURL;
+	private Map<String, String> urlParameters = new HashMap<String, String>();
 
 	public void updateURLText(String urlText) {
 		this.urlText = urlText;
@@ -156,8 +158,7 @@ public class BaseAPIClass {
 	private void buildFinalURLWithParametersToken() {
 		if (!urlParameters.isEmpty()) {
 			String urlParameterTokens = "";
-			for (Map.Entry<String, String> eachKeyValuePair : urlParameters
-					.entrySet()) {
+			for (Map.Entry<String, String> eachKeyValuePair : urlParameters.entrySet()) {
 				if (isNotNull(eachKeyValuePair.getValue())) {
 					String eachToken = String.format(THREE_TOKENS,
 							eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
@@ -173,19 +174,7 @@ public class BaseAPIClass {
 					urlParameterTokens);
 		}
 	}
-
-	@SuppressWarnings("deprecation")
-	public String encodeToken(String value) {
-		if (value == null) {
-			return null;
-		}
-		return URLEncoder.encode(value);
-	}
-
-	private boolean isNotNull(Object value) {
-		return value != null;
-	}
-
+	
 	private void buildFinalURLWithCommandString()
 			throws BaseURLNotAssignedException {
 		validateBaseURL();
@@ -209,36 +198,6 @@ public class BaseAPIClass {
 		}
 
 		return true;
-	}
-
-	private String dropTrailingSeparator(String urlParameterTokens,
-			String paramSeparator) {
-		int lastCharIndex = urlParameterTokens.length()
-				- paramSeparator.length();
-		if (lastCharIndex > 0) {
-			String trailingString = urlParameterTokens.substring(lastCharIndex,
-					lastCharIndex + paramSeparator.length());
-			if (trailingString.equals(paramSeparator)) {
-				return urlParameterTokens.substring(0, lastCharIndex);
-			}
-		}
-		return urlParameterTokens;
-	}
-
-	private boolean doesHaveSeparator(String urlString,
-			String commandUrlSeparator) {
-		int lastCharIndex = urlString.length() - commandUrlSeparator.length();
-		if (lastCharIndex > 0) {
-			String trailingString = urlString.substring(lastCharIndex,
-					lastCharIndex + commandUrlSeparator.length());
-			return trailingString.equals(commandUrlSeparator);
-		}
-		return false;
-	}
-
-	private boolean doesNotHaveTrailingSeparator(String urlString,
-			String commandUrlSeparator) {
-		return !doesHaveSeparator(urlString, commandUrlSeparator);
 	}
 
 	public String getAPIReadyURL() {
