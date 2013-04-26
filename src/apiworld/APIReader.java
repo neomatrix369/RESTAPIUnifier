@@ -28,6 +28,7 @@ public class APIReader extends BaseAPIClass {
 	}
 
 	public APIReader(String urlText) {
+		updateURLText(urlText);
 		clearAlllastHttpResults();
 		executeURL(urlText);
 	}

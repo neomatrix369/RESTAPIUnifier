@@ -24,7 +24,6 @@ public class BaseAPIClass {
 	public static final String PARAM_SEPARATOR = "&";
 
 	private List<String> lastHttpResult = new ArrayList<String>();
-	private Map<String, String> paramList = new HashMap<String, String>();
 	private Document lastHttpResultXML;
 	private String lastHttpResultJSON;
 	private String urlText;
@@ -54,69 +53,6 @@ public class BaseAPIClass {
 		lastHttpResult.clear();
 		lastHttpResultXML = null;
 		lastHttpResultJSON = "";
-	}
-
-	protected String buildURL(String baseURL, String apiCommand,
-			String[] params, String[] arrayURLParamCodes,
-			String[] arrayURLParamDefaultValues, Map<String, String> paramList) {
-		this.paramList = paramList;
-
-		String[] localParams = initParamList(params, arrayURLParamDefaultValues);
-		localParams = buildParamList(localParams, arrayURLParamCodes);
-
-		String localURLText = buildURL(baseURL, apiCommand);
-		localURLText = addParamsToURL(localURLText, paramList);
-
-		this.urlText = localURLText;
-		return localURLText;
-	}
-
-	private String addParamsToURL(String inURLText,
-			Map<String, String> paramList) {
-		this.paramList = paramList;
-		String localURLText = buildURL(inURLText, PARAM_START);
-		for (Map.Entry<String, String> eachParam : paramList.entrySet()) {
-			String eachParamToken = eachParam.getKey() + KEY_VALUE_SEPARATOR
-					+ eachParam.getValue();
-			localURLText = buildURL(localURLText, eachParamToken);
-			localURLText = buildURL(localURLText, PARAM_SEPARATOR);
-		}
-
-		if (localURLText.charAt(localURLText.length() - 1) == PARAM_SEPARATOR
-				.charAt(0)) {
-			localURLText = localURLText.substring(0, localURLText.length() - 1);
-		}
-
-		return localURLText;
-	}
-
-	@SuppressWarnings("deprecation")
-	private String[] buildParamList(String[] inParams, String[] inParamCodes) {
-		int paramCtr = 0;
-		for (String eachParam : inParamCodes) {
-			if (((inParams.length > 0) && (inParams.length > paramCtr))
-					&& (inParams[paramCtr] != null)) {
-				paramList.put(eachParam, URLEncoder.encode(inParams[paramCtr]));
-			}
-			paramCtr++;
-		}
-		return inParams;
-	}
-
-	private String[] initParamList(String[] params, String[] defaultValues) {
-		if ((params != null) && (defaultValues != null)) {
-
-			for (int paramCtr = 0; paramCtr < params.length; paramCtr++) {
-				if ((params[paramCtr] == null) || params[paramCtr].isEmpty()) {
-					params[paramCtr] = defaultValues[paramCtr];
-				}
-			}
-		}
-		return params;
-	}
-
-	private String buildURL(String someURL, String suffix) {
-		return someURL + suffix;
 	}
 
 	public void displayHttpReqResult(ResultType format) {
@@ -200,19 +136,20 @@ public class BaseAPIClass {
 		return this;
 	}
 
-	public BaseAPIClass build() throws  BaseURLNotAssignedException, APIKeyNotAssignedException {		
+	public BaseAPIClass build() throws BaseURLNotAssignedException,
+			APIKeyNotAssignedException {
 		buildFinalURLWithCommandString();
 		validateAPIKey();
 		buildFinalURLWithParametersToken();
 
 		return this;
 	}
-	
+
 	private boolean validateAPIKey() throws APIKeyNotAssignedException {
 		if ((apiKey == null) || (apiKey.trim().isEmpty())) {
 			throw new APIKeyNotAssignedException();
 		}
-		
+
 		return true;
 	}
 
@@ -221,17 +158,32 @@ public class BaseAPIClass {
 			String urlParameterTokens = "";
 			for (Map.Entry<String, String> eachKeyValuePair : urlParameters
 					.entrySet()) {
-				String eachToken = String.format(THREE_TOKENS,
-						eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
-						eachKeyValuePair.getValue());
-				urlParameterTokens = String.format(THREE_TOKENS,
-						urlParameterTokens, eachToken, PARAM_SEPARATOR);
+				if (isNotNull(eachKeyValuePair.getValue())) {
+					String eachToken = String.format(THREE_TOKENS,
+							eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
+							eachKeyValuePair.getValue());
+					urlParameterTokens = String.format(THREE_TOKENS,
+							urlParameterTokens, eachToken, PARAM_SEPARATOR);
+				}
 			}
 
 			urlParameterTokens = dropTrailingSeparator(urlParameterTokens,
 					PARAM_SEPARATOR);
-			this.finalURL = String.format(TWO_TOKENS, finalURL, urlParameterTokens);
+			this.finalURL = String.format(TWO_TOKENS, finalURL,
+					urlParameterTokens);
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public String encodeToken(String value) {
+		if (value == null) {
+			return null;
+		}
+		return URLEncoder.encode(value);
+	}
+
+	private boolean isNotNull(Object value) {
+		return value != null;
 	}
 
 	private void buildFinalURLWithCommandString()
@@ -241,7 +193,7 @@ public class BaseAPIClass {
 
 		this.finalURL = baseURL.trim();
 		if ((commandString != null) && (!commandString.isEmpty())) {
-			if (doesNotHaveSeparator(this.finalURL, COMMAND_URL_SEPARATOR)) {
+			if (doesNotHaveTrailingSeparator(this.finalURL, COMMAND_URL_SEPARATOR)) {
 				this.finalURL = String.format(TWO_TOKENS, finalURL,
 						COMMAND_URL_SEPARATOR);
 			}
@@ -255,7 +207,7 @@ public class BaseAPIClass {
 		if ((baseURL == null) || (baseURL.trim().isEmpty())) {
 			throw new BaseURLNotAssignedException();
 		}
-		
+
 		return true;
 	}
 
@@ -267,7 +219,7 @@ public class BaseAPIClass {
 			String trailingString = urlParameterTokens.substring(lastCharIndex,
 					lastCharIndex + paramSeparator.length());
 			if (trailingString.equals(paramSeparator)) {
-				return urlParameterTokens.substring(0, lastCharIndex); 
+				return urlParameterTokens.substring(0, lastCharIndex);
 			}
 		}
 		return urlParameterTokens;
@@ -284,7 +236,7 @@ public class BaseAPIClass {
 		return false;
 	}
 
-	private boolean doesNotHaveSeparator(String urlString,
+	private boolean doesNotHaveTrailingSeparator(String urlString,
 			String commandUrlSeparator) {
 		return !doesHaveSeparator(urlString, commandUrlSeparator);
 	}
@@ -298,7 +250,12 @@ public class BaseAPIClass {
 	}
 
 	public void addAPIKey(String key, String value) {
-		this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR, value);
+		this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR,
+				value);
+		addAURLParameter(key, value);
+	}
+
+	public void addAURLParameter(String key, String value) {
 		this.urlParameters.put(key, value);
 	}
 }

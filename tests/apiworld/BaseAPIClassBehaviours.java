@@ -2,6 +2,7 @@ package apiworld;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -62,5 +63,39 @@ public class BaseAPIClassBehaviours {
 	public void shouldReturnExceptionWhenNoAPIKeyIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		baseAPIClass.addBaseURL(baseURL);
 		baseAPIClass.build();
+	}
+	
+	@Test
+	public void shouldReturnURLWithAPIKeyAndParamsWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		baseAPIClass.addCommand(API_BROWSE_COMMAND);
+		baseAPIClass.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		baseAPIClass.addAURLParameter("key1", "value1");
+		baseAPIClass.build();
+		String actual = baseAPIClass.getAPIReadyURL(); 
+		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key1=value1";
+		assertThat(actual, is(expected));		
+	}
+	
+	@Test
+	public void shouldReturnURLWithAPIKeyAndSkipParamsWithNulls() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		baseAPIClass.addCommand(API_BROWSE_COMMAND);
+		baseAPIClass.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		baseAPIClass.addAURLParameter("key1", null);
+		baseAPIClass.addAURLParameter("key2", "value2");
+		baseAPIClass.build();
+		String actual = baseAPIClass.getAPIReadyURL(); 
+		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key2=value2";
+		assertThat(actual, is(expected));		
+	}
+	
+	@Test
+	public void shouldReturnURLWithEncodedParam() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		baseAPIClass.addCommand(API_BROWSE_COMMAND);
+		baseAPIClass.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		baseAPIClass.addAURLParameter("key", baseAPIClass.encodeToken("string with space"));
+		baseAPIClass.build();
+		String actual = baseAPIClass.getAPIReadyURL(); 
+		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key=string+with+space";
+		assertThat(actual, is(expected));		
 	}
 }
