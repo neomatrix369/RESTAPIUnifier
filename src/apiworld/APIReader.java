@@ -32,7 +32,6 @@ public class APIReader extends BaseAPIClass {
 		executeURL(urlText);
 	}
 
-	@SuppressWarnings("deprecation")
 	final void executeURL(String urlText) {
 		try {
 			URL webSite = new URL(urlText);

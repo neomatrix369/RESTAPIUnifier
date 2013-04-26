@@ -46,7 +46,7 @@ public final class MuzuDotTV {
 			BaseAPIClass muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
 					"views", "0", null, null, null, rtJSON.toString());
 			muzuBrowse.displayHttpReqResult(rtJSON);
-			Thread.sleep(200);
+			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
 			
 			BaseAPIClass muzuArtist = new MuzuArtist(
 					"http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=SGY60V0lEp");
@@ -74,10 +74,6 @@ class BaseMuzuAPI extends APIReader {
 
 class MuzuBrowse extends BaseMuzuAPI {
 	private BaseAPIClass muzuBrowse;
-	
-	private MuzuBrowse() {
-		//
-	}
 
 	MuzuBrowse(String apiKey, String... params) {
 		String apiCommand = "browse";
@@ -105,10 +101,6 @@ class MuzuBrowse extends BaseMuzuAPI {
 class MuzuSearch extends BaseMuzuAPI {
 	private BaseAPIClass muzuSearch;
 	
-	private MuzuSearch() {
-		//
-	}
-	
 	MuzuSearch(String apiKey, String... params) {
 		String apiCommand = "search";
 		String[] arrayURLParamCodes = { "mySearch", "l", "format", "country",
@@ -134,10 +126,6 @@ class MuzuSearch extends BaseMuzuAPI {
 
 class MuzuArtist extends BaseMuzuAPI {
 	private BaseAPIClass muzuArtist;
-	
-	private MuzuArtist() {
-		//
-	}	
 	
 	MuzuArtist(String urlWithAPIKey, String... params) {
 		String apiCommand = "artist";
