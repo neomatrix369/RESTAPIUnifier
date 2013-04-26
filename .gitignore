@@ -4,3 +4,10 @@
 *.jar
 *.war
 *.ear
+
+# Ignore . & ~ files except .gitignore #
+*~
+.*
+target/
+!/.gitignore
+resources/
