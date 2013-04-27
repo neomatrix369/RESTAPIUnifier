@@ -3,6 +3,8 @@ package apiworld;
 import java.io.*;
 import java.net.*;
 
+import examples.GoogleTVHackathon.BaseMuzuAPI;
+
 import apiworld.APIBuilder;
 
 public class APIReader extends APIBuilder {
@@ -15,8 +17,13 @@ public class APIReader extends APIBuilder {
 	private static final String INPUT_URL_STRING = ">>> Input URL String: %s%n";
 	private static final String ERROR_DUE_TO = "Error due to: %s%n";
 
-	protected APIReader() {
+	protected APIReader(APIBuilder apiBuilder) {
 		super();
+		
+		String urlText = apiBuilder.getAPIReadyURL(); 
+		updateURLText(urlText);
+		clearAllLastHttpResults();
+		executeURL(urlText);
 	}
 
 	public APIReader(String websiteBaseURL, String apiVarIdentifier,

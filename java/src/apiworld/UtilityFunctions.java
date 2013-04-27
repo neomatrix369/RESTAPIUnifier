@@ -7,6 +7,12 @@ import java.util.Map;
 import org.jsoup.nodes.Document;
 
 public final class UtilityFunctions {
+	
+	public static final String PARAM_START = "?";
+	public static final String COMMAND_URL_SEPARATOR = "/";
+	public static final String URL_SEPARATOR = "/";
+	public static final String PARAM_SEPARATOR = "&";
+
 	public static String dropTrailingSeparator(String urlParameterTokens,
 			String paramSeparator) {
 		int lastCharIndex = urlParameterTokens.length()

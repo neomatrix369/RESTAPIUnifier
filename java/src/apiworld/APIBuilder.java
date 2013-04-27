@@ -21,11 +21,6 @@ public class APIBuilder {
 	private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
 	private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s%n";
 	private static final String NO_RESULTS_RETURNED = ">>> No results returned.";
-
-	public static final String PARAM_START = "?";
-	public static final String COMMAND_URL_SEPARATOR = "/";
-	public static final String URL_SEPARATOR = "/";
-	public static final String PARAM_SEPARATOR = "&";
 	
 	private String urlText;
 	private Document lastHttpResultXML;
