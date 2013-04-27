@@ -23,13 +23,13 @@ public class APIReader extends APIBuilder {
 			String apiKey) {
 		String urlText = websiteBaseURL.replace(apiVarIdentifier, apiKey);
 		updateURLText(urlText);
-		clearAlllastHttpResults();
+		clearAllLastHttpResults();
 		executeURL(urlText);
 	}
 
 	public APIReader(String urlText) {
 		updateURLText(urlText);
-		clearAlllastHttpResults();
+		clearAllLastHttpResults();
 		executeURL(urlText);
 	}
 

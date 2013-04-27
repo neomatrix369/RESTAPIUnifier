@@ -10,14 +10,13 @@ import apiworld.*;
 import static apiworld.ResultType.*;
 
 /*
- API Key: SGY60V0lEp
  Create Date: Saturday 21 April 2012 13:18 PM
  Max queries: 10000
  */
-public final class MuzuDotTV {
+public final class MuzuDotTV_search_api {
 	private static final int SHORT_PAUSE_IN_MILLIS = 200;
 
-	private MuzuDotTV() {
+	private MuzuDotTV_search_api() {
 		// Hide utility class constructor
 	}
 
@@ -39,19 +38,6 @@ public final class MuzuDotTV {
 					null, rtJSON.toString());
 			muzuSearch.displayHttpReqResult(rtJSON);
 			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
-
-			/**
-			 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
-			 */
-			APIBuilder muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
-					"views", "0", null, null, null, rtJSON.toString());
-			muzuBrowse.displayHttpReqResult(rtJSON);
-			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
-
-			APIBuilder muzuArtist = new MuzuArtist(
-					"http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid="
-							+ muzuAPIKey);
-			muzuArtist.displayHttpReqResult(rtJSON);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {
@@ -86,25 +72,6 @@ class BaseMuzuAPI extends APIReader {
 	}
 }
 
-class MuzuBrowse extends BaseMuzuAPI {
-	private APIBuilder muzuBrowse;
-
-	MuzuBrowse(String apiKey, String... params) {
-		String apiCommand = "browse";
-		String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of",
-				"format", "country", "soundoff", "autostart", "videotype",
-				"width", "height", "includeAll" };
-
-		muzuBrowse = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
-				params);
-	}
-
-	@Override
-	public void displayHttpReqResult(ResultType resultType) {
-		muzuBrowse.displayHttpReqResult(resultType);
-	}
-}
-
 class MuzuSearch extends BaseMuzuAPI {
 	private APIBuilder muzuSearch;
 
@@ -121,23 +88,5 @@ class MuzuSearch extends BaseMuzuAPI {
 	@Override
 	public void displayHttpReqResult(ResultType resultType) {
 		muzuSearch.displayHttpReqResult(resultType);
-	}
-}
-
-class MuzuArtist extends BaseMuzuAPI {
-	private APIBuilder muzuArtist;
-
-	MuzuArtist(String apiKey, String... params) {
-		String apiCommand = "artist";
-		String[] arrayURLParamCodes = { "artist_name", "format", "country",
-				"soundoff", "autostart", "videotype", "width", "height",
-				"includeAll" };
-		muzuArtist = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
-				params);
-	}
-
-	@Override
-	public void displayHttpReqResult(ResultType resultType) {
-		muzuArtist.displayHttpReqResult(resultType);
 	}
 }

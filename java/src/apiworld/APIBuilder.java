@@ -53,7 +53,7 @@ public class APIBuilder {
 		this.lastHttpResultJSON = lastHttpResultJSON;
 	}
 
-	void clearAlllastHttpResults() {
+	public void clearAllLastHttpResults() {
 		lastHttpResult.clear();
 		lastHttpResultXML = null;
 		lastHttpResultJSON = "";
