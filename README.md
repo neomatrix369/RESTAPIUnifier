@@ -15,8 +15,8 @@ Timeline
 * 23 April 2013: came across Import.IO (see below)
 * 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc...
 
-Similar ideas (different horizontals/verticals)
----------------------------------------------
+Ideas based on similar principles
+---------------------------------
 * Import.IO - imports and reformats data using APIs from other sites/providers: http://Import.IO 
 * Mashery I/O Wraps Client Library Generator - 
 Native language client library (SDK) builder for platforms using I/O Docs: https://github.com/mashery/io-wraps/
