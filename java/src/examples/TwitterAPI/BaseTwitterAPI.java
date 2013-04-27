@@ -1,4 +1,4 @@
-package examples.GoogleTVHackathon;
+package examples.TwitterAPI;
 
 import apiworld.APIBuilder;
 import apiworld.APIReader;
@@ -7,18 +7,20 @@ import apiworld.APIKeyNotAssignedException;
 import apiworld.BaseURLNotAssignedException;
 import apiworld.UtilityFunctions;
 
-public class BaseMuzuAPI {
+public class BaseTwitterAPI {
 	
-	private static final String MUZUID_URL_PARAM = "muzuid";
-	private String baseURL = "http://www.muzu.tv/api/";
+	private static final String TWITTER_URL_PARAM = "api_key";
+	private String baseURL = "http://search.twitter.com/";
+	private String paramStart = "?";
 	public APIReader fetchedResults;
 
-	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand,
+	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 			String[] arrayURLParamCodes, String... params) {
 		APIBuilder apiBuilder = new APIBuilder();
 		apiBuilder.addBaseURL(baseURL);
 		apiBuilder.setCommand(apiCommand);
-		apiBuilder.setAPIKey(MUZUID_URL_PARAM, apiKey);
+		apiBuilder.setParamStart(paramStart);
+		apiBuilder.setNoAPIKeyRequired();
 		int paramCtr = 0;
 		for (String eachValue : params) {
 			apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

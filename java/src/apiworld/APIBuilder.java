@@ -19,6 +19,8 @@ public class APIBuilder {
 	private String finalURL;
 
 	private Map<String, String> urlParameters = new LinkedHashMap<String, String>();
+	private String paramStart = PARAM_START;
+	private boolean apiKeyIsRequired = true;
 
 	public APIBuilder addBaseURL(String baseURL) {
 		this.baseURL = baseURL;
@@ -35,6 +37,10 @@ public class APIBuilder {
 	}
 
 	private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
+		if (doesNotRequireAPIKey()) {
+			return;
+		}
+
 		validateAPIKey();
 
 		if ((apiKey != null) && (!apiKey.isEmpty())) {
@@ -43,6 +49,10 @@ public class APIBuilder {
 	}
 
 	private boolean validateAPIKey() throws APIKeyNotAssignedException {
+		if (doesNotRequireAPIKey()) {
+			return true;
+		}
+
 		if ((apiKey == null) || (apiKey.trim().isEmpty())) {
 			throw new APIKeyNotAssignedException();
 		}
@@ -50,12 +60,17 @@ public class APIBuilder {
 		return true;
 	}
 
+	private boolean doesNotRequireAPIKey() {
+		return !apiKeyIsRequired;
+	}
+
 	private void buildFinalURLWithParametersToken() {
 		if (!urlParameters.isEmpty()) {
 			String urlParameterTokens = "";
 			for (Map.Entry<String, String> eachKeyValuePair : urlParameters
 					.entrySet()) {
-				if (isNotNull(eachKeyValuePair.getValue())) {
+				if (isNotNull(eachKeyValuePair.getKey())
+						&& isNotNull(eachKeyValuePair.getValue())) {
 					String eachToken = String.format(THREE_TOKENS,
 							eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
 							eachKeyValuePair.getValue());
@@ -85,7 +100,7 @@ public class APIBuilder {
 			}
 
 			this.finalURL = String.format(THREE_TOKENS, finalURL,
-					commandString, PARAM_START);
+					commandString, paramStart);
 		}
 	}
 
@@ -108,9 +123,22 @@ public class APIBuilder {
 	public void setAPIKey(String key, String value) {
 		this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR,
 				value);
+		setAPIKeyIsRequired();
+	}
+
+	private boolean setAPIKeyIsRequired() {
+		return apiKeyIsRequired = true;
 	}
 
 	public void addAURLParameter(String key, String value) {
 		this.urlParameters.put(key, value);
+	}
+
+	public void setParamStart(String paramStart) {
+		this.paramStart = paramStart;
+	}
+
+	public void setNoAPIKeyRequired() {
+		apiKeyIsRequired = false;
 	}
 }

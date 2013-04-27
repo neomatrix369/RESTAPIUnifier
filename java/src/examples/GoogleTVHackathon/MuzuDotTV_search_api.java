@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+
+import apiworld.FinalURLNotGeneratedException;
 import static apiworld.ResultType.*;
 
 /*
@@ -16,7 +18,7 @@ public final class MuzuDotTV_search_api {
 		// Hide utility class constructor
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, FinalURLNotGeneratedException {
 		Properties prop = new Properties();
 		try {
 			prop.load(new FileReader(new File(
@@ -30,7 +32,7 @@ public final class MuzuDotTV_search_api {
 			 */
 			MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
 					null, rtJSON.toString());
-			muzuSearch.fetchedResults.displayHttpReqResult(rtJSON);
+			System.out.format("%s", muzuSearch.getFetchedResults());
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {
@@ -41,12 +43,13 @@ public final class MuzuDotTV_search_api {
 
 class MuzuSearch extends BaseMuzuAPI {
 
-	MuzuSearch(String apiKey, String... params) {
+	MuzuSearch(String apiKey, String... params) throws FinalURLNotGeneratedException {
 		String apiCommand = "search";
 		String[] arrayURLParamCodes = { "mySearch", "l", "format", "country",
 				"soundoff", "autostart", "videotype", "width", "height",
 				"includeAll" };
 
-		performAPICall(apiKey, apiCommand, arrayURLParamCodes, params);
+		fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
+		fetchedResults.executeURL();
 	}
 }

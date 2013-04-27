@@ -108,7 +108,7 @@ public class APIReader {
 		}
 	}
 
-	public void displayHttpReqResult(ResultType format) {
+	public void displayHttpReqResult() {
 		if (urlText == null) {
 			LOGGER.warning(String.format(STRING_WITH_NEW_LINE_FEED,
 					NO_HTTP_CONNECTIONS_MADE));
@@ -131,7 +131,7 @@ public class APIReader {
 		lastHttpResult.add(inputLine);
 	}
 
-	public String getFetchedResults(ResultType resultType) {
+	public String getFetchedResults() {
 		return lastHttpResult.toString();
 	}
 }

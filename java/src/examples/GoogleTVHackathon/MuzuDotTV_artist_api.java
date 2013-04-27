@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+
+import apiworld.FinalURLNotGeneratedException;
 import static apiworld.ResultType.*;
 
 /*
@@ -16,7 +18,7 @@ public final class MuzuDotTV_artist_api {
 		// Hide utility class constructor
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, FinalURLNotGeneratedException {
 		/**
 		 * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
 		 */
@@ -29,7 +31,8 @@ public final class MuzuDotTV_artist_api {
 			MuzuArtist muzuArtist = new MuzuArtist(
 					"http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid="
 							+ muzuAPIKey);
-			muzuArtist.fetchedResults.displayHttpReqResult(rtJSON);
+			
+			System.out.format("%s", muzuArtist.getFetchedResults());
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {
@@ -39,12 +42,13 @@ public final class MuzuDotTV_artist_api {
 }
 
 class MuzuArtist extends BaseMuzuAPI {
-	MuzuArtist(String apiKey, String... params) {
+	MuzuArtist(String apiKey, String... params) throws FinalURLNotGeneratedException {
 		String apiCommand = "artist";
 		String[] arrayURLParamCodes = { "artist_name", "format", "country",
 				"soundoff", "autostart", "videotype", "width", "height",
 				"includeAll" };
-		fetchedResults = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
+		fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes,
 				params);
+		fetchedResults.executeURL();
 	}
 }

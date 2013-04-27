@@ -1,7 +1,8 @@
 package apiworld;
 
-import static apiworld.UtilityFunctions.stringToXML;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URLEncoder;
 
 import org.jsoup.Jsoup;
@@ -75,5 +76,29 @@ public final class UtilityFunctions {
 	public static Boolean validateXML(String result) {
 		stringToXML(result);
 		return true;
+	}
+	
+	private String loadTestDataFromFile(String filename) {
+		String fileContent = "";
+		BufferedReader br = null;
+		try {
+			String sCurrentLine;
+			br = new BufferedReader(new FileReader(filename));
+
+			while ((sCurrentLine = br.readLine()) != null) {
+				fileContent = fileContent + sCurrentLine;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return fileContent;
 	}
 }
