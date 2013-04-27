@@ -45,32 +45,6 @@ public final class MuzuDotTV_browse_api {
 	}
 }
 
-class BaseMuzuAPI extends APIReader {
-	private static final String MUZUID_URL_PARAM = "muzuid";
-	private String baseURL = "http://www.muzu.tv/api/";
-
-	protected APIReader performAPICall(String apiKey, String apiCommand,
-			String[] arrayURLParamCodes, String... params) {
-		addBaseURL(baseURL);
-		addCommand(apiCommand);
-		addAPIKey(MUZUID_URL_PARAM, apiKey);
-		int paramCtr = 0;
-		for (String eachValue : params) {
-			addAURLParameter(arrayURLParamCodes[paramCtr++],
-					UtilityFunctions.encodeToken(eachValue));
-		}
-
-		try {
-			build();
-			String urlText = getAPIReadyURL();
-			return new APIReader(urlText);
-		} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-			System.out.format("%s", e.getMessage());
-		}
-		return new APIReader(baseURL);
-	}
-}
-
 class MuzuBrowse extends BaseMuzuAPI {
 	private APIBuilder muzuBrowse;
 

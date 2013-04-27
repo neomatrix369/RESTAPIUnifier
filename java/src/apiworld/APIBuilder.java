@@ -2,6 +2,7 @@ package apiworld;
 
 import static apiworld.UtilityFunctions.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class APIBuilder {
 	private String commandString;
 	private String finalURL;
 	
-	private List<String> lastHttpResult;
+	private List<String> lastHttpResult = new ArrayList<String>();
 	private Map<String, String> urlParameters = new HashMap<String, String>();
 
 	public void updateURLText(String urlText) {
@@ -54,9 +55,14 @@ public class APIBuilder {
 	}
 
 	public void clearAllLastHttpResults() {
-		lastHttpResult.clear();
+		if (lastHttpResult != null) {
+			lastHttpResult.clear();
+		}
 		lastHttpResultXML = null;
-		lastHttpResultJSON = "";
+		
+		if (lastHttpResultJSON != null) {
+			lastHttpResultJSON = "";
+		}
 	}
 
 	public void displayHttpReqResult(ResultType format) {
