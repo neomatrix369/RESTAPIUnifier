@@ -8,12 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.google.gson.*;
-
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.*;
 import static apiworld.ResultType.*;
+import static apiworld.UtilityFunctions.*;
 
 public class APIReaderBehaviours {
 	@Test
@@ -31,12 +30,6 @@ public class APIReaderBehaviours {
 		String result = apiReader.getFetchedResults(rtJSON);
 		assertThat(result.isEmpty(), is(false));	
 		assertThat(validateJSON(result), is(true));
-	}
-	
-	private Boolean validateJSON(String resultAsString) {
-		Gson gson = new Gson();
-		gson.toJson(resultAsString);
-		return true;
 	}
 
 	@Test
