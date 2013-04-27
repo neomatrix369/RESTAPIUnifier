@@ -5,9 +5,6 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import org.jsoup.nodes.Document;
-
 import apiworld.APIBuilder;
 
 public class APIReader {
@@ -20,12 +17,10 @@ public class APIReader {
 	private static final String INPUT_URL_STRING = ">>> Input URL String: %s";
 	private static final String ERROR_DUE_TO = "Error due to: %s";
 
-	private Document lastHttpResultXML;
-	private String lastHttpResultJSON;
 	private final static Logger LOGGER = Logger.getLogger(APIReader.class
 			.getName());
 
-	private static final String STRING_WITH_NEW_LINE_FEED = "%s";
+	private static final String STRING_WITH_NEW_LINE_FEED = "%s%n";
 	private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
 	private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s";
 	private static final String NO_RESULTS_RETURNED = ">>> No results returned.";
@@ -35,18 +30,15 @@ public class APIReader {
 
 	public APIReader(APIBuilder apiBuilder) {
 		this.urlText = apiBuilder.getAPIReadyURL();
-		// executeURL(urlText);
 	}
 
 	public APIReader(String websiteBaseURL, String apiVarIdentifier,
 			String apiKey) {
 		this.urlText = websiteBaseURL.replace(apiVarIdentifier, apiKey);
-		// executeURL(urlText);
 	}
 
 	public APIReader(String urlText) {
 		this.urlText = urlText;
-		// executeURL(urlText);
 	}
 
 	public final void executeURL() throws FinalURLNotGeneratedException {
@@ -90,7 +82,6 @@ public class APIReader {
 				addToLastHttpResults(inputLine);
 			}
 
-			updateAllLastHttpResults();
 			LOGGER.info(READING_COMPLETED);
 		} finally {
 			if (httpResult != null) {
@@ -115,79 +106,25 @@ public class APIReader {
 		if (lastHttpResult != null) {
 			lastHttpResult.clear();
 		}
-		lastHttpResultXML = null;
-
-		if (lastHttpResultJSON != null) {
-			lastHttpResultJSON = "";
-		}
 	}
 
 	public void displayHttpReqResult(ResultType format) {
 		if (urlText == null) {
-			System.out.format(STRING_WITH_NEW_LINE_FEED,
-					NO_HTTP_CONNECTIONS_MADE);
+			LOGGER.warning(String.format(STRING_WITH_NEW_LINE_FEED,
+					NO_HTTP_CONNECTIONS_MADE));
 			return;
 		}
 
-		switch (format) {
-		case rtXML: {
-			displayResultsForResultTypeXML();
-			break;
-		}
-		case rtJSON: {
-			displayResultsForResultTypeJSON();
-			break;
-		}
-		case rtNone:
-		default: {
-			displayResultsForAllOtherResultTypes();
-			break;
-		}
-		}
+		displayResults();
 	}
 
-	private void displayResultsForAllOtherResultTypes() {
-		if ((lastHttpResult == null) || (lastHttpResult.size() == 0)) {
-			LOGGER.info(String.format(STRING_WITH_NEW_LINE_FEED,
-					NO_RESULTS_RETURNED));
-			return;
-		}
+	private void displayResults() {
 		displayMessageAboutLastRetrieval(urlText);
-
-		for (String eachLine : lastHttpResult) {
-			LOGGER.info(String.format(STRING_WITH_NEW_LINE_FEED, eachLine));
-		}
-	}
-
-	private void displayResultsForResultTypeJSON() {
-		if (lastHttpResultJSON == null) {
-			System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
-			return;
-		}
-		displayMessageAboutLastRetrieval(urlText);
-
-		System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResultJSON);
-	}
-
-	private void displayResultsForResultTypeXML() {
-		if (lastHttpResultXML == null) {
-			System.out.format(STRING_WITH_NEW_LINE_FEED, NO_RESULTS_RETURNED);
-			return;
-		}
-		displayMessageAboutLastRetrieval(urlText);
-
-		System.out.format(STRING_WITH_NEW_LINE_FEED,
-				lastHttpResultXML.toString());
+		System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResult.toString());
 	}
 
 	private void displayMessageAboutLastRetrieval(String urlText) {
-		System.out.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL, urlText);
-	}
-
-	private void updateAllLastHttpResults() {
-		lastHttpResultXML = UtilityFunctions.stringToXML(lastHttpResult
-				.toString());
-		lastHttpResultJSON = lastHttpResult.toString();
+		LOGGER.info(String.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL, urlText));
 	}
 
 	private void addToLastHttpResults(String inputLine) {
@@ -195,20 +132,6 @@ public class APIReader {
 	}
 
 	public String getFetchedResults(ResultType resultType) {
-		switch (resultType) {
-		case rtJSON: {
-			return lastHttpResultJSON;
-		}
-
-		case rtXML: {
-			return lastHttpResultXML.toString();
-		}
-
-		case rtRSS:
-		case rtNone:
-		default: {
-			return lastHttpResultJSON.toString();
-		}
-		}
+		return lastHttpResult.toString();
 	}
 }

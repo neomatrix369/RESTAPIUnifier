@@ -1,9 +1,13 @@
 package apiworld;
 
+import static apiworld.UtilityFunctions.stringToXML;
+
 import java.net.URLEncoder;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.google.gson.Gson;
 
 public final class UtilityFunctions {
 	private UtilityFunctions(){
@@ -60,5 +64,16 @@ public final class UtilityFunctions {
 		String localString = string.substring(1, string.length() - 1);
 		localString = localString.replaceAll(">,", ">");
 		return Jsoup.parse(localString);
+	}
+	
+	public static Boolean validateJSON(String resultAsString) {
+		Gson gson = new Gson();
+		gson.toJson(resultAsString);
+		return true;
+	}
+	
+	public static Boolean validateXML(String result) {
+		stringToXML(result);
+		return true;
 	}
 }
