@@ -13,7 +13,7 @@ public class BaseMuzuAPI {
 	private String baseURL = "http://www.muzu.tv/api/";
 	public APIReader fetchedResults;
 
-	protected APIReader performAPICall(String apiKey, String apiCommand,
+	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand,
 			String[] arrayURLParamCodes, String... params) {
 		APIBuilder apiBuilder = new APIBuilder();
 		apiBuilder.addBaseURL(baseURL);
@@ -33,5 +33,12 @@ public class BaseMuzuAPI {
 		}
 		
 		return new APIReader(baseURL);
-	}	
+	}
+	
+	public String getFetchedResults() {
+		if (fetchedResults != null) {
+			return fetchedResults.getFetchedResults();
+		}
+		return "";
+	}
 }

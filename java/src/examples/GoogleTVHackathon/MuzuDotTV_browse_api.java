@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import apiworld.APIReader;
+import apiworld.FinalURLNotGeneratedException;
+
 import static apiworld.ResultType.*;
 
 /*
@@ -18,7 +21,7 @@ public final class MuzuDotTV_browse_api {
 		// Hide utility class constructor
 	}
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, FinalURLNotGeneratedException {
 		/**
 		 * "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=a&g=pop";
 		 */
@@ -32,8 +35,8 @@ public final class MuzuDotTV_browse_api {
 			String muzuAPIKey = prop.getProperty("APIKey");
 
 			MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
-					"views", "0", null, null, null, rtJSON.toString());
-			muzuBrowse.fetchedResults.displayHttpReqResult(rtJSON);
+					"views", "0", null, null, null, rtJSON.toString());			
+			System.out.format("%s", muzuBrowse.getFetchedResults());
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {
@@ -43,12 +46,13 @@ public final class MuzuDotTV_browse_api {
 }
 
 class MuzuBrowse extends BaseMuzuAPI {
-	MuzuBrowse(String apiKey, String... params) {
+	MuzuBrowse(String apiKey, String... params) throws FinalURLNotGeneratedException {
 		String apiCommand = "browse";
 		String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of",
 				"format", "country", "soundoff", "autostart", "videotype",
 				"width", "height", "includeAll" };
 
-		performAPICall(apiKey, apiCommand, arrayURLParamCodes, params);
+		fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
+		fetchedResults.executeURL();
 	}
 }

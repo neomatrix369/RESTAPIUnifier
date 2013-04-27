@@ -29,7 +29,7 @@ public class APIBuilderBehaviours {
 
 	@Test 
     (expected=BaseURLNotAssignedException.class)
-	public void shouldReturnExceptionWhenNoURLIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_Exception_When_No_URL_Is_Supplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		baseURL = "";
 		apiBuilder = new APIBuilder();
 		apiBuilder.addBaseURL(baseURL);
@@ -38,13 +38,13 @@ public class APIBuilderBehaviours {
 
 
 	@Test (expected=APIKeyNotAssignedException.class)
-	public void shouldReturnExceptionWhenNoAPIKeyIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_Exception_When_No_API_Key_Is_Supplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.addBaseURL(baseURL);
 		apiBuilder.build();
 	}
 		
 	@Test
-	public void shouldReturnURLWithCommandWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_URL_With_Command_When_Passed_In() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.build();
@@ -54,7 +54,7 @@ public class APIBuilderBehaviours {
 	}
 	
 	@Test
-	public void shouldReturnURLWithAPIKeyAndParamsWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_URL_With_API_Key_And_Params_When_Passed_In() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 		apiBuilder.addAURLParameter("key1", "value1");
@@ -65,7 +65,7 @@ public class APIBuilderBehaviours {
 	}
 
     @Test
-    public void shouldReturnURLWithAPIKeyAndAllValidParams() throws BaseURLNotAssignedException, APIKeyNotAssignedException    
+    public void should_Return_URL_With_API_Key_And_All_Valid_Params() throws BaseURLNotAssignedException, APIKeyNotAssignedException    
     {
         apiBuilder.setCommand(API_BROWSE_COMMAND);
         apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
@@ -79,7 +79,7 @@ public class APIBuilderBehaviours {
 
 	
 	@Test
-	public void shouldReturnURLWithAPIKeyAndSkipParamsWithNulls() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_URL_With_API_Key_And_Skip_Params_With_Nulls() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 
@@ -93,7 +93,7 @@ public class APIBuilderBehaviours {
 	}
 	
 	@Test
-	public void shouldReturnURLWithEncodedParam() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_URL_With_Encoded_Param() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 		apiBuilder.addAURLParameter("key", UtilityFunctions.encodeToken("string with space"));
