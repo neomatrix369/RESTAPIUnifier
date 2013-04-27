@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\bin\Debug\TestAPI.dll" total="8" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-04-27" time="18:42:24">
+  <environment nunit-version="2.5.10.11092" clr-version="4.0.30319.18034" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE" machine-name="ANDREA-PC" user="Andrea" user-domain="Andrea-PC" />
+  <culture-info current-culture="en-GB" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\bin\Debug\TestAPI.dll" executed="True" result="Success" success="True" time="0.098" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="TestAPI" executed="True" result="Success" success="True" time="0.092" asserts="0">
+        <results>
+          <test-suite type="TestFixture" name="APIBuilderBehaviours" executed="True" result="Success" success="True" time="0.091" asserts="0">
+            <results>
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnExceptionWhenNoAPIKeyAssignedAtBuildStage" executed="True" result="Success" success="True" time="0.011" asserts="0" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnExceptionWhenNoURLIsSupplied" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnURLWithAPIKeyAndAllValidParams" executed="True" result="Success" success="True" time="0.007" asserts="1" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnURLWithAPIKeyAndAllValidParamsWhichAreNotNull" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnURLWithAPIKeyAndParamsWhenPassedIn" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnURLWithAPIKeyAndSkipParamsWithNulls" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnURLWithAPIKeyWhenPassedIn" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+              <test-case name="TestAPI.APIBuilderBehaviours.shouldReturnURLWithEncodedParam" executed="True" result="Success" success="True" time="0.048" asserts="1" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
