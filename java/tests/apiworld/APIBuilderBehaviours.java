@@ -43,7 +43,6 @@ public class APIBuilderBehaviours {
 		apiBuilder.build();
 	}
 	
-	
 	@Test 
 	public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.addBaseURL(baseURL);
@@ -87,7 +86,21 @@ public class APIBuilderBehaviours {
 
 	
 	@Test
-	public void should_Return_URL_With_API_Key_And_Skip_Params_With_Nulls() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Keys() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		apiBuilder.setCommand(API_BROWSE_COMMAND);
+		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
+
+		apiBuilder.addAURLParameter(null, "value1");
+		apiBuilder.addAURLParameter("key2", "value2");
+		apiBuilder.addAURLParameter("key3", "value3");
+		apiBuilder.build();
+		String actual = apiBuilder.getAPIReadyURL(); 
+		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key2=value2&key3=value3";
+		assertThat(actual, is(expected));		
+	}
+
+	@Test
+	public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Values() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 

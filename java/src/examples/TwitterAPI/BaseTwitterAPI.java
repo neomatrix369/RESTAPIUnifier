@@ -1,4 +1,4 @@
-package examples.FlickrAPI;
+package examples.TwitterAPI;
 
 import apiworld.APIBuilder;
 import apiworld.APIReader;
@@ -7,10 +7,10 @@ import apiworld.APIKeyNotAssignedException;
 import apiworld.BaseURLNotAssignedException;
 import apiworld.UtilityFunctions;
 
-public class BaseFlickrAPI {
+public class BaseTwitterAPI {
 	
-	private static final String FLICKR_API_PARAM = "api_key";
-	private String baseURL = "http://api.flickr.com/services/rest";
+	private static final String TWITTER_URL_PARAM = "api_key";
+	private String baseURL = "http://search.twitter.com/";
 	private String paramStart = "?";
 	public APIReader fetchedResults;
 
@@ -20,7 +20,7 @@ public class BaseFlickrAPI {
 		apiBuilder.addBaseURL(baseURL);
 		apiBuilder.setCommand(apiCommand);
 		apiBuilder.setParamStart(paramStart);
-		apiBuilder.setAPIKey(FLICKR_API_PARAM, apiKey);
+		apiBuilder.setNoAPIKeyRequired();
 		int paramCtr = 0;
 		for (String eachValue : params) {
 			apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

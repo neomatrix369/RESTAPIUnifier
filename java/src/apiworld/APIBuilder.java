@@ -37,7 +37,7 @@ public class APIBuilder {
 	}
 
 	private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
-		if (doesNotRequiredAPIKey()) {
+		if (doesNotRequireAPIKey()) {
 			return;
 		}
 
@@ -49,7 +49,7 @@ public class APIBuilder {
 	}
 
 	private boolean validateAPIKey() throws APIKeyNotAssignedException {
-		if (doesNotRequiredAPIKey()) {
+		if (doesNotRequireAPIKey()) {
 			return true;
 		}
 
@@ -60,7 +60,7 @@ public class APIBuilder {
 		return true;
 	}
 
-	private boolean doesNotRequiredAPIKey() {
+	private boolean doesNotRequireAPIKey() {
 		return !apiKeyIsRequired;
 	}
 
@@ -69,7 +69,8 @@ public class APIBuilder {
 			String urlParameterTokens = "";
 			for (Map.Entry<String, String> eachKeyValuePair : urlParameters
 					.entrySet()) {
-				if (isNotNull(eachKeyValuePair.getValue())) {
+				if (isNotNull(eachKeyValuePair.getKey())
+						&& isNotNull(eachKeyValuePair.getValue())) {
 					String eachToken = String.format(THREE_TOKENS,
 							eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
 							eachKeyValuePair.getValue());
