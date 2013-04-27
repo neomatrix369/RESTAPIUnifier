@@ -2,7 +2,7 @@ package apiworld;
 
 import static apiworld.UtilityFunctions.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import apiworld.APIKeyNotAssignedException;
@@ -12,13 +12,13 @@ public class APIBuilder {
 	private static final String THREE_TOKENS = "%s%s%s";
 	private static final String TWO_TOKENS = "%s%s";
 	private static final String KEY_VALUE_SEPARATOR = "=";
-	
+
 	private String baseURL;
 	private String apiKey;
 	private String commandString;
 	private String finalURL;
-	
-	private Map<String, String> urlParameters = new HashMap<String, String>();
+
+	private Map<String, String> urlParameters = new LinkedHashMap<String, String>();
 
 	public APIBuilder addBaseURL(String baseURL) {
 		this.baseURL = baseURL;
@@ -28,10 +28,18 @@ public class APIBuilder {
 	public APIBuilder build() throws BaseURLNotAssignedException,
 			APIKeyNotAssignedException {
 		buildFinalURLWithCommandString();
-		validateAPIKey();
+		buildFinalURLWithTheAPIKey();
 		buildFinalURLWithParametersToken();
 
 		return this;
+	}
+
+	private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
+		validateAPIKey();
+
+		if ((apiKey != null) && (!apiKey.isEmpty())) {
+			this.finalURL = String.format(TWO_TOKENS, finalURL, apiKey);
+		}
 	}
 
 	private boolean validateAPIKey() throws APIKeyNotAssignedException {
@@ -45,7 +53,8 @@ public class APIBuilder {
 	private void buildFinalURLWithParametersToken() {
 		if (!urlParameters.isEmpty()) {
 			String urlParameterTokens = "";
-			for (Map.Entry<String, String> eachKeyValuePair : urlParameters.entrySet()) {
+			for (Map.Entry<String, String> eachKeyValuePair : urlParameters
+					.entrySet()) {
 				if (isNotNull(eachKeyValuePair.getValue())) {
 					String eachToken = String.format(THREE_TOKENS,
 							eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
@@ -57,11 +66,11 @@ public class APIBuilder {
 
 			urlParameterTokens = dropTrailingSeparator(urlParameterTokens,
 					PARAM_SEPARATOR);
-			this.finalURL = String.format(TWO_TOKENS, finalURL,
-					urlParameterTokens);
+			this.finalURL = String.format(THREE_TOKENS, finalURL,
+					PARAM_SEPARATOR, urlParameterTokens);
 		}
 	}
-	
+
 	private void buildFinalURLWithCommandString()
 			throws BaseURLNotAssignedException {
 		validateBaseURL();
@@ -69,7 +78,8 @@ public class APIBuilder {
 
 		this.finalURL = baseURL.trim();
 		if ((commandString != null) && (!commandString.isEmpty())) {
-			if (doesNotHaveTrailingSeparator(this.finalURL, COMMAND_URL_SEPARATOR)) {
+			if (doesNotHaveTrailingSeparator(this.finalURL,
+					COMMAND_URL_SEPARATOR)) {
 				this.finalURL = String.format(TWO_TOKENS, finalURL,
 						COMMAND_URL_SEPARATOR);
 			}
@@ -91,14 +101,13 @@ public class APIBuilder {
 		return finalURL;
 	}
 
-	public void addCommand(String commandString) {
+	public void setCommand(String commandString) {
 		this.commandString = commandString;
 	}
 
-	public void addAPIKey(String key, String value) {
+	public void setAPIKey(String key, String value) {
 		this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR,
 				value);
-		addAURLParameter(key, value);
 	}
 
 	public void addAURLParameter(String key, String value) {

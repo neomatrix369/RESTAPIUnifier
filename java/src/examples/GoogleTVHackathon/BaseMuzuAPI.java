@@ -17,8 +17,8 @@ public class BaseMuzuAPI {
 			String[] arrayURLParamCodes, String... params) {
 		APIBuilder apiBuilder = new APIBuilder();
 		apiBuilder.addBaseURL(baseURL);
-		apiBuilder.addCommand(apiCommand);
-		apiBuilder.addAPIKey(MUZUID_URL_PARAM, apiKey);
+		apiBuilder.setCommand(apiCommand);
+		apiBuilder.setAPIKey(MUZUID_URL_PARAM, apiKey);
 		int paramCtr = 0;
 		for (String eachValue : params) {
 			apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

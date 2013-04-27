@@ -17,9 +17,6 @@ public final class MuzuDotTV_search_api {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		/**
-		 * "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=a&g=pop";
-		 */
 		Properties prop = new Properties();
 		try {
 			prop.load(new FileReader(new File(
@@ -27,8 +24,9 @@ public final class MuzuDotTV_search_api {
 			String muzuAPIKey = prop.getProperty("APIKey");
 
 			/**
-			 * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=the+
-			 * script
+			 * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&format=json&
+			 * mySearch=the+script
+			 * 
 			 */
 			MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
 					null, rtJSON.toString());
@@ -49,7 +47,6 @@ class MuzuSearch extends BaseMuzuAPI {
 				"soundoff", "autostart", "videotype", "width", "height",
 				"includeAll" };
 
-		performAPICall(apiKey, apiCommand, arrayURLParamCodes,
-				params);
+		performAPICall(apiKey, apiCommand, arrayURLParamCodes, params);
 	}
 }

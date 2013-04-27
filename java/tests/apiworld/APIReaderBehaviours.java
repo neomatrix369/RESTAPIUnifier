@@ -21,15 +21,37 @@ public class APIReaderBehaviours {
 		String apiKey = prop.getProperty("APIKey");
 
 		String url = String.format(
-				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop", apiKey);
+				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop&l=json", apiKey);
 		APIReader apiReader = new APIReader(url);
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults(ResultType.rtJSON);
-		//String expected = loadTestDataFromFile("resources/expectedMuzuBrowseCommandResults.txt");
 		assertThat(result.isEmpty(), is(false));
+
+		//String expected = loadTestDataFromFile("resources/expectedMuzuBrowseCommandResults.txt");
+		//expected = UtilityFunctions.encodeToken(expected);
 		//assertThat(expected, is(result));
 	}
 
+	
+	@Test
+	public void should_Fetch_Data_As_XML_When_API_URL_Is_Passed_In()
+			throws FileNotFoundException, IOException,
+			FinalURLNotGeneratedException {
+		Properties prop = new Properties();
+		prop.load(new FileReader(new File("resources/muzu_settings.properties")));
+		String apiKey = prop.getProperty("APIKey");
+
+		String url = String.format(
+				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop&l=xml", apiKey);
+		APIReader apiReader = new APIReader(url);
+		apiReader.executeURL();
+		String result = apiReader.getFetchedResults(ResultType.rtXML);
+		assertThat(result.isEmpty(), is(false));
+
+		//String expected = loadTestDataFromFile("resources/expectedMuzuBrowseCommandResults.txt");
+		//expected = UtilityFunctions.encodeToken(expected);
+		//assertThat(expected, is(result));
+	}	
 	private String loadTestDataFromFile(String filename) {
 		String fileContent = "";
 		BufferedReader br = null;

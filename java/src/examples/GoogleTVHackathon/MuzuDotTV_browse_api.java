@@ -22,15 +22,15 @@ public final class MuzuDotTV_browse_api {
 		/**
 		 * "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=a&g=pop";
 		 */
+		/**
+		 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
+		 */
 		Properties prop = new Properties();
 		try {
 			prop.load(new FileReader(new File(
 					"resources/muzu_settings.properties")));
 			String muzuAPIKey = prop.getProperty("APIKey");
 
-			/**
-			 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
-			 */
 			MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
 					"views", "0", null, null, null, rtJSON.toString());
 			muzuBrowse.fetchedResults.displayHttpReqResult(rtJSON);
@@ -49,7 +49,6 @@ class MuzuBrowse extends BaseMuzuAPI {
 				"format", "country", "soundoff", "autostart", "videotype",
 				"width", "height", "includeAll" };
 
-		performAPICall(apiKey, apiCommand, arrayURLParamCodes,
-				params);
+		performAPICall(apiKey, apiCommand, arrayURLParamCodes, params);
 	}
 }

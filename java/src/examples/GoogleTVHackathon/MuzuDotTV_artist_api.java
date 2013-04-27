@@ -18,7 +18,7 @@ public final class MuzuDotTV_artist_api {
 
 	public static void main(String[] args) throws InterruptedException {
 		/**
-		 * "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=a&g=pop";
+		 * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
 		 */
 		Properties prop = new Properties();
 		try {
