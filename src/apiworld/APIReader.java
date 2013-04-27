@@ -3,9 +3,9 @@ package apiworld;
 import java.io.*;
 import java.net.*;
 
-import apiworld.BaseAPIClass;
+import apiworld.APIBuilder;
 
-public class APIReader extends BaseAPIClass {
+public class APIReader extends APIBuilder {
 
 	private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.%n";
 	private static final String READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT = ">>> Reading results returned, this may take a moment...%n";

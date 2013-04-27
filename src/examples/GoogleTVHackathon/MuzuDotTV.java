@@ -35,7 +35,7 @@ public final class MuzuDotTV {
 			 * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=the+
 			 * script
 			 */
-			BaseAPIClass muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
+			APIBuilder muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
 					null, rtJSON.toString());
 			muzuSearch.displayHttpReqResult(rtJSON);
 			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
@@ -43,12 +43,12 @@ public final class MuzuDotTV {
 			/**
 			 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
 			 */
-			BaseAPIClass muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
+			APIBuilder muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
 					"views", "0", null, null, null, rtJSON.toString());
 			muzuBrowse.displayHttpReqResult(rtJSON);
 			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
 
-			BaseAPIClass muzuArtist = new MuzuArtist(
+			APIBuilder muzuArtist = new MuzuArtist(
 					"http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid="
 							+ muzuAPIKey);
 			muzuArtist.displayHttpReqResult(rtJSON);
@@ -87,7 +87,7 @@ class BaseMuzuAPI extends APIReader {
 }
 
 class MuzuBrowse extends BaseMuzuAPI {
-	private BaseAPIClass muzuBrowse;
+	private APIBuilder muzuBrowse;
 
 	MuzuBrowse(String apiKey, String... params) {
 		String apiCommand = "browse";
@@ -106,7 +106,7 @@ class MuzuBrowse extends BaseMuzuAPI {
 }
 
 class MuzuSearch extends BaseMuzuAPI {
-	private BaseAPIClass muzuSearch;
+	private APIBuilder muzuSearch;
 
 	MuzuSearch(String apiKey, String... params) {
 		String apiCommand = "search";
@@ -125,7 +125,7 @@ class MuzuSearch extends BaseMuzuAPI {
 }
 
 class MuzuArtist extends BaseMuzuAPI {
-	private BaseAPIClass muzuArtist;
+	private APIBuilder muzuArtist;
 
 	MuzuArtist(String apiKey, String... params) {
 		String apiCommand = "artist";

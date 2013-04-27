@@ -8,6 +8,7 @@
 # Ignore . & ~ files except .gitignore #
 *~
 .*
+sonar-project.properties
 target/
 !/.gitignore
 resources/

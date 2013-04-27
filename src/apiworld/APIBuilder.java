@@ -12,7 +12,7 @@ import apiworld.BaseURLNotAssignedException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class BaseAPIClass {
+public class APIBuilder {
 	private static final String THREE_TOKENS = "%s%s%s";
 	private static final String TWO_TOKENS = "%s%s";
 	private static final String KEY_VALUE_SEPARATOR = "=";
@@ -25,14 +25,16 @@ public class BaseAPIClass {
 	public static final String COMMAND_URL_SEPARATOR = "/";
 	public static final String URL_SEPARATOR = "/";
 	public static final String PARAM_SEPARATOR = "&";
+	
 	private String urlText;
-	private List<String> lastHttpResult;
 	private Document lastHttpResultXML;
 	private String lastHttpResultJSON;
 	private String baseURL;
 	private String apiKey;
 	private String commandString;
 	private String finalURL;
+	
+	private List<String> lastHttpResult;
 	private Map<String, String> urlParameters = new HashMap<String, String>();
 
 	public void updateURLText(String urlText) {
@@ -133,12 +135,12 @@ public class BaseAPIClass {
 		lastHttpResult.add(inputLine);
 	}
 
-	public BaseAPIClass addBaseURL(String baseURL) {
+	public APIBuilder addBaseURL(String baseURL) {
 		this.baseURL = baseURL;
 		return this;
 	}
 
-	public BaseAPIClass build() throws BaseURLNotAssignedException,
+	public APIBuilder build() throws BaseURLNotAssignedException,
 			APIKeyNotAssignedException {
 		buildFinalURLWithCommandString();
 		validateAPIKey();
