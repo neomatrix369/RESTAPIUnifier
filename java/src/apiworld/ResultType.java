@@ -11,6 +11,11 @@ public enum ResultType {
 			return "json";
 		}
 	},
+	rtJSONP {
+		public String toString() {
+			return "jsonp";
+		}
+	},
 	rtRSS {
 		public String toString() {
 			return "rss";

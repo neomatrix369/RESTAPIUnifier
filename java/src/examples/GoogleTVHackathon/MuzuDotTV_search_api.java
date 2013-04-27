@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import apiworld.APIReader;
 import apiworld.FinalURLNotGeneratedException;
 import static apiworld.ResultType.*;
 

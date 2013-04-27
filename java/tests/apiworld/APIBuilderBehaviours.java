@@ -42,7 +42,15 @@ public class APIBuilderBehaviours {
 		apiBuilder.addBaseURL(baseURL);
 		apiBuilder.build();
 	}
-		
+	
+	
+	@Test 
+	public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		apiBuilder.addBaseURL(baseURL);
+		apiBuilder.setNoAPIKeyRequired();
+		apiBuilder.build();
+	}
+	
 	@Test
 	public void should_Return_URL_With_Command_When_Passed_In() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
