@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import apiworld.*;
 import static apiworld.ResultType.*;
 
 /*
@@ -14,7 +13,6 @@ import static apiworld.ResultType.*;
  Max queries: 10000
  */
 public final class MuzuDotTV_browse_api {
-	private static final int SHORT_PAUSE_IN_MILLIS = 200;
 
 	private MuzuDotTV_browse_api() {
 		// Hide utility class constructor
@@ -36,7 +34,6 @@ public final class MuzuDotTV_browse_api {
 			MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
 					"views", "0", null, null, null, rtJSON.toString());
 			muzuBrowse.fetchedResults.displayHttpReqResult(rtJSON);
-			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {

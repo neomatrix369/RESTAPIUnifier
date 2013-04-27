@@ -9,7 +9,7 @@ MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier
 
 Timeline
 --------
-*   April 2012: discovery of idea at a hackathon
+* 21 April 2012: discovery of idea at a hackathon
 *      May 2012: came across Mashery I/O Wraps Client Library Generator (see below)
 *   August 2012: continued improving library at hackathon
 * 23 April 2013: came across Import.IO (see below)

@@ -1,10 +1,10 @@
 package examples.GoogleTVHackathon;
 
 import apiworld.APIBuilder;
-import apiworld.APIKeyNotAssignedException;
 import apiworld.APIReader;
+
+import apiworld.APIKeyNotAssignedException;
 import apiworld.BaseURLNotAssignedException;
-import apiworld.ResultType;
 import apiworld.UtilityFunctions;
 
 public class BaseMuzuAPI {

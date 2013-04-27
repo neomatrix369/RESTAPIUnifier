@@ -6,6 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import apiworld.APIBuilder;
+
 public class APIBuilderBehaviours {
 	private static final String MUZUID_KEY = "muzuid";
 	private static final String MUZUID_VALUE = "[MUZU_ID]";
@@ -39,16 +41,8 @@ public class APIBuilderBehaviours {
 		
 	@Test
 	public void shouldReturnURLWithCommandWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		apiBuilder.build();
-		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);	
-		String actual = apiBuilder.getAPIReadyURL(); 
-		String expected = MUZU_BASE_URL_WITH_BROWSE_COMMAND;
-		assertThat(actual, is(expected));		
-	}
-	
-	@Test
-	public void shouldReturnURLWithAPIKeyWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		apiBuilder.addCommand(API_BROWSE_COMMAND);
 		apiBuilder.build();
 		String actual = apiBuilder.getAPIReadyURL(); 
 		String expected = MUZU_URL_WITH_BROWSE_AND_MUZU_ID;

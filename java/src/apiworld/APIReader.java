@@ -24,7 +24,7 @@ public class APIReader {
 	private String lastHttpResultJSON;
 	private final static Logger LOGGER = Logger.getLogger(APIReader.class
 			.getName());
-	
+
 	private static final String STRING_WITH_NEW_LINE_FEED = "%s";
 	private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
 	private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s";
@@ -35,38 +35,42 @@ public class APIReader {
 
 	public APIReader(APIBuilder apiBuilder) {
 		this.urlText = apiBuilder.getAPIReadyURL();
-		executeURL(urlText);
+		// executeURL(urlText);
 	}
 
 	public APIReader(String websiteBaseURL, String apiVarIdentifier,
 			String apiKey) {
 		this.urlText = websiteBaseURL.replace(apiVarIdentifier, apiKey);
-		executeURL(urlText);
+		// executeURL(urlText);
 	}
 
 	public APIReader(String urlText) {
 		this.urlText = urlText;
-		executeURL(urlText);
+		// executeURL(urlText);
 	}
 
-	public final void executeURL(String urlText) {
+	public final void executeURL() throws FinalURLNotGeneratedException {
 		clearAllLastHttpResults();
-		try {
-			URL webSite = new URL(urlText);
+		if (urlText != null) {
 			try {
-				/**
-				 * http://docs.oracle.com/javase/7/docs/api/java/net/
-				 * HttpURLConnection.html
-				 */
-				URLConnection urlConnection = webSite.openConnection();
-				showMessageWhileMakingConnection(urlText);
-				fetchDataFromURL(new InputStreamReader(
-						urlConnection.getInputStream()));
-			} catch (IOException ioe) {
-				showMessageDueToIOException(urlText, ioe);
+				URL webSite = new URL(urlText);
+				try {
+					/**
+					 * http://docs.oracle.com/javase/7/docs/api/java/net/
+					 * HttpURLConnection.html
+					 */
+					URLConnection urlConnection = webSite.openConnection();
+					showMessageWhileMakingConnection(urlText);
+					fetchDataFromURL(new InputStreamReader(
+							urlConnection.getInputStream()));
+				} catch (IOException ioe) {
+					showMessageDueToIOException(urlText, ioe);
+				}
+			} catch (MalformedURLException me) {
+				showMessageDueToMalformedURLException(urlText, me);
 			}
-		} catch (MalformedURLException me) {
-			showMessageDueToMalformedURLException(urlText, me);
+		} else {
+			throw new FinalURLNotGeneratedException();
 		}
 	}
 
@@ -107,19 +111,7 @@ public class APIReader {
 		LOGGER.severe(String.format(ERROR_DUE_TO, ioe.getMessage()));
 	}
 
-	public void updateLastHttpResult(List<String> lastHttpResult) {
-		this.lastHttpResult = lastHttpResult;
-	}
-
-	public void updatelastHttpResultXML(Document lastHttpResultXML) {
-		this.lastHttpResultXML = lastHttpResultXML;
-	}
-
-	public void updatelastHttpResultJSON(String lastHttpResultJSON) {
-		this.lastHttpResultJSON = lastHttpResultJSON;
-	}
-
-	public void clearAllLastHttpResults() {
+	private void clearAllLastHttpResults() {
 		if (lastHttpResult != null) {
 			lastHttpResult.clear();
 		}
@@ -192,13 +184,31 @@ public class APIReader {
 		System.out.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL, urlText);
 	}
 
-	protected void updateAllLastHttpResults() {
+	private void updateAllLastHttpResults() {
 		lastHttpResultXML = UtilityFunctions.stringToXML(lastHttpResult
 				.toString());
 		lastHttpResultJSON = lastHttpResult.toString();
 	}
 
-	protected void addToLastHttpResults(String inputLine) {
+	private void addToLastHttpResults(String inputLine) {
 		lastHttpResult.add(inputLine);
+	}
+
+	public String getFetchedResults(ResultType resultType) {
+		switch (resultType) {
+		case rtJSON: {
+			return lastHttpResultJSON;
+		}
+
+		case rtXML: {
+			return lastHttpResultXML.toString();
+		}
+
+		case rtRSS:
+		case rtNone:
+		default: {
+			return lastHttpResultJSON.toString();
+		}
+		}
 	}
 }
