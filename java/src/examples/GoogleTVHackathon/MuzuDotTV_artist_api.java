@@ -13,9 +13,7 @@ import static apiworld.ResultType.*;
  Create Date: Saturday 21 April 2012 13:18 PM
  Max queries: 10000
  */
-public class MuzuDotTV_artist_api {
-	private static final int SHORT_PAUSE_IN_MILLIS = 200;
-
+public final class MuzuDotTV_artist_api {
 	private MuzuDotTV_artist_api() {
 		// Hide utility class constructor
 	}

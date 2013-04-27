@@ -14,8 +14,6 @@ import static apiworld.ResultType.*;
  Max queries: 10000
  */
 public final class MuzuDotTV_search_api {
-	private static final int SHORT_PAUSE_IN_MILLIS = 200;
-
 	private MuzuDotTV_search_api() {
 		// Hide utility class constructor
 	}
@@ -37,7 +35,6 @@ public final class MuzuDotTV_search_api {
 			MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
 					null, rtJSON.toString());
 			muzuSearch.fetchedResults.displayHttpReqResult(rtJSON);
-			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {
@@ -47,7 +44,6 @@ public final class MuzuDotTV_search_api {
 }
 
 class MuzuSearch extends BaseMuzuAPI {
-	private APIBuilder muzuSearch;
 
 	MuzuSearch(String apiKey, String... params) {
 		String apiCommand = "search";

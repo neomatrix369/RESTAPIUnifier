@@ -12,22 +12,22 @@ import apiworld.APIBuilder;
 
 public class APIReader {
 
-	private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.%n";
-	private static final String READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT = ">>> Reading results returned, this may take a moment...%n";
-	private static final String READING_COMPLETED = ">>> Reading completed...%n";
-	private static final String CONNECTION_CLOSED = ">>> Connection closed!%n";
-	private static final String ERROR_CONNECTING_TO_THE_WEBSITE = ">>> Error connecting to the website: %s%n";
-	private static final String INPUT_URL_STRING = ">>> Input URL String: %s%n";
-	private static final String ERROR_DUE_TO = "Error due to: %s%n";
+	private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.";
+	private static final String READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT = ">>> Reading results returned, this may take a moment...";
+	private static final String READING_COMPLETED = ">>> Reading completed...";
+	private static final String CONNECTION_CLOSED = ">>> Connection closed!";
+	private static final String ERROR_CONNECTING_TO_THE_WEBSITE = ">>> Error connecting to the website: %s";
+	private static final String INPUT_URL_STRING = ">>> Input URL String: %s";
+	private static final String ERROR_DUE_TO = "Error due to: %s";
 
 	private Document lastHttpResultXML;
 	private String lastHttpResultJSON;
 	private final static Logger LOGGER = Logger.getLogger(APIReader.class
 			.getName());
-
-	private static final String STRING_WITH_NEW_LINE_FEED = "%s%n";
+	
+	private static final String STRING_WITH_NEW_LINE_FEED = "%s";
 	private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
-	private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s%n";
+	private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s";
 	private static final String NO_RESULTS_RETURNED = ">>> No results returned.";
 
 	private List<String> lastHttpResult = new ArrayList<String>();
@@ -35,24 +35,22 @@ public class APIReader {
 
 	public APIReader(APIBuilder apiBuilder) {
 		this.urlText = apiBuilder.getAPIReadyURL();
-		clearAllLastHttpResults();
 		executeURL(urlText);
 	}
 
 	public APIReader(String websiteBaseURL, String apiVarIdentifier,
 			String apiKey) {
 		this.urlText = websiteBaseURL.replace(apiVarIdentifier, apiKey);
-		clearAllLastHttpResults();
 		executeURL(urlText);
 	}
 
 	public APIReader(String urlText) {
 		this.urlText = urlText;
-		clearAllLastHttpResults();
 		executeURL(urlText);
 	}
 
-	final void executeURL(String urlText) {
+	public final void executeURL(String urlText) {
+		clearAllLastHttpResults();
 		try {
 			URL webSite = new URL(urlText);
 			try {

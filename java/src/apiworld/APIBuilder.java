@@ -2,37 +2,23 @@ package apiworld;
 
 import static apiworld.UtilityFunctions.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import apiworld.APIKeyNotAssignedException;
 import apiworld.BaseURLNotAssignedException;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class APIBuilder {
 	private static final String THREE_TOKENS = "%s%s%s";
 	private static final String TWO_TOKENS = "%s%s";
 	private static final String KEY_VALUE_SEPARATOR = "=";
 	
-//	private String urlText;
 	private String baseURL;
 	private String apiKey;
 	private String commandString;
 	private String finalURL;
 	
 	private Map<String, String> urlParameters = new HashMap<String, String>();
-//	private final static Logger LOGGER = Logger.getLogger(APIBuilder.class.getName());
-
-	
-	public void updateURLText(String urlText) {
-//		this.urlText = urlText;
-	}
-
 
 	public APIBuilder addBaseURL(String baseURL) {
 		this.baseURL = baseURL;

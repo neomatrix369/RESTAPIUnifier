@@ -1,14 +1,14 @@
 package apiworld;
 
 import java.net.URLEncoder;
-import java.util.List;
-import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public final class UtilityFunctions {
-	
+	private UtilityFunctions(){
+		// Hide Utility Class Constructor - Utility classes should not have a public or default constructor.
+	}
 	public static final String PARAM_START = "?";
 	public static final String COMMAND_URL_SEPARATOR = "/";
 	public static final String URL_SEPARATOR = "/";
