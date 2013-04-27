@@ -34,9 +34,9 @@ public final class MuzuDotTV_search_api {
 			 * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=the+
 			 * script
 			 */
-			APIBuilder muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
+			MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
 					null, rtJSON.toString());
-			muzuSearch.displayHttpReqResult(rtJSON);
+			muzuSearch.fetchedResults.displayHttpReqResult(rtJSON);
 			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
@@ -55,12 +55,7 @@ class MuzuSearch extends BaseMuzuAPI {
 				"soundoff", "autostart", "videotype", "width", "height",
 				"includeAll" };
 
-		muzuSearch = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
+		performAPICall(apiKey, apiCommand, arrayURLParamCodes,
 				params);
-	}
-
-	@Override
-	public void displayHttpReqResult(ResultType resultType) {
-		muzuSearch.displayHttpReqResult(resultType);
 	}
 }

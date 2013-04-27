@@ -15,86 +15,76 @@ public class APIBuilderBehaviours {
 	private static final String API_BROWSE_COMMAND = "browse";
 	
 	private String baseURL;
-	private APIBuilder aPIBuilder;
+	private APIBuilder apiBuilder;
 	
 	@Before
 	public void setup() {
 		baseURL = MUZU_BASE_URL;
-		aPIBuilder = new APIBuilder();
-		aPIBuilder.addBaseURL(baseURL);
+		apiBuilder = new APIBuilder();
+		apiBuilder.addBaseURL(baseURL);
 	}
-	
-	@Test(expected=APIKeyNotAssignedException.class)
-	public void shouldReturnURLOnlyWhenNoParametersArePassed() throws APIKeyNotAssignedException, BaseURLNotAssignedException {
-		aPIBuilder.build();
-		String actual = aPIBuilder.getAPIReadyURL(); 
-		String expected = MUZU_BASE_URL;
-		assertThat(actual, is(expected));
+
+	@Test (expected=BaseURLNotAssignedException.class)
+	public void shouldReturnExceptionWhenNoURLIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		baseURL = "";
+		apiBuilder = new APIBuilder();
+		apiBuilder.addBaseURL(baseURL);
+		apiBuilder.build();
 	}
-	
-	@Test(expected=APIKeyNotAssignedException.class)
-	public void shouldReturnURLWithCommandWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		aPIBuilder.addCommand(API_BROWSE_COMMAND);
-		aPIBuilder.build();
-		String actual = aPIBuilder.getAPIReadyURL(); 
-		String expected = MUZU_BASE_URL_WITH_BROWSE_COMMAND;
-		assertThat(actual, is(expected));		
+	@Test (expected=APIKeyNotAssignedException.class)
+	public void shouldReturnExceptionWhenNoAPIKeyIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		apiBuilder.addBaseURL(baseURL);
+		apiBuilder.build();
 	}
 		
 	@Test
+	public void shouldReturnURLWithCommandWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+		apiBuilder.build();
+		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);	
+		String actual = apiBuilder.getAPIReadyURL(); 
+		String expected = MUZU_BASE_URL_WITH_BROWSE_COMMAND;
+		assertThat(actual, is(expected));		
+	}
+	
+	@Test
 	public void shouldReturnURLWithAPIKeyWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		aPIBuilder.addCommand(API_BROWSE_COMMAND);
-		aPIBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
-		aPIBuilder.build();
-		String actual = aPIBuilder.getAPIReadyURL(); 
+		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		apiBuilder.build();
+		String actual = apiBuilder.getAPIReadyURL(); 
 		String expected = MUZU_URL_WITH_BROWSE_AND_MUZU_ID;
 		assertThat(actual, is(expected));		
 	}
 	
-	@Test (expected=BaseURLNotAssignedException.class)
-	public void shouldReturnExceptionWhenNoURLIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		baseURL = "";
-		aPIBuilder = new APIBuilder();
-		aPIBuilder.addBaseURL(baseURL);
-		aPIBuilder.build();
-	}
-
-	@Test (expected=APIKeyNotAssignedException.class)
-	public void shouldReturnExceptionWhenNoAPIKeyIsSupplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		aPIBuilder.addBaseURL(baseURL);
-		aPIBuilder.build();
-	}
-	
 	@Test
 	public void shouldReturnURLWithAPIKeyAndParamsWhenPassedIn() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		aPIBuilder.addCommand(API_BROWSE_COMMAND);
-		aPIBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
-		aPIBuilder.addAURLParameter("key1", "value1");
-		aPIBuilder.build();
-		String actual = aPIBuilder.getAPIReadyURL(); 
+		apiBuilder.addCommand(API_BROWSE_COMMAND);
+		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		apiBuilder.addAURLParameter("key1", "value1");
+		apiBuilder.build();
+		String actual = apiBuilder.getAPIReadyURL(); 
 		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key1=value1";
 		assertThat(actual, is(expected));		
 	}
 	
 	@Test
 	public void shouldReturnURLWithAPIKeyAndSkipParamsWithNulls() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		aPIBuilder.addCommand(API_BROWSE_COMMAND);
-		aPIBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
-		aPIBuilder.addAURLParameter("key1", null);
-		aPIBuilder.addAURLParameter("key2", "value2");
-		aPIBuilder.build();
-		String actual = aPIBuilder.getAPIReadyURL(); 
+		apiBuilder.addCommand(API_BROWSE_COMMAND);
+		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		apiBuilder.addAURLParameter("key1", null);
+		apiBuilder.addAURLParameter("key2", "value2");
+		apiBuilder.build();
+		String actual = apiBuilder.getAPIReadyURL(); 
 		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key2=value2";
 		assertThat(actual, is(expected));		
 	}
 	
 	@Test
 	public void shouldReturnURLWithEncodedParam() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		aPIBuilder.addCommand(API_BROWSE_COMMAND);
-		aPIBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
-		aPIBuilder.addAURLParameter("key", UtilityFunctions.encodeToken("string with space"));
-		aPIBuilder.build();
-		String actual = aPIBuilder.getAPIReadyURL(); 
+		apiBuilder.addCommand(API_BROWSE_COMMAND);
+		apiBuilder.addAPIKey(MUZUID_KEY, MUZUID_VALUE);
+		apiBuilder.addAURLParameter("key", UtilityFunctions.encodeToken("string with space"));
+		apiBuilder.build();
+		String actual = apiBuilder.getAPIReadyURL(); 
 		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key=string+with+space";
 		assertThat(actual, is(expected));		
 	}

@@ -33,9 +33,9 @@ public final class MuzuDotTV_browse_api {
 			/**
 			 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
 			 */
-			APIBuilder muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
+			MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
 					"views", "0", null, null, null, rtJSON.toString());
-			muzuBrowse.displayHttpReqResult(rtJSON);
+			muzuBrowse.fetchedResults.displayHttpReqResult(rtJSON);
 			Thread.sleep(SHORT_PAUSE_IN_MILLIS);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
@@ -46,20 +46,13 @@ public final class MuzuDotTV_browse_api {
 }
 
 class MuzuBrowse extends BaseMuzuAPI {
-	private APIBuilder muzuBrowse;
-
 	MuzuBrowse(String apiKey, String... params) {
 		String apiCommand = "browse";
 		String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of",
 				"format", "country", "soundoff", "autostart", "videotype",
 				"width", "height", "includeAll" };
 
-		muzuBrowse = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
+		performAPICall(apiKey, apiCommand, arrayURLParamCodes,
 				params);
-	}
-
-	@Override
-	public void displayHttpReqResult(ResultType resultType) {
-		muzuBrowse.displayHttpReqResult(resultType);
 	}
 }

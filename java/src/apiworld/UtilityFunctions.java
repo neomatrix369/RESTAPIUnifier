@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public final class UtilityFunctions {
@@ -54,5 +55,10 @@ public final class UtilityFunctions {
 	public static boolean isNotNull(Object value) {
 		return value != null;
 	}
-
+	
+	public static Document stringToXML(String string) {
+		String localString = string.substring(1, string.length() - 1);
+		localString = localString.replaceAll(">,", ">");
+		return Jsoup.parse(localString);
+	}
 }

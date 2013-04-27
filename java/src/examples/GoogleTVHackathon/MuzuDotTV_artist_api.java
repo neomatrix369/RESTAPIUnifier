@@ -13,7 +13,7 @@ import static apiworld.ResultType.*;
  Create Date: Saturday 21 April 2012 13:18 PM
  Max queries: 10000
  */
-public final class MuzuDotTV_artist_api {
+public class MuzuDotTV_artist_api {
 	private static final int SHORT_PAUSE_IN_MILLIS = 200;
 
 	private MuzuDotTV_artist_api() {
@@ -30,10 +30,10 @@ public final class MuzuDotTV_artist_api {
 					"resources/muzu_settings.properties")));
 			String muzuAPIKey = prop.getProperty("APIKey");
 
-			APIBuilder muzuArtist = new MuzuArtist(
+			MuzuArtist muzuArtist = new MuzuArtist(
 					"http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid="
 							+ muzuAPIKey);
-			muzuArtist.displayHttpReqResult(rtJSON);
+			muzuArtist.fetchedResults.displayHttpReqResult(rtJSON);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		} catch (IOException e) {
@@ -43,19 +43,12 @@ public final class MuzuDotTV_artist_api {
 }
 
 class MuzuArtist extends BaseMuzuAPI {
-	private APIBuilder muzuArtist;
-
 	MuzuArtist(String apiKey, String... params) {
 		String apiCommand = "artist";
 		String[] arrayURLParamCodes = { "artist_name", "format", "country",
 				"soundoff", "autostart", "videotype", "width", "height",
 				"includeAll" };
-		muzuArtist = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
+		fetchedResults = performAPICall(apiKey, apiCommand, arrayURLParamCodes,
 				params);
-	}
-
-	@Override
-	public void displayHttpReqResult(ResultType resultType) {
-		muzuArtist.displayHttpReqResult(resultType);
 	}
 }
