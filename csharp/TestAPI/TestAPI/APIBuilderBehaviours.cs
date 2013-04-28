@@ -34,10 +34,23 @@ namespace TestAPI
         public void shouldReturnExceptionWhenNoURLIsSupplied()
         {
             baseURL = "";
-            aPIBuilder = new APIBuilder();
             aPIBuilder.setBaseURL(baseURL);
             aPIBuilder.build();
         }
+
+
+        [Test]
+
+        public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set()    // throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+        {
+            aPIBuilder.setNoAPIKeyRequired();
+            aPIBuilder.build();
+         //   String expected = MUZU_BASE_URL;
+         //   string actual = aPIBuilder.getAPIReadyURL();
+            Assert.AreEqual(false, aPIBuilder.keyRequired);
+        }
+
+	
 
         [Test]
         [ExpectedException(typeof(APIKeyNotAssignedException))]
