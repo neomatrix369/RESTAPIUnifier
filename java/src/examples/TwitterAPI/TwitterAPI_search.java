@@ -2,8 +2,7 @@ package examples.TwitterAPI;
 
 import static apiworld.ResultType.rtJSON;
 
-import apiworld.FinalURLNotGeneratedException;
-import examples.FlickrAPI.BaseFlickrAPI;
+import apiworld.FinalURLNotGeneratedException;;
 
 public final class TwitterAPI_search {
 	private TwitterAPI_search() {

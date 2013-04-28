@@ -17,7 +17,7 @@ public class APIReader {
 	private static final String INPUT_URL_STRING = ">>> Input URL String: %s";
 	private static final String ERROR_DUE_TO = "Error due to: %s";
 
-	private final static Logger LOGGER = Logger.getLogger(APIReader.class
+	private static final Logger LOGGER = Logger.getLogger(APIReader.class
 			.getName());
 
 	private static final String STRING_WITH_NEW_LINE_FEED = "%s%n";

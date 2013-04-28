@@ -12,14 +12,14 @@ public final class ImportIOAPI_search {
 
 	public static void main(String[] args) throws InterruptedException,
 			FinalURLNotGeneratedException {
-		importIOSearch importIOSearch = new importIOSearch("", "?",
+		ImportIOSearch importIOSearch = new ImportIOSearch("", "?",
 				rtJSON.toString(), "hello");
 		System.out.format("%s", importIOSearch.getFetchedResults());
 	}
 }
 
-class importIOSearch extends ImportIOAPI {
-	importIOSearch(String apiKey, String paramStart, String... params)
+class ImportIOSearch extends ImportIOAPI {
+	ImportIOSearch(String apiKey, String paramStart, String... params)
 			throws FinalURLNotGeneratedException {
 		String apiCommand = String.format("search.%s", params[0]);
 		String[] arrayURLParamCodes = { null, "q" };

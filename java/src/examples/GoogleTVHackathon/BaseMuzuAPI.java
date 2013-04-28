@@ -11,7 +11,7 @@ public class BaseMuzuAPI {
 	
 	private static final String MUZUID_URL_PARAM = "muzuid";
 	private String baseURL = "http://www.muzu.tv/api/";
-	public APIReader fetchedResults;
+	protected APIReader fetchedResults;
 
 	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand,
 			String[] arrayURLParamCodes, String... params) {

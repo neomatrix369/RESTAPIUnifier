@@ -9,10 +9,8 @@ import apiworld.UtilityFunctions;
 
 public class BaseTwitterAPI {
 	
-	private static final String TWITTER_URL_PARAM = "api_key";
 	private String baseURL = "http://search.twitter.com/";
-	private String paramStart = "?";
-	public APIReader fetchedResults;
+	protected APIReader fetchedResults;
 
 	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 			String[] arrayURLParamCodes, String... params) {

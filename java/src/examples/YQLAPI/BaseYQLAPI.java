@@ -10,7 +10,7 @@ import apiworld.UtilityFunctions;
 public class BaseYQLAPI {
 	
 	private String baseURL = "http://query.yahooapis.com/v1/public/yql";
-	public APIReader fetchedResults;
+	protected APIReader fetchedResults;
 
 	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 			String[] arrayURLParamCodes, String... params) {

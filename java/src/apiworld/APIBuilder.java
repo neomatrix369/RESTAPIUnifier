@@ -126,8 +126,8 @@ public class APIBuilder {
 		setAPIKeyIsRequired();
 	}
 
-	private boolean setAPIKeyIsRequired() {
-		return apiKeyIsRequired = true;
+	private void setAPIKeyIsRequired() {
+		apiKeyIsRequired = true;
 	}
 
 	public void addAURLParameter(String key, String value) {

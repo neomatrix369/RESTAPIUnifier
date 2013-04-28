@@ -11,8 +11,7 @@ public class BaseFlickrAPI {
 	
 	private static final String FLICKR_API_PARAM = "api_key";
 	private String baseURL = "http://api.flickr.com/services/rest";
-	private String paramStart = "?";
-	public APIReader fetchedResults;
+	protected APIReader fetchedResults;
 
 	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 			String[] arrayURLParamCodes, String... params) {
