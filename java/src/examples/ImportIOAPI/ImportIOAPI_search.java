@@ -1,26 +1,25 @@
-package examples.TwitterAPI;
+package examples.ImportIOAPI;
 
 import static apiworld.ResultType.rtJSON;
 
 import apiworld.FinalURLNotGeneratedException;
-import examples.FlickrAPI.BaseFlickrAPI;
+import examples.ImportIOAPI.ImportIOAPI;
 
-public final class TwitterAPI_search {
-	private TwitterAPI_search() {
+public final class ImportIOAPI_search {
+	private ImportIOAPI_search() {
 		// Hide utility class constructor
 	}
 
 	public static void main(String[] args) throws InterruptedException,
 			FinalURLNotGeneratedException {
-		TwitterSearch twitterSearch = new TwitterSearch("", "?",
+		importIOSearch importIOSearch = new importIOSearch("", "?",
 				rtJSON.toString(), "hello");
-		System.out.format("%s", twitterSearch.getFetchedResults());
+		System.out.format("%s", importIOSearch.getFetchedResults());
 	}
 }
 
-class TwitterSearch extends BaseTwitterAPI {
-
-	TwitterSearch(String apiKey, String paramStart, String... params)
+class importIOSearch extends ImportIOAPI {
+	importIOSearch(String apiKey, String paramStart, String... params)
 			throws FinalURLNotGeneratedException {
 		String apiCommand = String.format("search.%s", params[0]);
 		String[] arrayURLParamCodes = { null, "q" };
