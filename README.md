@@ -5,11 +5,11 @@ APIUnifier - lightweight Java library that brings together all the APIs of vario
 
 Examples implemented using APIUnifier
 -------------------------------------
-MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier/tree/master/src/examples/GoogleTVHackathon
+MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/GoogleTVHackathon
 
 Timeline
 --------
-* 21 April 2012: discovery of idea at a hackathon
+* 21 April 2012: discovery and inception of idea at a hackathon
 *      May 2012: came across Mashery I/O Wraps Client Library Generator (see below)
 *   August 2012: continued improving library at hackathon
 * 23 April 2013: came across Import.IO (see below)
