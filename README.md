@@ -5,7 +5,12 @@ APIUnifier - lightweight Java library that brings together all the APIs of vario
 
 Examples implemented using APIUnifier
 -------------------------------------
-MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/GoogleTVHackathon
+<b>Java</b>
+- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/GoogleTVHackathon
+- Flickr API (search and getRecent) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/FlickrAPI
+- Twitter API (search) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/TwitterAPI
+- Import.IO API (underway)
+- YQL! (underway)
 
 Timeline
 --------
@@ -28,3 +33,5 @@ You can...
 - ...combine it with other interesting ideas, libraries, etc...
 - ...do the above and submit pull requests.
 - ...create new examples of existing APIs which can be accessed through the library.
+- ...please follow the principles behind the Java project
+- ...please use Test-Driven Development (TDD) to spawn out your solutions, ideal a test for each feature / functionality. Behaviour-Driven Development (BDD) based solutions are also welcome.
