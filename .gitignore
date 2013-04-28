@@ -12,3 +12,10 @@ sonar-project.properties
 target/
 !/.gitignore
 resources/
+
+
+# Csharp files
+obj/
+bin/
+App.config
+*.sln

@@ -11,10 +11,13 @@ namespace TestAPI
         string key = "";
         string value = "";
         string command = "";
+        public bool keyRequired { get; set; }
+
         Dictionary<string, string> lstParams;
         public APIBuilder()
         {
             lstParams = new Dictionary<string, string>();
+            keyRequired = true;
         }
 
         public void setBaseURL(string baseURL)
@@ -23,18 +26,19 @@ namespace TestAPI
         }
         public void build()
         {
-
-
             if ((url == null) || (url.Trim() == ""))
                 throw new BaseURLNotAssignedException();
 
             if (command != "")
                 url = url + command;
 
-            if ((key == null) || (value == null))
-                throw new APIKeyNotAssignedException();
+            if (keyRequired)
+            {
+                if ((key == null) || (value == null) || (value == ""))
+                    throw new APIKeyNotAssignedException();
 
-            url = url + "?" + key + "=" + value;
+                url = url + "?" + key + "=" + value;
+            }
 
             if (lstParams.Count > 0)
                 foreach (var d in lstParams)
@@ -43,9 +47,6 @@ namespace TestAPI
 
         public string getAPIReadyURL()
         {
-            if ((key == "") || (value == ""))
-                throw new APIKeyNotAssignedException();
-
             return url;
         }
 
@@ -66,6 +67,13 @@ namespace TestAPI
                 return;
             lstParams.Add(p1, p2);
         }
+
+        internal void setNoAPIKeyRequired()
+        {
+            keyRequired = false;
+        }
+
+      
     }
 
 
@@ -81,4 +89,6 @@ namespace TestAPI
         public BaseURLNotAssignedException()
         { }
     }
+
+   
 }

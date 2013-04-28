@@ -1,6 +1,0 @@
-E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\bin\Debug\TestAPI.dll
-E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\bin\Debug\TestAPI.pdb
-E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\bin\Debug\nunit.framework.dll
-E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\bin\Debug\nunit.framework.xml
-E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\obj\Debug\TestAPI.dll
-E:\HACKER2013\APIUnifier\csharp\TestAPI\TestAPI\obj\Debug\TestAPI.pdb
