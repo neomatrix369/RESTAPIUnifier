@@ -3,6 +3,12 @@ APIUnifier
 
 APIUnifier - lightweight Java library that brings together all the APIs of various formats under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc...
 
+Purpose and audience
+--------------------
+To simplify the use and maintainence of APIs. Create an abstraction layer between your application and the APIs from disparate vendors and reducy inter-app dependencies.
+
+Developers, OpenSource committers, API vendors, API Service Providers, etc... will benefit from such a library.
+
 Examples implemented using APIUnifier
 -------------------------------------
 <b>Java</b>
