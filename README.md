@@ -9,8 +9,8 @@ Examples implemented using APIUnifier
 - MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/GoogleTVHackathon
 - Flickr API (search and getRecent) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/FlickrAPI
 - Twitter API (search) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/TwitterAPI
-- Import.IO API (underway)
-- YQL! (underway)
+- Import.IO API - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/ImportIOAPI (underway)
+- YQL! - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/YQLAPI
 
 Timeline
 --------
