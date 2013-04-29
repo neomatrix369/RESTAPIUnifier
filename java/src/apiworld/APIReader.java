@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import apiworld.APIBuilder;
 
@@ -43,27 +44,62 @@ public class APIReader {
 
 	public final void executeURL() throws FinalURLNotGeneratedException {
 		clearAllLastHttpResults();
-		if (urlText != null) {
-			try {
-				URL webSite = new URL(urlText);
-				try {
-					/**
-					 * http://docs.oracle.com/javase/7/docs/api/java/net/
-					 * HttpURLConnection.html
-					 */
-					URLConnection urlConnection = webSite.openConnection();
-					showMessageWhileMakingConnection(urlText);
-					fetchDataFromURL(new InputStreamReader(
-							urlConnection.getInputStream()));
-				} catch (IOException ioe) {
-					showMessageDueToIOException(urlText, ioe);
-				}
-			} catch (MalformedURLException me) {
-				showMessageDueToMalformedURLException(urlText, me);
-			}
-		} else {
+		if (urlText == null) {
 			throw new FinalURLNotGeneratedException();
 		}
+		try {
+			URL webSite = new URL(urlText);
+			try {
+				/**
+				 * http://docs.oracle.com/javase/7/docs/api/java/net/
+				 * HttpURLConnection.html
+				 */
+				URLConnection urlConnection = webSite.openConnection();
+				showMessageWhileMakingConnection(urlText);
+				fetchDataFromURL(new InputStreamReader(
+						urlConnection.getInputStream()));
+			} catch (IOException ioe) {
+				showMessageDueToIOException(urlText, ioe);
+			}
+		} catch (MalformedURLException me) {
+			showMessageDueToMalformedURLException(urlText, me);
+		}
+	}
+
+	public List<String> executeURL(String requestMethod,
+			Map<String, String> requestProperties)
+			throws FinalURLNotGeneratedException {
+		clearAllLastHttpResults();
+		if (urlText == null) {
+			throw new FinalURLNotGeneratedException();
+		}
+		try {
+			URL webSite = new URL(urlText);
+			try {
+				/**
+				 * http://docs.oracle.com/javase/7/docs/api/java/net/
+				 * HttpURLConnection.html
+				 */
+				HttpURLConnection urlConnection = (HttpURLConnection) webSite
+						.openConnection();
+				urlConnection.setRequestMethod(requestMethod);
+				if (requestProperties != null) {
+					for (Map.Entry<String, String> eachProperty : requestProperties
+							.entrySet()) {
+						urlConnection.setRequestProperty(eachProperty.getKey(),
+								eachProperty.getValue());
+					}
+				}
+				showMessageWhileMakingConnection(urlText);
+				return fetchDataFromURL(new InputStreamReader(
+						urlConnection.getInputStream()));
+			} catch (IOException ioe) {
+				showMessageDueToIOException(urlText, ioe);
+			}
+		} catch (MalformedURLException me) {
+			showMessageDueToMalformedURLException(urlText, me);
+		}
+		return new ArrayList<String>();
 	}
 
 	private void showMessageWhileMakingConnection(String urlText) {
@@ -71,7 +107,8 @@ public class APIReader {
 				urlText));
 	}
 
-	private void fetchDataFromURL(InputStreamReader isr) throws IOException {
+	private List<String> fetchDataFromURL(InputStreamReader isr)
+			throws IOException {
 		BufferedReader httpResult = null;
 		try {
 			httpResult = new BufferedReader(isr);
@@ -89,6 +126,8 @@ public class APIReader {
 			}
 			LOGGER.info(CONNECTION_CLOSED);
 		}
+
+		return lastHttpResult;
 	}
 
 	private void showMessageDueToMalformedURLException(String urlText,
@@ -108,7 +147,7 @@ public class APIReader {
 		}
 	}
 
-	public void displayHttpReqResult() {
+	public void displayResult() {
 		if (urlText == null) {
 			LOGGER.warning(String.format(STRING_WITH_NEW_LINE_FEED,
 					NO_HTTP_CONNECTIONS_MADE));
@@ -124,7 +163,8 @@ public class APIReader {
 	}
 
 	private void displayMessageAboutLastRetrieval(String urlText) {
-		LOGGER.info(String.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL, urlText));
+		LOGGER.info(String.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL,
+				urlText));
 	}
 
 	private void addToLastHttpResults(String inputLine) {

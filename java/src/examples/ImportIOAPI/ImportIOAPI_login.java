@@ -1,19 +1,22 @@
 package examples.ImportIOAPI;
 
-import static apiworld.ResultType.rtJSON;
-
 import apiworld.FinalURLNotGeneratedException;
 import examples.ImportIOAPI.ImportIOAPI;
+import static apiworld.UtilityFunctions.*;
 
-public final class ImportIOAPI_search {
-	private ImportIOAPI_search() {
+public final class ImportIOAPI_login {
+
+	private ImportIOAPI_login() {
 		// Hide utility class constructor
 	}
 
 	public static void main(String[] args) throws InterruptedException,
 			FinalURLNotGeneratedException {
-		ImportIOSearch importIOSearch = new ImportIOSearch("", "?",
-				rtJSON.toString(), "hello");
+		String username = readPropertyFrom("resources/importIO_settings.properties","username");
+		String password = readPropertyFrom("resources/importIO_settings.properties","password");
+
+		ImportIOSearch importIOSearch = new ImportIOSearch("", "",
+				username, password);
 		System.out.format("%s", importIOSearch.getFetchedResults());
 	}
 }
@@ -21,8 +24,8 @@ public final class ImportIOAPI_search {
 class ImportIOSearch extends ImportIOAPI {
 	ImportIOSearch(String apiKey, String paramStart, String... params)
 			throws FinalURLNotGeneratedException {
-		String apiCommand = String.format("search.%s", params[0]);
-		String[] arrayURLParamCodes = { null, "q" };
+		String apiCommand = "login";
+		String[] arrayURLParamCodes = { "username", "password" };
 
 		fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
 				arrayURLParamCodes, params);

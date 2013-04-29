@@ -9,7 +9,7 @@ import apiworld.UtilityFunctions;
 
 public class ImportIOAPI {
 	
-	private String baseURL = "http://search.twitter.com/";
+	private String baseURL = "https://api.import.io/auth/";
 	protected APIReader fetchedResults;
 
 	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
