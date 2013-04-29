@@ -27,8 +27,8 @@ Timeline
 * 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc
 * 27 April 2013: more improvements, added examples in Java & inception of C# version at Yahoo! Hack Europe: London
 
-Ideas based on similar principles
----------------------------------
+Implementations based on the principles behind this idea
+--------------------------------------------------------
 * Import.IO - imports and reformats data using APIs from other sites/providers: http://Import.IO 
 * Mashery I/O Wraps Client Library Generator - 
 Native language client library (SDK) builder for platforms using I/O Docs: https://github.com/mashery/io-wraps/
