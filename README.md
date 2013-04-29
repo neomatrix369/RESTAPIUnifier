@@ -18,7 +18,8 @@ Timeline
 *      May 2012: came across Mashery I/O Wraps Client Library Generator (see below)
 *   August 2012: continued improving library at hackathon
 * 23 April 2013: came across Import.IO (see below)
-* 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc at Yahoo! HackLondon
+* 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc
+* 27 April 2013: more improvements, added examples in Java & inception of C# version at Yahoo! Hack Europe: London
 
 Ideas based on similar principles
 ---------------------------------
