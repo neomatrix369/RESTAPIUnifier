@@ -14,11 +14,11 @@ Examples implemented using APIUnifier
 
 Timeline
 --------
-* 21 April 2012: discovery and inception of idea at a hackathon
+* 21 April 2012: discovery and inception of idea at the Google Hackathon
 *      May 2012: came across Mashery I/O Wraps Client Library Generator (see below)
 *   August 2012: continued improving library at hackathon
 * 23 April 2013: came across Import.IO (see below)
-* 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc...
+* 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc at Yahoo! HackLondon
 
 Ideas based on similar principles
 ---------------------------------
