@@ -18,6 +18,10 @@ Examples implemented using APIUnifier
 - Import.IO API - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/ImportIOAPI (underway)
 - YQL! - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/YQLAPI
 
+<b>C#</b>
+We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. Examples are on the way. Credit goes to @angiemae for the tasks. 
+She spent several hours during the Yahoo! Europe Hackday at London to accomplish the feat!
+
 Timeline
 --------
 * 21 April 2012: discovery and inception of idea at the Google Hackathon
@@ -36,7 +40,7 @@ Native language client library (SDK) builder for platforms using I/O Docs: https
 You can...
 ----------
 - ...fork the repo and create a version for your own development environment, and create pull requests.
-- ...comment, suggest design improvements, take the idea to the next level.
+- ...comment, suggest design improvements, take the idea to the next level. 
 - ...combine it with other interesting ideas, libraries, etc...
 - ...do the above and submit pull requests.
 - ...create new examples of existing APIs which can be accessed through the library.
