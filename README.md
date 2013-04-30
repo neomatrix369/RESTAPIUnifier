@@ -9,14 +9,14 @@ To simplify the use and maintainence of dependencies on external or internal API
 
 Developers, OpenSource committers, API vendors, API Service Providers, etc... will benefit from such a library.
 
-Examples implemented using APIUnifier
--------------------------------------
+Examples implemented using RESTAPIUnifier
+-----------------------------------------
 <b>Java</b>
-- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/GoogleTVHackathon
-- Flickr API (search and getRecent) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/FlickrAPI
-- Twitter API (search) - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/TwitterAPI
-- Import.IO API - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/ImportIOAPI (underway)
-- YQL! - https://github.com/neomatrix369/APIUnifier/tree/master/java/src/examples/YQLAPI
+- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/GoogleTVHackathon
+- Flickr API (search and getRecent) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/FlickrAPI
+- Twitter API (search) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/TwitterAPI
+- Import.IO API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/ImportIOAPI (underway)
+- YQL! - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/YQLAPI
 
 <b>C#</b>
 We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. Examples are on the way. Credit goes to @angiemae for the tasks. 
