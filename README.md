@@ -19,8 +19,8 @@ Examples implemented using RESTAPIUnifier
 - YQL! - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/YQLAPI
 
 <b>C#</b>
-We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. Examples are on the way. Credit goes to @angiemae for the tasks. 
-She spent several hours during the Yahoo! Europe Hackday at London to accomplish the feat!
+- We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
+- Examples are on the way. Credit goes to @angiemae for the tasks. She spent several hours during the Yahoo! Europe Hackday at London to accomplish the feat!
 
 Timeline
 --------
