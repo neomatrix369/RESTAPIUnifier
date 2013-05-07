@@ -2,6 +2,8 @@ package examples.FlickrAPI;
 
 import static apiworld.ResultType.rtJSON;
 
+import java.io.IOException;
+
 import apiworld.FinalURLNotGeneratedException;
 import examples.FlickrAPI.BaseFlickrAPI;
 import static apiworld.UtilityFunctions.*;
@@ -12,7 +14,7 @@ public final class FlickrAPI_getRecent {
 	}
 
 	public static void main(String[] args) throws InterruptedException,
-			FinalURLNotGeneratedException {
+			FinalURLNotGeneratedException, IOException {
 
 		/**
 		 * http://api.flickr.com/services/rest/?method=

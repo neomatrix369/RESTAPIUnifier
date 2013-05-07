@@ -1,6 +1,7 @@
 package examples.FlickrAPI;
 
 import static apiworld.ResultType.rtJSON;
+import static apiworld.UtilityFunctions.readPropertyFrom;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,11 +19,8 @@ public final class FlickrAPI_search {
 
 	public static void main(String[] args) throws InterruptedException,
 			FinalURLNotGeneratedException, IOException {
-		Properties prop = new Properties();
-		try {
-			prop.load(new FileReader(new File(
-					"resources/flickr_settings.properties")));
-			String flickrAPIKey = prop.getProperty("APIKey");
+			String flickrAPIKey = readPropertyFrom(
+					"resources/flickr_settings.properties", "APIKey");
 
 			/**
 			 * http://www.flickr.com/services/api/explore/flickr.photos.search
@@ -32,13 +30,6 @@ public final class FlickrAPI_search {
 			FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&",
 					rtJSON.toString(), "hello");
 			System.out.format("%s", flickrSearch.getFetchedResults());
-		} catch (FileNotFoundException e) {
-			System.out.format("Error due to: %s%n", e.getMessage());
-			String currentPath = new File(".").getCanonicalPath();
-			System.out.format("Current path: " + currentPath);
-		} catch (IOException e) {
-			System.out.format("Error due to: %s%n", e.getMessage());
-		}
 	}
 }
 

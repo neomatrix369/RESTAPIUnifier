@@ -1,5 +1,7 @@
 package examples.ImportIOAPI;
 
+import java.io.IOException;
+
 import apiworld.FinalURLNotGeneratedException;
 import examples.ImportIOAPI.ImportIOAPI;
 import static apiworld.UtilityFunctions.*;
@@ -11,7 +13,7 @@ public final class ImportIOAPI_login {
 	}
 
 	public static void main(String[] args) throws InterruptedException,
-			FinalURLNotGeneratedException {
+			FinalURLNotGeneratedException, IOException {
 		String username = readPropertyFrom("resources/importIO_settings.properties","username");
 		String password = readPropertyFrom("resources/importIO_settings.properties","password");
 
