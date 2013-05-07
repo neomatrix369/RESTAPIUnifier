@@ -52,7 +52,7 @@ public class APIReaderBehaviours {
 	}
 
 	@Test
-	public void should_Return_Cookie_When_URL_Is_Invoked_With_A_Post_Method() throws FinalURLNotGeneratedException {
+	public void should_Return_Cookie_When_URL_Is_Invoked_With_A_Post_Method() throws FinalURLNotGeneratedException, IOException {
 		String username = UtilityFunctions.readPropertyFrom(
 				"resources/importIO_settings.properties", "username");
 		String password = UtilityFunctions.readPropertyFrom(
@@ -70,7 +70,7 @@ public class APIReaderBehaviours {
 	}
 	
 	@Test
-	public void should_Return_Results_When_URL_Is_Invoked_With_An_Auth_Cookie_And_Post_Method() throws FinalURLNotGeneratedException {
+	public void should_Return_Results_When_URL_Is_Invoked_With_An_Auth_Cookie_And_Post_Method() throws FinalURLNotGeneratedException, IOException {
 		String username = UtilityFunctions.readPropertyFrom(
 				"resources/importIO_settings.properties", "username");
 		String password = UtilityFunctions.readPropertyFrom(
