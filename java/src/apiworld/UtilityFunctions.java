@@ -83,13 +83,15 @@ public final class UtilityFunctions {
 	}
 
 	public static String readPropertyFrom(String propertyFilename,
-			String propertyName) {
+			String propertyName) throws IOException {
 		Properties prop = new Properties();
 		try {
 			prop.load(new FileReader(new File(propertyFilename)));
 			return prop.getProperty(propertyName);
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
+			String currentPath = new File(".").getCanonicalPath();
+			System.out.format("Current path: " + currentPath);			
 		} catch (IOException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		}
