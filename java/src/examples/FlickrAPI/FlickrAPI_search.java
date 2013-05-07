@@ -17,7 +17,7 @@ public final class FlickrAPI_search {
 	}
 
 	public static void main(String[] args) throws InterruptedException,
-			FinalURLNotGeneratedException {
+			FinalURLNotGeneratedException, IOException {
 		Properties prop = new Properties();
 		try {
 			prop.load(new FileReader(new File(
@@ -34,6 +34,8 @@ public final class FlickrAPI_search {
 			System.out.format("%s", flickrSearch.getFetchedResults());
 		} catch (FileNotFoundException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
+			String currentPath = new File(".").getCanonicalPath();
+			System.out.format("Current path: " + currentPath);
 		} catch (IOException e) {
 			System.out.format("Error due to: %s%n", e.getMessage());
 		}
