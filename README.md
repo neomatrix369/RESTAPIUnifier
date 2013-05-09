@@ -22,6 +22,8 @@ Examples implemented using RESTAPIUnifier
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
 - Examples are on the way. Credit goes to @angiemae for the tasks. She spent several hours during the Yahoo! Europe Hackday at London to accomplish the feat!
 
+<b><i>Note: each of the examples require their own settings file containing properties. Also most of them expect you to have your API key atleast to access their services. Information for these requirements are mentioned within comments of each if the source codes.</i></b>
+
 Timeline
 --------
 * 21 April 2012: discovery and inception of idea at the Google Hackathon
@@ -46,3 +48,32 @@ You can...
 - ...create new examples of existing APIs which can be accessed through the library.
 - ...please follow the principles behind the Java project
 - ...please use Test-Driven Development (TDD) to spawn out your solutions, ideal a test for each feature / functionality. Behaviour-Driven Development (BDD) based solutions are also welcome.
+
+Getting started
+---------------
+
+Fork repo into your own organisation using the github.com interface. For further help with using the github.com site please refer to https://help.github.com/.
+
+Clone the github repo on your system:
+
+  $ git clone git@github.com:<[your user id]>/RESTAPIUnifier.git
+  
+Note: local repo will be refered to by the name 'origin'.
+
+Create a link from the local repo to the remote repo (upstream = parent repo):
+
+  $ git remote add upstream git@github.com:neomatrix369/RESTAPIUnifier.git
+
+To push changes from local repo to own github repo:
+  
+  $ git push origin master
+
+To pull changes from <b>own github repo</b> to local repo:
+  
+  $ git pull origin master
+
+To pull changes from <b>original remote repo</b> to local repo:
+  
+  $ git pull upstream master
+  
+For further help with git commands, please refer to one of the git cheatsheets at http://bit.ly/YxvRYV.
