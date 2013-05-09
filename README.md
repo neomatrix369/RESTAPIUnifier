@@ -56,24 +56,24 @@ Fork repo into your own organisation using the github.com interface. For further
 
 Clone the github repo on your system:
 
-  $ git clone git@github.com:<[your user id]>/RESTAPIUnifier.git
+<code>  $ git clone git@github.com:<[your user id]>/RESTAPIUnifier.git</code>
   
 Note: local repo will be refered to by the name 'origin'.
 
 Create a link from the local repo to the remote repo (upstream = parent repo):
 
-  $ git remote add upstream git@github.com:neomatrix369/RESTAPIUnifier.git
+<code>  $ git remote add upstream git@github.com:neomatrix369/RESTAPIUnifier.git</code>
 
 To push changes from local repo to own github repo:
   
-  $ git push origin master
+<code>  $ git push origin master</code>
 
 To pull changes from <b>own github repo</b> to local repo:
   
-  $ git pull origin master
+<code>  $ git pull origin master</code>
 
 To pull changes from <b>original remote repo</b> to local repo:
   
-  $ git pull upstream master
+<code>  $ git pull upstream master</code>
   
 For further help with git commands, please refer to one of the git cheatsheets at http://bit.ly/YxvRYV.
