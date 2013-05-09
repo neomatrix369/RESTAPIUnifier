@@ -11,6 +11,23 @@ public final class YQLAPI_webservices {
 		// Hide utility class constructor
 	}
 
+	/**
+	 * This example does not explicitly require an API key, but for other API calls
+	 * an API key maybe required - see YQL's API documentation for further details.
+	 * 
+	 * API provider URL: http://developer.yahoo.com/yql/
+	 * 
+	 * Required settings file to run this example: 
+	 *    resources/yql_settings.properties 
+	 * 
+	 * containing 
+	 *    APIKey=[xxxxx]
+	 * 
+	 * [xxxxx] = is APIKey needed to get authentication from yahoo.com to be
+	 * able to make any API calls.
+	 * 
+	 */
+	
 	public static void main(String[] args) throws InterruptedException,
 			FinalURLNotGeneratedException {
 		YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?",

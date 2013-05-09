@@ -13,6 +13,9 @@ import org.jsoup.nodes.Document;
 import com.google.gson.Gson;
 
 public final class UtilityFunctions {
+	private static final String CURRENT_PATH_MSG = "Current path: ";
+	private static final String ERROR_DUE_TO_MSG = "Error due to: %s%n";
+
 	private UtilityFunctions() {
 		// Hide Utility Class Constructor - Utility classes should not have a
 		// public or default constructor.
@@ -89,11 +92,11 @@ public final class UtilityFunctions {
 			prop.load(new FileReader(new File(propertyFilename)));
 			return prop.getProperty(propertyName);
 		} catch (FileNotFoundException e) {
-			System.out.format("Error due to: %s%n", e.getMessage());
+			System.out.format(ERROR_DUE_TO_MSG, e.getMessage());
 			String currentPath = new File(".").getCanonicalPath();
-			System.out.format("Current path: " + currentPath);			
+			System.out.format(CURRENT_PATH_MSG + currentPath);			
 		} catch (IOException e) {
-			System.out.format("Error due to: %s%n", e.getMessage());
+			System.out.format(ERROR_DUE_TO_MSG, e.getMessage());
 		}
 		return "";
 	}

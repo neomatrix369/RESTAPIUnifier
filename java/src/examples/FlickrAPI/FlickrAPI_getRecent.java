@@ -13,14 +13,23 @@ public final class FlickrAPI_getRecent {
 		// Hide utility class constructor
 	}
 
+	/**
+	 * API provider URL: http://www.flickr.com/services/api/
+	 * 
+	 * Required settings file to run this example: 
+	 *    resources/flickr_settings.properties 
+	 * 
+	 * containing 
+	 *    APIKey=[xxxxx]
+	 * 
+	 * [xxxxx] = is APIKey needed to get authentication from flickr.com to be
+	 * able to make any API calls.
+	 * 
+	 */
+	
 	public static void main(String[] args) throws InterruptedException,
 			FinalURLNotGeneratedException, IOException {
 
-		/**
-		 * http://api.flickr.com/services/rest/?method=
-		 * 
-		 * 
-		 */
 		String flickrAPIKey = readPropertyFrom(
 				"resources/flickr_settings.properties", "APIKey");
 		FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey,

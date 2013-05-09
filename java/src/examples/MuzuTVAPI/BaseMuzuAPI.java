@@ -1,4 +1,4 @@
-package examples.GoogleTVHackathon;
+package examples.MuzuTVAPI;
 
 import apiworld.APIBuilder;
 import apiworld.APIReader;

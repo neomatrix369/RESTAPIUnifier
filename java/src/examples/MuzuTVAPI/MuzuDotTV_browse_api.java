@@ -1,4 +1,4 @@
-package examples.GoogleTVHackathon;
+package examples.MuzuTVAPI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import apiworld.FinalURLNotGeneratedException;
-
 import static apiworld.ResultType.*;
 
 /*
@@ -19,6 +18,20 @@ public final class MuzuDotTV_browse_api {
 	private MuzuDotTV_browse_api() {
 		// Hide utility class constructor
 	}
+	
+	/**
+	 * API provider URL: http://www.muzu.tv/api/
+	 * 
+	 * Required settings file to run this example: 
+	 *    resources/muzu_settings.properties 
+	 * 
+	 * containing 
+	 *    APIKey=[xxxxx]
+	 * 
+	 * [xxxxx] = is APIKey needed to get authentication from muzutv.com to be
+	 * able to make any API calls.
+	 * 
+	 */
 
 	public static void main(String[] args) throws InterruptedException, FinalURLNotGeneratedException {
 		/**
