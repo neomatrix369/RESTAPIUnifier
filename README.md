@@ -3,6 +3,10 @@ RESTAPIUnifier
 
 RESTAPIUnifier - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc...
 
+License
+-------
+Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RESTAPIUnifier/blob/master/LICENSE) in root and other directories.
+
 Purpose and audience
 --------------------
 To simplify the use and maintainence of dependencies on external or internal APIs (RESTful APIs). Create an abstraction layer between your application and APIs from disparate vendors and increase cohesion, reduce coupling.
