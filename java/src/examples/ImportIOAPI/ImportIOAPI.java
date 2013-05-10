@@ -12,7 +12,7 @@ public class ImportIOAPI {
 	private String baseURL = "https://api.import.io/auth/";
 	protected APIReader fetchedResults;
 
-	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
+	protected APIReader buildAPIReadyToExecute(String apiCommand, String paramStart,
 			String[] arrayURLParamCodes, String... params) {
 		APIBuilder apiBuilder = new APIBuilder();
 		apiBuilder.addBaseURL(baseURL);
