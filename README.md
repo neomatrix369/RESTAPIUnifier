@@ -80,5 +80,5 @@ For further help with git commands, please refer to one of the git cheatsheets a
 
 Quotes
 ------
-Alone we can do so little; together we can do so much - Helen Keller
-Long live social coding! - @neomatrix369
+* Alone we can do so little; together we can do so much - Helen Keller
+* Long live social coding! - @neomatrix369
