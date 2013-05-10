@@ -24,7 +24,6 @@ public class APIReader {
 	private static final String STRING_WITH_NEW_LINE_FEED = "%s%n";
 	private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
 	private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s";
-	private static final String NO_RESULTS_RETURNED = ">>> No results returned.";
 
 	private List<String> lastHttpResult = new ArrayList<String>();
 	private String urlText;

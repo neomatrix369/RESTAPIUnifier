@@ -13,6 +13,7 @@ import apiworld.FinalURLNotGeneratedException;
  Max queries: 10000
  */
 public final class MuzuDotTV_artist_api {
+	
 	private MuzuDotTV_artist_api() {
 		// Hide utility class constructor
 	}

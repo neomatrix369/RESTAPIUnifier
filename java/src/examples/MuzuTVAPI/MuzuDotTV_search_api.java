@@ -14,6 +14,7 @@ import static apiworld.ResultType.*;
  Max queries: 10000
  */
 public final class MuzuDotTV_search_api {
+	
 	private MuzuDotTV_search_api() {
 		// Hide utility class constructor
 	}
