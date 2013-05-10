@@ -20,7 +20,7 @@ Examples implemented using RESTAPIUnifier
 
 <b>C#</b>
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
-- Examples are on the way. Credit for this task goes to @angiemai . She spent several hours going through the tests and writing tests and implementations during the Yahoo! Europe Hackday in London to accomplish the feat!
+- Examples are on the way. Credit for this task goes to @angiemai . She spent several hours going through the Java tests and writing tests and implementations in C# during the Yahoo! Europe Hackday in London to accomplish the feat!
 
 <b><i>Note: each of the examples require their own settings file containing properties. Also most of them expect you to have your API key atleast to access their services. Information for these requirements are mentioned within comments of each if the source codes.</i></b>
 
