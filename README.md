@@ -82,7 +82,12 @@ To pull changes from <b>original remote repo</b> to local repo:
   
 For further help with git commands, please refer to one of the git cheatsheets at http://bit.ly/YxvRYV.
 
+Resources
+---------
+RESTful API - https://en.wikipedia.org/wiki/Representational_state_transfer
+
 Quotes
 ------
 * Alone we can do so little; together we can do so much - Helen Keller
 * Long live social coding! - @neomatrix369
+
