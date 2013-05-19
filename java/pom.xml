@@ -93,14 +93,16 @@
                         <exclude>**/LICENSE/**</exclude>
                         <exclude>**/src/test/resources/**</exclude>
                         <exclude>**/src/test/data/**</exclude>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*.txt</exclude>
                     </excludes>
                     <useDefaultMapping>true</useDefaultMapping>                
                     <encoding>UTF-8</encoding>
                 </configuration>			    
                 <executions>
                     <execution>
-                        <!--id>check-headers</id>
-                        <phase>verify</phase -->
+                        <id>check-headers</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
