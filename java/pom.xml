@@ -7,16 +7,18 @@
 
     <packaging>jar</packaging>
     <description>RESTAPIUnifier - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc..</description>
-    <inceptionYear>2013</inceptionYear>
+    <inceptionYear>${project.inceptionYear}</inceptionYear>
 
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.inceptionYear>2013</project.inceptionYear>
+        
         <jdk.version>1.7</jdk.version>
         <surefire.version>2.14.1</surefire.version>
         <sonar.host.url>http://heliofrota.com:9000/</sonar.host.url>
-        <license.licenseName>LICENSE</license.licenseName>
+        <license.licenseName>LICENSE_short_header</license.licenseName>
         <license.licenseResolver>${project.baseUri}/</license.licenseResolver>        
     </properties>
 
@@ -85,9 +87,9 @@
                 <version>1.9.0</version>
                 <configuration>
                     <basedir>${basedir}</basedir>
-                    <header>${basedir}/LICENSE</header>
+                    <header>${basedir}/LICENSE_short_header</header>
                     <validHeaders>
-                        <validHeader>/LICENSE</validHeader>
+                        <validHeader>/LICENSE_short_header</validHeader>
                     </validHeaders>
                     <quiet>false</quiet>
                     <failIfMissing>true</failIfMissing>
@@ -103,7 +105,7 @@
                     </includes>
                     <useDefaultExcludes>true</useDefaultExcludes>
                     <excludes>
-                        <exclude>**/LICENSE/**</exclude>
+                        <exclude>**/LICENSE*/**</exclude>
                         <exclude>**/src/test/resources/**</exclude>
                         <exclude>**/src/test/data/**</exclude>
                         <exclude>**/*.json</exclude>
