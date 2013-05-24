@@ -22,7 +22,6 @@
  */
 package org.neomatrix369.examples.flickr_api;
 
-
 import java.io.IOException;
 
 import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
@@ -32,44 +31,43 @@ import static org.neomatrix369.apiworld.ResultType.rtJSON;
 import static org.neomatrix369.apiworld.UtilityFunctions.*;
 
 public final class FlickrAPI_getRecent {
-	private FlickrAPI_getRecent() {
-		// Hide utility class constructor
-	}
+    private FlickrAPI_getRecent() {
+        // Hide utility class constructor
+    }
 
-	/**
-	 * API provider URL: http://www.flickr.com/services/api/
-	 * 
-	 * Required settings file to run this example: 
-	 *    resources/flickr_settings.properties 
-	 * 
-	 * containing 
-	 *    APIKey=[xxxxx]
-	 * 
-	 * [xxxxx] = is APIKey needed to get authentication from flickr.com to be
-	 * able to make any API calls.
-	 * 
-	 */
-	
-	public static void main(String[] args) throws InterruptedException,
-			FinalURLNotGeneratedException, IOException {
+    /**
+     * API provider URL: http://www.flickr.com/services/api/
+     * 
+     * Required settings file to run this example:
+     * resources/flickr_settings.properties
+     * 
+     * containing APIKey=[xxxxx]
+     * 
+     * [xxxxx] = is APIKey needed to get authentication from flickr.com to be
+     * able to make any API calls.
+     * 
+     */
 
-		String flickrAPIKey = readPropertyFrom(
-				"resources/flickr_settings.properties", "APIKey");
-		FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey,
-				"&", rtJSON.toString());
-		System.out.format("%s", flickrGetRecent.getFetchedResults());
-	}
+    public static void main(String[] args) throws InterruptedException,
+            FinalURLNotGeneratedException, IOException {
+
+        String flickrAPIKey = readPropertyFrom(
+                "resources/flickr_settings.properties", "APIKey");
+        FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey,
+                "&", rtJSON.toString());
+        System.out.format("%s", flickrGetRecent.getFetchedResults());
+    }
 }
 
 class FlickrGetRecent extends BaseFlickrAPI {
 
-	FlickrGetRecent(String apiKey, String paramStart, String... params)
-			throws FinalURLNotGeneratedException {
-		String apiCommand = "?method=flickr.photos.getRecent";
-		String[] arrayURLParamCodes = { "format" };
+    FlickrGetRecent(String apiKey, String paramStart, String... params)
+            throws FinalURLNotGeneratedException {
+        String apiCommand = "?method=flickr.photos.getRecent";
+        String[] arrayURLParamCodes = { "format" };
 
-		fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
-				arrayURLParamCodes, params);
-		fetchedResults.executeURL();
-	}
+        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
+                arrayURLParamCodes, params);
+        fetchedResults.executeURL();
+    }
 }

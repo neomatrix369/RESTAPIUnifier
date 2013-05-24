@@ -28,40 +28,40 @@ import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.BaseURLNotAssignedException;
 import org.neomatrix369.apiworld.UtilityFunctions;
 
-
 public class BaseFlickrAPI {
-	
-	private static final String FLICKR_API_PARAM = "api_key";
-	private String baseURL = "http://api.flickr.com/services/rest";
-	protected APIReader fetchedResults;
 
-	protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
-			String[] arrayURLParamCodes, String... params) {
-		APIBuilder apiBuilder = new APIBuilder();
-		apiBuilder.addBaseURL(baseURL);
-		apiBuilder.setCommand(apiCommand);
-		apiBuilder.setParamStart(paramStart);
-		apiBuilder.setAPIKey(FLICKR_API_PARAM, apiKey);
-		int paramCtr = 0;
-		for (String eachValue : params) {
-			apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
-					UtilityFunctions.encodeToken(eachValue));
-		}
+    private static final String FLICKR_API_PARAM = "api_key";
+    private String baseURL = "http://api.flickr.com/services/rest";
+    protected APIReader fetchedResults;
 
-		try {
-			apiBuilder.build();
-			return new APIReader(apiBuilder);
-		} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-			System.out.format("%s", e.getMessage());
-		}
-		
-		return new APIReader(baseURL);
-	}
-	
-	public String getFetchedResults() {
-		if (fetchedResults != null) {
-			return fetchedResults.getFetchedResults();
-		}
-		return "";
-	}
+    protected APIReader buildAPIReadyToExecute(String apiKey,
+            String apiCommand, String paramStart, String[] arrayURLParamCodes,
+            String... params) {
+        APIBuilder apiBuilder = new APIBuilder();
+        apiBuilder.addBaseURL(baseURL);
+        apiBuilder.setCommand(apiCommand);
+        apiBuilder.setParamStart(paramStart);
+        apiBuilder.setAPIKey(FLICKR_API_PARAM, apiKey);
+        int paramCtr = 0;
+        for (String eachValue : params) {
+            apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
+                    UtilityFunctions.encodeToken(eachValue));
+        }
+
+        try {
+            apiBuilder.build();
+            return new APIReader(apiBuilder);
+        } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
+            System.out.format("%s", e.getMessage());
+        }
+
+        return new APIReader(baseURL);
+    }
+
+    public String getFetchedResults() {
+        if (fetchedResults != null) {
+            return fetchedResults.getFetchedResults();
+        }
+        return "";
+    }
 }

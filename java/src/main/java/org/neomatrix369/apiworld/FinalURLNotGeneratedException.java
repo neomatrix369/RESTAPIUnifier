@@ -24,9 +24,9 @@ package org.neomatrix369.apiworld;
 
 public final class FinalURLNotGeneratedException extends Exception {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -1487425148252776053L;
+    private static final long serialVersionUID = -1487425148252776053L;
 
 }

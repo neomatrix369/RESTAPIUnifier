@@ -23,11 +23,11 @@
 package org.neomatrix369.apiworld;
 
 public class BaseURLNotAssignedException extends Exception {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -4015789980098609213L;
+    private static final long serialVersionUID = -4015789980098609213L;
 
-	public BaseURLNotAssignedException() {
-	}
+    public BaseURLNotAssignedException() {
+    }
 }

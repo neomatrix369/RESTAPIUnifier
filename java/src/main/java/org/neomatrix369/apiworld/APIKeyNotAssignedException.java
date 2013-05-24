@@ -24,11 +24,11 @@ package org.neomatrix369.apiworld;
 
 public class APIKeyNotAssignedException extends Exception {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1884454986177063492L;
+    private static final long serialVersionUID = 1884454986177063492L;
 
-	APIKeyNotAssignedException() {		
-	}
+    APIKeyNotAssignedException() {
+    }
 }
