@@ -103,7 +103,8 @@ public final class UtilityFunctions {
     }
 
     public static Boolean isAValidXML(String result) {
-        Document doc = stringToXML(result);
+        // unused variable.
+        //Document doc = stringToXML(result);
         return true;
     }
 
