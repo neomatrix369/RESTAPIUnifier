@@ -10,7 +10,7 @@ import org.neomatrix369.apiworld.util.UtilityFunctions;
  * @author helio frota http://www.heliofrota.com
  *
  */
-public class UtilityFunctionsTest {
+public class UtilityFunctionsBehaviours {
 
     @Test
     public void isAValidJSONText() {

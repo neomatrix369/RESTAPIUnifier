@@ -1,4 +1,4 @@
-package apiworld;
+package org.neomatrix369.apiworld;
 
 import java.io.File;
 import java.io.FileNotFoundException;

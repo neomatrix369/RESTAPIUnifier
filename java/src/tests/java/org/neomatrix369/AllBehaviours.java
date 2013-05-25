@@ -3,7 +3,7 @@ package org.neomatrix369;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.neomatrix369.apiworld.UtilityFunctionsTest;
+import org.neomatrix369.apiworld.UtilityFunctionsBehaviours;
 
 /**
  * Suite class AllTests.
@@ -13,8 +13,8 @@ import org.neomatrix369.apiworld.UtilityFunctionsTest;
  */
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
-    UtilityFunctionsTest.class
+    UtilityFunctionsBehaviours.class
 })
-public class AllTests {
+public class AllBehaviours {
 
 }

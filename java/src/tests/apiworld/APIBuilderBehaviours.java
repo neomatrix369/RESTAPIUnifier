@@ -1,4 +1,4 @@
-package apiworld;
+package org.neomatrix369.apiworld;
 
 import org.junit.Before;
 import org.junit.Test;
