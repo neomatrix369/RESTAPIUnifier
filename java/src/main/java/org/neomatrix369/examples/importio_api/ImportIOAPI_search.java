@@ -24,10 +24,10 @@ package org.neomatrix369.examples.importio_api;
 
 import java.io.IOException;
 
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.neomatrix369.examples.importio_api.ImportIOAPI;
 
-import static org.neomatrix369.apiworld.UtilityFunctions.*;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
 public final class ImportIOAPI_search {
 

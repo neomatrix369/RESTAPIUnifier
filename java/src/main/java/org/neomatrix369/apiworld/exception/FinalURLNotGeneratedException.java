@@ -20,25 +20,19 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.apiworld.exception;
 
 /**
- * Enum ResultType.
+ * Custom exception class FinalURLNotGeneratedException.
  * 
  * @author Mani Sarkar
- * 
+ *
  */
-public enum ResultType {
+public final class FinalURLNotGeneratedException extends Exception {
 
-    NONE(""), JSON("json"), JSONP("jsonp"), RSS("rss"), XML("xml"); 
-    
-    private String returnType;
-    
-    private ResultType(String returnType) {
-        this.returnType = returnType;
-    }
-    
-    public String toString() {
-        return this.returnType;
-    }
+    /**
+	 * Generated serialVersionUID. 
+	 */
+    private static final long serialVersionUID = -1487425148252776053L;
+
 }

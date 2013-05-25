@@ -22,12 +22,12 @@
  */
 package org.neomatrix369.examples.flickr_api;
 
-import static org.neomatrix369.apiworld.ResultType.rtJSON;
-import static org.neomatrix369.apiworld.UtilityFunctions.readPropertyFrom;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 
 import java.io.IOException;
 
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.ResultType;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.neomatrix369.examples.flickr_api.BaseFlickrAPI;
 
 public final class FlickrAPI_search {
@@ -54,7 +54,7 @@ public final class FlickrAPI_search {
                 "resources/flickr_settings.properties", "APIKey");
 
         FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&",
-                rtJSON.toString(), "hello");
+                ResultType.JSON.toString(), "hello");
         System.out.format("%s", flickrSearch.getFetchedResults());
     }
 }

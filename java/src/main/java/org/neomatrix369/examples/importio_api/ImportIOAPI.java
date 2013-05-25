@@ -23,10 +23,10 @@
 package org.neomatrix369.examples.importio_api;
 
 import org.neomatrix369.apiworld.APIBuilder;
-import org.neomatrix369.apiworld.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.APIReader;
-import org.neomatrix369.apiworld.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.UtilityFunctions;
+import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
+import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import org.neomatrix369.apiworld.util.UtilityFunctions;
 
 public class ImportIOAPI {
 

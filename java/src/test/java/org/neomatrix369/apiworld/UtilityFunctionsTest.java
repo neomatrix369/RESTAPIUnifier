@@ -3,6 +3,7 @@ package org.neomatrix369.apiworld;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.neomatrix369.apiworld.util.UtilityFunctions;
 
 /**
  * Test class UtilityFunctionsTest.

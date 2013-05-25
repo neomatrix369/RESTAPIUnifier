@@ -28,7 +28,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 
 /*
  Create Date: Saturday 21 April 2012 13:18 PM

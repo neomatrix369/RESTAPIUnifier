@@ -28,9 +28,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
-
-import static org.neomatrix369.apiworld.ResultType.*;
+import org.neomatrix369.apiworld.ResultType;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 
 /*
  Create Date: Saturday 21 April 2012 13:18 PM
@@ -69,7 +68,7 @@ public final class MuzuDotTV_search_api {
              * 
              */
             MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
-                    null, rtJSON.toString());
+                    null, ResultType.JSON.toString());
             System.out.format("%s", muzuSearch.getFetchedResults());
         } catch (FileNotFoundException e) {
             System.out.format("Error due to: %s%n", e.getMessage());

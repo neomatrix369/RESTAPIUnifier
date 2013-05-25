@@ -22,9 +22,8 @@
  */
 package org.neomatrix369.examples.twitter_api;
 
-import static org.neomatrix369.apiworld.ResultType.rtJSON;
-
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.ResultType;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 
 public final class TwitterAPI_search {
     private TwitterAPI_search() {
@@ -51,7 +50,7 @@ public final class TwitterAPI_search {
     public static void main(String[] args) throws InterruptedException,
             FinalURLNotGeneratedException {
         TwitterSearch twitterSearch = new TwitterSearch("", "?",
-                rtJSON.toString(), "hello");
+                ResultType.JSON.toString(), "hello");
         System.out.format("%s", twitterSearch.getFetchedResults());
     }
 }

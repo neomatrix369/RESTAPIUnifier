@@ -22,10 +22,9 @@
  */
 package org.neomatrix369.examples.yql_api;
 
-import static org.neomatrix369.apiworld.ResultType.rtJSON;
-import static org.neomatrix369.apiworld.ResultType.rtXML;
 
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.ResultType;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.neomatrix369.examples.yql_api.BaseYQLAPI;
 
 public final class YQLAPI_webservices {
@@ -53,10 +52,10 @@ public final class YQLAPI_webservices {
     public static void main(String[] args) throws InterruptedException,
             FinalURLNotGeneratedException {
         YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?",
-                rtJSON.toString(), "show tables");
+                ResultType.JSON.toString(), "show tables");
         System.out.format("%s", yqlAPIWebServices.getFetchedResults());
 
-        yqlAPIWebServices = new YQLAPIWebServices("", "?", rtXML.toString(),
+        yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(),
                 "show tables", null);
         System.out.format("%s", yqlAPIWebServices.getFetchedResults());
     }

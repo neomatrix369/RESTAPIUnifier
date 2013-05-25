@@ -22,13 +22,12 @@
  */
 package org.neomatrix369.examples.flickr_api;
 
+import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
+
 import java.io.IOException;
 
-import org.neomatrix369.apiworld.FinalURLNotGeneratedException;
-import org.neomatrix369.examples.flickr_api.BaseFlickrAPI;
-
-import static org.neomatrix369.apiworld.ResultType.rtJSON;
-import static org.neomatrix369.apiworld.UtilityFunctions.*;
+import org.neomatrix369.apiworld.ResultType;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 
 public final class FlickrAPI_getRecent {
     private FlickrAPI_getRecent() {
@@ -54,7 +53,7 @@ public final class FlickrAPI_getRecent {
         String flickrAPIKey = readPropertyFrom(
                 "resources/flickr_settings.properties", "APIKey");
         FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey,
-                "&", rtJSON.toString());
+                "&", ResultType.JSON.toString());
         System.out.format("%s", flickrGetRecent.getFetchedResults());
     }
 }

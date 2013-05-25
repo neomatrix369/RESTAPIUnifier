@@ -22,11 +22,19 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.UtilityFunctions.*;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
+import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+
+/**
+ * 
+ * @author Mani Sarkar
+ *
+ */
 public class APIBuilder {
 
     private static final String THREE_TOKENS = "%s%s%s";

@@ -30,7 +30,13 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.neomatrix369.apiworld.APIBuilder;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 
+/**
+ * 
+ * @author Mani Sarkar
+ *
+ */
 public class APIReader {
 
     private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.";
