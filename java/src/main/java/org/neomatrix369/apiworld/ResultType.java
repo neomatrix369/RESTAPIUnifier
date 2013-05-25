@@ -30,7 +30,7 @@ package org.neomatrix369.apiworld;
  */
 public enum ResultType {
 
-    NONE(""), JSON("json"), JSONP("jsonp"), RSS("rss"), XML("xml"); 
+    JSON("json"), XML("xml"); 
     
     private String returnType;
     
