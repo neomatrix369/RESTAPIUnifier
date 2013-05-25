@@ -48,11 +48,22 @@ public class APIBuilder {
     private String paramStart = PARAM_START;
     private boolean apiKeyIsRequired = true;
 
+    /**
+     * .
+     * @param baseURL String
+     * @return APIBuilder
+     */
     public APIBuilder addBaseURL(String baseURL) {
         this.baseURL = baseURL;
         return this;
     }
 
+    /**
+     * .
+     * @return APIBuilder
+     * @throws BaseURLNotAssignedException exception
+     * @throws APIKeyNotAssignedException exception
+     */
     public APIBuilder build() throws BaseURLNotAssignedException,
             APIKeyNotAssignedException {
         buildFinalURLWithCommandString();
@@ -62,8 +73,12 @@ public class APIBuilder {
         return this;
     }
 
+    /**
+     * .
+     * @throws APIKeyNotAssignedException exception
+     */
     private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
-        if (doesNotRequireAPIKey()) {
+        if (!apiKeyIsRequired) {
             return;
         }
 
@@ -74,8 +89,13 @@ public class APIBuilder {
         }
     }
 
+    /**
+     * .
+     * @return boolean
+     * @throws APIKeyNotAssignedException exception
+     */
     private boolean validateAPIKey() throws APIKeyNotAssignedException {
-        if (doesNotRequireAPIKey()) {
+        if (!apiKeyIsRequired) {
             return true;
         }
 
@@ -86,17 +106,15 @@ public class APIBuilder {
         return true;
     }
 
-    private boolean doesNotRequireAPIKey() {
-        return !apiKeyIsRequired;
-    }
-
+    /**
+     * .
+     */
     private void buildFinalURLWithParametersToken() {
         if (!urlParameters.isEmpty()) {
             String urlParameterTokens = "";
             for (Map.Entry<String, String> eachKeyValuePair : urlParameters
                     .entrySet()) {
-                if (isNotNull(eachKeyValuePair.getKey())
-                        && isNotNull(eachKeyValuePair.getValue())) {
+                if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
                     String eachToken = String.format(THREE_TOKENS,
                             eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
                             eachKeyValuePair.getValue());
@@ -112,6 +130,10 @@ public class APIBuilder {
         }
     }
 
+    /**
+     * .
+     * @throws BaseURLNotAssignedException exception
+     */
     private void buildFinalURLWithCommandString()
             throws BaseURLNotAssignedException {
         validateBaseURL();
@@ -119,8 +141,7 @@ public class APIBuilder {
 
         this.finalURL = baseURL.trim();
         if ((commandString != null) && (!commandString.isEmpty())) {
-            if (doesNotHaveTrailingSeparator(this.finalURL,
-                    COMMAND_URL_SEPARATOR)) {
+            if (!doesHaveSeparator(this.finalURL, COMMAND_URL_SEPARATOR)) {
                 this.finalURL = String.format(TWO_TOKENS, finalURL,
                         COMMAND_URL_SEPARATOR);
             }
@@ -130,6 +151,11 @@ public class APIBuilder {
         }
     }
 
+    /**
+     * .
+     * @return boolean
+     * @throws BaseURLNotAssignedException exception
+     */
     private boolean validateBaseURL() throws BaseURLNotAssignedException {
         if ((baseURL == null) || (baseURL.trim().isEmpty())) {
             throw new BaseURLNotAssignedException();
@@ -138,33 +164,55 @@ public class APIBuilder {
         return true;
     }
 
-    public String getAPIReadyURL() {
+    /**
+     * Gets the finalURL attribute.
+     * @return String
+     */
+    public String getFinalURL() {
         return finalURL;
     }
 
+    /**
+     * Sets the commandString attribute.
+     * @param commandString String
+     */
     public void setCommand(String commandString) {
         this.commandString = commandString;
     }
 
+    /**
+     * .
+     * @param key String
+     * @param value String
+     */
     public void setAPIKey(String key, String value) {
-        this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR,
-                value);
-        setAPIKeyIsRequired();
-    }
-
-    private void setAPIKeyIsRequired() {
+        this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR, value);
         apiKeyIsRequired = true;
     }
 
+    /**
+     * .
+     * @param key String
+     * @param value String
+     */
     public void addAURLParameter(String key, String value) {
         this.urlParameters.put(key, value);
     }
 
+    /**
+     * Sets the paramStart attribute. 
+     * @param paramStart String
+     */
     public void setParamStart(String paramStart) {
         this.paramStart = paramStart;
     }
 
-    public void setNoAPIKeyRequired() {
-        apiKeyIsRequired = false;
+    /**
+     * Sets the apiKeyIsRequired attribute.
+     * @param apiKeyIsRequired boolean
+     */
+    public void setApiKeyIsRequired(boolean apiKeyIsRequired) {
+        this.apiKeyIsRequired = apiKeyIsRequired;
     }
+    
 }

@@ -42,19 +42,28 @@ import com.google.gson.Gson;
  *
  */
 public final class UtilityFunctions {
+    
     private static final String CURRENT_PATH_MSG = "Current path: ";
     private static final String ERROR_DUE_TO_MSG = "Error due to: %s%n";
 
+    /**
+     * Hide Utility Class Constructor - Utility classes should not have a
+     * public or default constructor.
+     */
     private UtilityFunctions() {
-        // Hide Utility Class Constructor - Utility classes should not have a
-        // public or default constructor.
+        
     }
 
     public static final String PARAM_START = "?";
     public static final String COMMAND_URL_SEPARATOR = "/";
-    public static final String URL_SEPARATOR = "/";
     public static final String PARAM_SEPARATOR = "&";
 
+    /**
+     * .
+     * @param urlParameterTokens String
+     * @param paramSeparator String
+     * @return String
+     */
     public static String dropTrailingSeparator(String urlParameterTokens,
             String paramSeparator) {
         int lastCharIndex = urlParameterTokens.length()
@@ -69,6 +78,12 @@ public final class UtilityFunctions {
         return urlParameterTokens;
     }
 
+    /**
+     * .
+     * @param urlString String
+     * @param commandUrlSeparator String
+     * @return booelan
+     */
     public static boolean doesHaveSeparator(String urlString,
             String commandUrlSeparator) {
         int lastCharIndex = urlString.length() - commandUrlSeparator.length();
@@ -79,12 +94,13 @@ public final class UtilityFunctions {
         }
         return false;
     }
+    
 
-    public static boolean doesNotHaveTrailingSeparator(String urlString,
-            String commandUrlSeparator) {
-        return !doesHaveSeparator(urlString, commandUrlSeparator);
-    }
-
+    /**
+     * .
+     * @param value String
+     * @return String
+     */
     @SuppressWarnings("deprecation")
     public static String encodeToken(String value) {
         if (value == null) {
@@ -93,28 +109,35 @@ public final class UtilityFunctions {
         return URLEncoder.encode(value);
     }
 
-    public static boolean isNotNull(Object value) {
-        return value != null;
-    }
-
+    /**
+     * 
+     * @param string
+     * @return
+     */
     public static Document stringToXML(String string) {
         String localString = string.substring(1, string.length() - 1);
         localString = localString.replaceAll(">,", ">");
         return Jsoup.parse(localString);
     }
 
-    public static Boolean isAValidJSONText(String resultAsString) {
+    /**
+     * .
+     * @param resultAsString String
+     * @return boolean
+     */
+    public static boolean isAValidJSONText(String resultAsString) {
         Gson gson = new Gson();
         gson.toJson(resultAsString);
         return true;
     }
 
-    public static Boolean isAValidXML(String result) {
-        // unused variable.
-        //Document doc = stringToXML(result);
-        return true;
-    }
-
+    /**
+     * .
+     * @param propertyFilename String
+     * @param propertyName String
+     * @return String
+     * @throws IOException exception
+     */
     public static String readPropertyFrom(String propertyFilename,
             String propertyName) throws IOException {
         Properties prop = new Properties();

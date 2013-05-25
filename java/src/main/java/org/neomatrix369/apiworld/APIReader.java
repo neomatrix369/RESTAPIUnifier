@@ -57,19 +57,26 @@ public class APIReader {
     private List<String> lastHttpResult = new ArrayList<String>();
     private String urlText;
 
+    /**
+     * Parametric constructor.
+     * @param apiBuilder APIBuilder
+     */
     public APIReader(APIBuilder apiBuilder) {
-        this.urlText = apiBuilder.getAPIReadyURL();
+        this.urlText = apiBuilder.getFinalURL();
     }
 
-    public APIReader(String websiteBaseURL, String apiVarIdentifier,
-            String apiKey) {
-        this.urlText = websiteBaseURL.replace(apiVarIdentifier, apiKey);
-    }
-
+    /**
+     * Parametric constructor.
+     * @param urlText String
+     */
     public APIReader(String urlText) {
         this.urlText = urlText;
     }
 
+    /**
+     * .
+     * @throws FinalURLNotGeneratedException exception
+     */
     public final void executeURL() throws FinalURLNotGeneratedException {
         clearAllLastHttpResults();
         if (urlText == null) {
@@ -94,6 +101,13 @@ public class APIReader {
         }
     }
 
+    /**
+     * .
+     * @param requestMethod String
+     * @param requestProperties Map<String, String> 
+     * @return List<String>
+     * @throws FinalURLNotGeneratedException exception
+     */
     public List<String> executeURL(String requestMethod,
             Map<String, String> requestProperties)
             throws FinalURLNotGeneratedException {
@@ -130,11 +144,21 @@ public class APIReader {
         return new ArrayList<String>();
     }
 
+    /**
+     * .
+     * @param urlText String
+     */
     private void showMessageWhileMakingConnection(String urlText) {
         LOGGER.info(String.format(CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT,
                 urlText));
     }
 
+    /**
+     * .
+     * @param isr InputStreamReader
+     * @return List<String>
+     * @throws IOException exception
+     */
     private List<String> fetchDataFromURL(InputStreamReader isr)
             throws IOException {
         BufferedReader httpResult = null;
@@ -158,23 +182,39 @@ public class APIReader {
         return lastHttpResult;
     }
 
+    /**
+     * .
+     * @param urlText String
+     * @param me MalformedURLException
+     */
     private void showMessageDueToMalformedURLException(String urlText,
             MalformedURLException me) {
         LOGGER.severe(String.format(INPUT_URL_STRING, urlText));
         LOGGER.severe(String.format(ERROR_DUE_TO, me.getMessage()));
     }
 
+    /**
+     * .
+     * @param urlText String
+     * @param ioe IOException
+     */
     private void showMessageDueToIOException(String urlText, IOException ioe) {
         LOGGER.severe(String.format(ERROR_CONNECTING_TO_THE_WEBSITE, urlText));
         LOGGER.severe(String.format(ERROR_DUE_TO, ioe.getMessage()));
     }
 
+    /**
+     * .
+     */
     private void clearAllLastHttpResults() {
         if (lastHttpResult != null) {
             lastHttpResult.clear();
         }
     }
 
+    /**
+     * .
+     */
     public void displayResult() {
         if (urlText == null) {
             LOGGER.warning(String.format(STRING_WITH_NEW_LINE_FEED,
@@ -185,20 +225,35 @@ public class APIReader {
         displayResults();
     }
 
+    /**
+     * .
+     */
     private void displayResults() {
         displayMessageAboutLastRetrieval(urlText);
         System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResult.toString());
     }
-
+    
+    /**
+     * .
+     * @param urlText String
+     */
     private void displayMessageAboutLastRetrieval(String urlText) {
         LOGGER.info(String.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL,
                 urlText));
     }
 
+    /**
+     * .
+     * @param inputLine String
+     */
     private void addToLastHttpResults(String inputLine) {
         lastHttpResult.add(inputLine);
     }
 
+    /**
+     * .
+     * @return String
+     */
     public String getFetchedResults() {
         return lastHttpResult.toString();
     }

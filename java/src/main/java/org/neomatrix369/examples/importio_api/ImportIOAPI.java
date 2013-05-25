@@ -39,7 +39,7 @@ public class ImportIOAPI {
         apiBuilder.addBaseURL(baseURL);
         apiBuilder.setCommand(apiCommand);
         apiBuilder.setParamStart(paramStart);
-        apiBuilder.setNoAPIKeyRequired();
+        apiBuilder.setApiKeyIsRequired(false);
         int paramCtr = 0;
         for (String eachValue : params) {
             apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

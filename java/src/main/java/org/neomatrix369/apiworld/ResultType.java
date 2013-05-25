@@ -34,10 +34,18 @@ public enum ResultType {
     
     private String returnType;
     
+    /**
+     * Parametric constructor.
+     * @param returnType String
+     */
     private ResultType(String returnType) {
         this.returnType = returnType;
     }
     
+    /**
+     * Return the enum as String.
+     * return String
+     */
     public String toString() {
         return this.returnType;
     }
