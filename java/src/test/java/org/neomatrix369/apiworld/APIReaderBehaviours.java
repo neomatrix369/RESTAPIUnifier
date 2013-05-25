@@ -10,9 +10,7 @@ import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
 import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.*;

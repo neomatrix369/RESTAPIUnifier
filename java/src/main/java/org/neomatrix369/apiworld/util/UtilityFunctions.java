@@ -31,17 +31,10 @@ import java.net.URLEncoder;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.neomatrix369.apiworld.APIReader;
-
-import com.google.gson.Gson;
-
 
 /**
  * Util class UtilityFunctions.
