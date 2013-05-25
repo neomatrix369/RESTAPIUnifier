@@ -26,11 +26,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Properties;
+import java.util.logging.Logger;
 
+import javax.json.Json;
+import javax.json.JsonBuilderFactory;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.neomatrix369.apiworld.APIReader;
 
 import com.google.gson.Gson;
 
@@ -43,8 +51,14 @@ import com.google.gson.Gson;
  */
 public final class UtilityFunctions {
     
+    private static final Logger LOGGER = Logger.getLogger(UtilityFunctions.class.getName());
+    
     private static final String CURRENT_PATH_MSG = "Current path: ";
     private static final String ERROR_DUE_TO_MSG = "Error due to: %s%n";
+    
+    public static final String PARAM_START = "?";
+    public static final String COMMAND_URL_SEPARATOR = "/";
+    public static final String PARAM_SEPARATOR = "&";
 
     /**
      * Hide Utility Class Constructor - Utility classes should not have a
@@ -54,9 +68,7 @@ public final class UtilityFunctions {
         
     }
 
-    public static final String PARAM_START = "?";
-    public static final String COMMAND_URL_SEPARATOR = "/";
-    public static final String PARAM_SEPARATOR = "&";
+    
 
     /**
      * .
@@ -86,6 +98,7 @@ public final class UtilityFunctions {
      */
     public static boolean doesHaveSeparator(String urlString,
             String commandUrlSeparator) {
+        
         int lastCharIndex = urlString.length() - commandUrlSeparator.length();
         if (lastCharIndex > 0) {
             String trailingString = urlString.substring(lastCharIndex,
@@ -97,27 +110,25 @@ public final class UtilityFunctions {
     
 
     /**
-     * .
+     * Converts the token to the application/x-www-form-urlencoded MIME format.
      * @param value String
      * @return String
      */
-    @SuppressWarnings("deprecation")
-    public static String encodeToken(String value) {
-        if (value == null) {
-            return null;
+    public static String encodeToken(String token) {
+        
+        if (token == null) {
+            throw new IllegalArgumentException("The token cannot be null.");
         }
-        return URLEncoder.encode(value);
-    }
-
-    /**
-     * 
-     * @param string
-     * @return
-     */
-    public static Document stringToXML(String string) {
-        String localString = string.substring(1, string.length() - 1);
-        localString = localString.replaceAll(">,", ">");
-        return Jsoup.parse(localString);
+        
+        String encodedToken = token;
+        
+        try {
+            encodedToken = URLEncoder.encode(token, "UTF-8");
+        } catch(UnsupportedEncodingException uee) {
+            LOGGER.warning("Invalid token.");
+        }
+        
+        return encodedToken;
     }
 
     /**
@@ -126,9 +137,15 @@ public final class UtilityFunctions {
      * @return boolean
      */
     public static boolean isAValidJSONText(String resultAsString) {
-        Gson gson = new Gson();
-        gson.toJson(resultAsString);
-        return true;
+        boolean valid = false;
+        try {
+            new JSONObject(resultAsString);
+            valid = true;
+        }
+        catch(JSONException ex) { 
+            valid = false;
+        }
+        return valid;
     }
 
     /**

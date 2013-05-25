@@ -1,7 +1,6 @@
 package org.neomatrix369.apiworld;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
 
@@ -13,19 +12,33 @@ import org.neomatrix369.apiworld.util.UtilityFunctions;
  */
 public class UtilityFunctionsTest {
 
-    private UtilityFunctions utilityFunctions;
-    
-    @Before
-    public void setUp() {
-        // enum singleton ?
-        //utilityFunctions = new UtilityFunctions(); 
+    @Test
+    public void isAValidJSONText() {
+        Assert.assertEquals(false, UtilityFunctions.isAValidJSONText("{abcde"));
+        Assert.assertEquals(true, UtilityFunctions.isAValidJSONText("{color:'green', status: 'good'}"));
     }
     
     @Test
-    public void isAValidJSONText() {
-        // this is not a valid jsonText we need to do a refactor.
-        Assert.assertEquals(true, UtilityFunctions.isAValidJSONText("{abcde"));
+    public void encodeToken() {
+        Assert.assertEquals("+", UtilityFunctions.encodeToken(" "));
     }
     
+    @Test(expected = IllegalArgumentException.class) 
+    public void encodeTokenException() {
+        UtilityFunctions.encodeToken(null);        
+    }
+    
+    @Test
+    public void doesHaveSeparator() {
+        Assert.assertEquals(false, UtilityFunctions.doesHaveSeparator("http://search.twitter.com", "/"));
+        Assert.assertEquals(true, UtilityFunctions.doesHaveSeparator("http://search.twitter.com/", "/"));
+        Assert.assertEquals(true, UtilityFunctions.doesHaveSeparator("http://search.twitter.com////////", "////////"));
+    }
+    
+    @Test
+    public void dropTrailingSeparator() {
+        Assert.assertEquals("http://search.twitter.com", UtilityFunctions.dropTrailingSeparator("http://search.twitter.com/", "/"));
+        Assert.assertEquals("http://search.twitter.com", UtilityFunctions.dropTrailingSeparator("http://search.twitter.com///", "///"));
+    }
     
 }
