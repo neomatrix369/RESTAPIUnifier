@@ -57,7 +57,11 @@ public class TweetsDataStorage {
     TweetsDataStorage() {
     }
 
-    public Boolean searchTermInUserNameInTweetMessage(String usingTerm) {
+    public TweetsDataStorage(String localStorageFile) {
+    	this.localStorageFile = localStorageFile;
+	}
+
+	public Boolean searchTermInUserNameInTweetMessage(String usingTerm) {
         return (findTermBy(usingTerm, BY_FROM_USERNAME) || findTermBy(
                 usingTerm, BY_TO_USERNAME));
     }

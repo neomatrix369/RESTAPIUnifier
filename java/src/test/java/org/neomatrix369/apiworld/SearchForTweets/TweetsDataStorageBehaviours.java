@@ -1,4 +1,4 @@
-package com.seedcloud;
+package org.neomatrix369.apiworld.SearchForTweets;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -6,7 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import org.json.JSONArray;
-import com.seedcloud.TweetsDataStorage;
+import org.neomatrix369.examples.search_tweets.TweetsDataStorage;
 
 public class TweetsDataStorageBehaviours {
 	private static final String READ_WRITE_MISMATCH_ERROR_MESSAGE = "Written and read messages do not match! Data storage error";

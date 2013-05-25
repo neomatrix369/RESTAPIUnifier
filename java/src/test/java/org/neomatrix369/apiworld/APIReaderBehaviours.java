@@ -1,22 +1,22 @@
 package org.neomatrix369.apiworld;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.util.UtilityFunctions;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.*;
-import static apiworld.ResultType.*;
-import static apiworld.UtilityFunctions.*;
+import static org.neomatrix369.apiworld.ResultType.*;
 
 public class APIReaderBehaviours {
 	@Test
@@ -27,7 +27,7 @@ public class APIReaderBehaviours {
 				"resources/muzu_settings.properties", "APIKey");
 		String url = String.format(
 				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop&format=%s",
-				apiKey, rtJSON);
+				apiKey, JSON);
 		APIReader apiReader = new APIReader(url);
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults();
@@ -43,7 +43,7 @@ public class APIReaderBehaviours {
 				"resources/muzu_settings.properties", "APIKey");
 		String url = String.format(
 				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop&format=%s",
-				apiKey, rtXML);
+				apiKey, XML);
 		APIReader apiReader = new APIReader(url);
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults();

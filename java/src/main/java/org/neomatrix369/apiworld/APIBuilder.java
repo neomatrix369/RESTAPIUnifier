@@ -214,5 +214,9 @@ public class APIBuilder {
     public void setApiKeyIsRequired(boolean apiKeyIsRequired) {
         this.apiKeyIsRequired = apiKeyIsRequired;
     }
+
+	public void setNoAPIKeyRequired() {
+		this.apiKeyIsRequired = false;		
+	}
     
 }

@@ -1,4 +1,4 @@
-package com.seedcloud;
+package org.neomatrix369.apiworld.SearchForTweets;
 
 import static org.junit.Assert.*;
 

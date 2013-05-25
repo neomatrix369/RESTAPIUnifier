@@ -1,7 +1,7 @@
-package com.seedcloud;
+package org.neomatrix369.apiworld.SearchForTweets;
 
 import org.junit.Test;
-import com.seedcloud.TwitterInterfaceEngine;
+import org.neomatrix369.examples.search_tweets.TwitterInterfaceEngine;
 import static org.junit.Assert.*;
 
 public class TwitterSearchBehaviours {

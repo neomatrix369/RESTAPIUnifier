@@ -1,10 +1,11 @@
-package com.seedcloud;
+package org.neomatrix369.apiworld.SearchForTweets;
+
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.seedcloud.TweetsDataStorage;
+import org.neomatrix369.examples.search_tweets.TweetsDataStorage;
 
 public class SearchTermFilterBehaviours {
 	TweetsDataStorage storage;
