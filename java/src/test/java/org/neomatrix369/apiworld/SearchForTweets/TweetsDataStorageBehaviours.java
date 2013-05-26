@@ -2,7 +2,6 @@ package org.neomatrix369.apiworld.SearchForTweets;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.json.JSONArray;
@@ -18,7 +17,7 @@ public class TweetsDataStorageBehaviours {
 		storage = new TweetsDataStorage(TWEETS_FILENAME);
 	}
 			
-	@Test @Ignore
+	@Test
 	public void shouldBeAbleToWriteAndReadBackMessages() {
 		final String tweetMessageWritten = "{'results':[{'from_user_name':'someUser', 'from_user_id':'‏@someonesTwitterHandle', 'text':'Body of the twitter message #hashtag1 #hashtag2 #hashtag3'}]}";
 		storage.saveTweetMessage(tweetMessageWritten);

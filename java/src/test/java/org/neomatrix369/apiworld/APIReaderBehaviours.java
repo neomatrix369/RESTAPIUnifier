@@ -17,6 +17,9 @@ import static org.hamcrest.core.Is.*;
 import static org.neomatrix369.apiworld.ResultType.*;
 
 public class APIReaderBehaviours {
+	private static final String INVALID_JSON_RETURNED = "Invalid JSON returned.";
+	private static final String NO_RESULTS_RETURNED = "No results returned.";
+
 	@Test
 	public void should_Fetch_Data_As_JSON_When_API_URL_Is_Passed_In()
 			throws FileNotFoundException, IOException,
@@ -29,11 +32,11 @@ public class APIReaderBehaviours {
 		APIReader apiReader = new APIReader(url);
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults();
-		assertThat(result.isEmpty(), is(false));
-		assertThat(isAValidJSONText(result), is(true));
+		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
+		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}
 
-	@Test
+	@Test 
 	public void should_Fetch_Data_As_XML_When_API_URL_Is_Passed_In()
 			throws FileNotFoundException, IOException,
 			FinalURLNotGeneratedException {
@@ -45,8 +48,8 @@ public class APIReaderBehaviours {
 		APIReader apiReader = new APIReader(url);
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults();
-		assertThat(result.isEmpty(), is(false));
-		assertThat(isAValidXML(result), is(true));
+		assertThat("Empty result returned.", result.isEmpty(), is(false));
+		assertThat(INVALID_JSON_RETURNED, isAValidXML(result), is(true));
 	}
 
 	@Test
@@ -63,8 +66,8 @@ public class APIReaderBehaviours {
 		apiReader.executeURL("POST", null);
 		String result = apiReader.getFetchedResults();
 		apiReader.displayResult();
-		assertThat(result.isEmpty(), is(false));
-		assertThat(isAValidJSONText(result), is(true));
+		assertThat("Empty result returned.", result.isEmpty(), is(false));
+		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}
 	
 	@Test
@@ -92,7 +95,7 @@ public class APIReaderBehaviours {
 		
 		String result = apiReader.getFetchedResults();		
 		System.out.format("%s", result);
-		assertThat(result.isEmpty(), is(false));
-		assertThat(isAValidJSONText(result), is(true));
+		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
+		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}	
 }
