@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 
 import org.neomatrix369.apiworld.APIBuilder;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
 /**
  * 
@@ -39,7 +40,7 @@ import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
  */
 public class APIReader {
 
-    private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.";
+	private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.";
     private static final String READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT = ">>> Reading results returned, this may take a moment...";
     private static final String READING_COMPLETED = ">>> Reading completed...";
     private static final String CONNECTION_CLOSED = ">>> Connection closed!";
@@ -255,6 +256,12 @@ public class APIReader {
      * @return String
      */
     public String getFetchedResults() {
-        return lastHttpResult.toString();
+		String result = lastHttpResult.toString();
+		while (result.startsWith(OPENING_BOX_BRACKET)
+				&& result.endsWith(CLOSING_BOX_BRACKET)) {
+			result = dropStartAndEndDelimeters(result, OPENING_BOX_BRACKET,
+					CLOSING_BOX_BRACKET);
+		}
+		return result;
     }
 }

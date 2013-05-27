@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import org.neomatrix369.apiworld.util.UtilityFunctions;
 import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
 import com.google.gson.Gson;
@@ -24,7 +24,7 @@ public class APIReaderBehaviours {
 	public void should_Fetch_Data_As_JSON_When_API_URL_Is_Passed_In()
 			throws FileNotFoundException, IOException,
 			FinalURLNotGeneratedException {
-		String apiKey = UtilityFunctions.readPropertyFrom(
+		String apiKey = readPropertyFrom(
 				"resources/muzu_settings.properties", "APIKey");
 		String url = String.format(
 				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop&format=%s",
@@ -33,6 +33,7 @@ public class APIReaderBehaviours {
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults();
 		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
+		System.out.println(result);
 		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}
 
@@ -40,7 +41,7 @@ public class APIReaderBehaviours {
 	public void should_Fetch_Data_As_XML_When_API_URL_Is_Passed_In()
 			throws FileNotFoundException, IOException,
 			FinalURLNotGeneratedException {
-		String apiKey = UtilityFunctions.readPropertyFrom(
+		String apiKey = readPropertyFrom(
 				"resources/muzu_settings.properties", "APIKey");
 		String url = String.format(
 				"http://www.muzu.tv/api/browse?muzuid=%s&af=a&g=pop&format=%s",
@@ -54,9 +55,9 @@ public class APIReaderBehaviours {
 
 	@Test
 	public void should_Return_Cookie_When_URL_Is_Invoked_With_A_Post_Method() throws FinalURLNotGeneratedException, IOException {
-		String username = UtilityFunctions.readPropertyFrom(
+		String username = readPropertyFrom(
 				"resources/importIO_settings.properties", "username");
-		String password = UtilityFunctions.readPropertyFrom(
+		String password = readPropertyFrom(
 				"resources/importIO_settings.properties", "password");
 		
 		String url = String.format(
@@ -70,11 +71,11 @@ public class APIReaderBehaviours {
 		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}
 	
-	@Test
+	@Test @Ignore
 	public void should_Return_Results_When_URL_Is_Invoked_With_An_Auth_Cookie_And_Post_Method() throws FinalURLNotGeneratedException, IOException {
-		String username = UtilityFunctions.readPropertyFrom(
+		String username = readPropertyFrom(
 				"resources/importIO_settings.properties", "username");
-		String password = UtilityFunctions.readPropertyFrom(
+		String password = readPropertyFrom(
 				"resources/importIO_settings.properties", "password");
 		
 		String url = String.format(

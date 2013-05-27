@@ -1,5 +1,7 @@
 package org.neomatrix369.apiworld.SearchForTweets;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.neomatrix369.examples.search_tweets.TwitterInterfaceEngine;
 import static org.junit.Assert.*;
@@ -10,8 +12,8 @@ public class TwitterSearchBehaviours {
 	private static final String ONE_TERM = "openjdk";
 	private static final String TWO_TERMS = "adopt openjdk";
 
-	@Test(expected = Exception.class)  
-	public void shouldReturnNoTweetsForSearchWhenNoTermsAreSupplied() throws Exception {
+	@Test
+	public void shouldReturnNoTweetsForSearchWhenNoTermsAreSupplied()  {
 		String noSearchTermsSupplied = EMPTY_SEARCH;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(noSearchTermsSupplied);

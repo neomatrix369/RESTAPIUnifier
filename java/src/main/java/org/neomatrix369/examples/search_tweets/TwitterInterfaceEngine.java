@@ -25,6 +25,7 @@ package org.neomatrix369.examples.search_tweets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -34,7 +35,9 @@ import java.util.logging.Logger;
 
 public class TwitterInterfaceEngine {
 
-    private static final String ERROR_WHILE_CONVERTING_AN_URL_STRING_INTO_AN_URI = "Error while converting an URL string into an URI: %s. %n";
+    private static final String ERROR_WHILE_FETCHING_TWEETS_CONNECTING_TO_SERVER = "Error while fetching tweets (connecting to server)";
+	private static final String ERROR_WHILE_ENCODING_TEXT = "Error while encoding text";
+	private static final String ERROR_WHILE_CONVERTING_AN_URL_STRING_INTO_AN_URI = "Error while converting an URL string into an URI: %s. %n";
     private static final String ERROR_WHILE_ACCESSING_THE_HTTP_SERVER = "Error while accessing the http server:%s. %n";
     private static final String HTTP_GET_METHOD_TOKEN = "GET";
     private static final String TWITTER_SEARCH_API_TEMPLATE = "http://search.twitter.com/search.json?q=%s";
@@ -42,11 +45,24 @@ public class TwitterInterfaceEngine {
     private static final Logger COMMON_LOGGER = Logger
             .getLogger(TwitterInterfaceEngine.class.getName());
 
-    public String searchTweets(String usingSearchTerms) throws IOException {
-        final String encodedTerms = java.net.URLEncoder.encode(
-                usingSearchTerms, "ISO-8859-1");
-        return getResponseFromTwitter(String.format(
-                TWITTER_SEARCH_API_TEMPLATE, encodedTerms));
+    public String searchTweets(String usingSearchTerms) {
+        String encodedTerms = "";
+        String result = "";
+        try {
+    		try {
+    			encodedTerms = java.net.URLEncoder.encode(
+    			        usingSearchTerms, "ISO-8859-1");
+    		} catch (UnsupportedEncodingException ex) {
+    			COMMON_LOGGER.log(Level.SEVERE, String.format(ERROR_WHILE_ENCODING_TEXT,
+                        ex.getMessage()));
+    		}
+        	result = getResponseFromTwitter(String.format(
+			        TWITTER_SEARCH_API_TEMPLATE, encodedTerms));
+		} catch (IOException ex) {
+			COMMON_LOGGER.log(Level.SEVERE, String.format(ERROR_WHILE_FETCHING_TWEETS_CONNECTING_TO_SERVER,
+                    ex.getMessage()));
+		}
+        return result;
     }
 
     public String getResponseFromTwitter(String usingURL) throws IOException {

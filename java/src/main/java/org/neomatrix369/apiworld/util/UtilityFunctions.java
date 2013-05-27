@@ -43,8 +43,11 @@ import org.jsoup.nodes.Document;
  *
  */
 public final class UtilityFunctions {
-    
+	
     private static final Logger LOGGER = Logger.getLogger(UtilityFunctions.class.getName());
+
+	public static final String OPENING_BOX_BRACKET = "[";
+	public static final String CLOSING_BOX_BRACKET = "]";
     
     private static final String CURRENT_PATH_MSG = "Current path: ";
     private static final String ERROR_DUE_TO_MSG = "Error due to: %s%n";
@@ -173,5 +176,24 @@ public final class UtilityFunctions {
 	public static Boolean isAValidXML(String result) {
 		stringToXML(result);
 		return true;
+	}
+
+
+
+	public static String dropStartAndEndDelimeters(String inputString, String startsWith, String endsWith) {
+		String result = inputString;
+		if (result.startsWith(startsWith)) {
+			if (result.length() == 1) {
+				result = "";
+			} else {
+				result = result.substring(1, result.length());
+			}	
+		}
+		
+		if (result.endsWith(endsWith)) {
+			result = result.substring(0, result.length() - 1); 
+		}
+		
+		return result;
 	}
 }
