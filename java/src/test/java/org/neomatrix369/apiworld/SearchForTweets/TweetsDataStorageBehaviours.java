@@ -30,6 +30,6 @@ public class TweetsDataStorageBehaviours {
 		final JSONArray tweetMessageRead = storage.loadTweetMessage();
 		
 		final JSONArray tweetMessageWrittenAsArray = new JSONArray(arrayPartOfTweetAsString);		
-		assertThat(READ_WRITE_MISMATCH_ERROR_MESSAGE, tweetMessageRead, is(tweetMessageWrittenAsArray));
+		assertThat(READ_WRITE_MISMATCH_ERROR_MESSAGE, tweetMessageRead.toString(), is(tweetMessageWrittenAsArray.toString()));
 	}
 }
