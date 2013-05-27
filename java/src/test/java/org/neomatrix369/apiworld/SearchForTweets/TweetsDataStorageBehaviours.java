@@ -24,12 +24,12 @@ public class TweetsDataStorageBehaviours {
 	@Test
 	public void shouldBeAbleToWriteAndReadBackMessages() throws JSONException {
 		String arrayPartOfTweetAsString =  "[{'from_user_name':'someUser', 'from_user_id':'‏@someonesTwitterHandle', 'text':'Body of the twitter message #hashtag1 #hashtag2 #hashtag3'}]";
-		final String tweetMessageWritten = "{results: "+ arrayPartOfTweetAsString + "}";		
-		storage.saveTweetMessage(tweetMessageWritten);
+		final String tweetMessageWrittenAsString = "{results: "+ arrayPartOfTweetAsString + "}";		
+		storage.saveTweetMessage(tweetMessageWrittenAsString);
 		
 		final JSONArray tweetMessageRead = storage.loadTweetMessage();
 		
-		final JSONArray arrayPartOfTweet = new JSONArray(arrayPartOfTweetAsString);		
-		assertThat(READ_WRITE_MISMATCH_ERROR_MESSAGE, tweetMessageRead, is(arrayPartOfTweet));
+		final JSONArray tweetMessageWrittenAsArray = new JSONArray(arrayPartOfTweetAsString);		
+		assertThat(READ_WRITE_MISMATCH_ERROR_MESSAGE, tweetMessageRead, is(tweetMessageWrittenAsArray));
 	}
 }
