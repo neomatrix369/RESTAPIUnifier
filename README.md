@@ -16,11 +16,11 @@ Developers, OpenSource committers, API vendors, API Service Providers, etc... wi
 Examples implemented using RESTAPIUnifier
 -----------------------------------------
 <b>Java</b>
-- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/GoogleTVHackathon
-- Flickr API (search and getRecent) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/FlickrAPI
-- Twitter API (search) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/TwitterAPI
-- Import.IO API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/ImportIOAPI (underway)
-- YQL! - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/examples/YQLAPI
+- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/muzu_tv_api
+- Flickr API (search and getRecent) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/flickr_api
+- Twitter API (search) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/twitter_api
+- Import.IO API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/importio_api (underway)
+- YQL! - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/yql_api
 
 <b>C#</b>
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
