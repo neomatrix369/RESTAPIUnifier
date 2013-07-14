@@ -1,7 +1,7 @@
 RESTAPIUnifier
 ==============
 
-RESTAPIUnifier - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc...
+<b>RESTAPIUnifier</b> - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc...
 
 License
 -------
