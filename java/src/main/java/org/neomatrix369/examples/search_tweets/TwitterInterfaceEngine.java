@@ -35,12 +35,13 @@ import java.util.logging.Logger;
 
 public class TwitterInterfaceEngine {
 
-    private static final String ERROR_WHILE_FETCHING_TWEETS_CONNECTING_TO_SERVER = "Error while fetching tweets (connecting to server)";
+    private static final String ISO_CHARSET = "ISO-8859-1";
+	private static final String ERROR_WHILE_FETCHING_TWEETS_CONNECTING_TO_SERVER = "Error while fetching tweets (connecting to server)";
 	private static final String ERROR_WHILE_ENCODING_TEXT = "Error while encoding text";
 	private static final String ERROR_WHILE_CONVERTING_AN_URL_STRING_INTO_AN_URI = "Error while converting an URL string into an URI: %s. %n";
     private static final String ERROR_WHILE_ACCESSING_THE_HTTP_SERVER = "Error while accessing the http server:%s. %n";
-    private static final String HTTP_GET_METHOD_TOKEN = "GET";
-    private static final String TWITTER_SEARCH_API_TEMPLATE = "http://search.twitter.com/search.json?q=%s";
+    private static final String HTTP_GET_METHOD_TOKEN = "GET"; 
+    private static final String TWITTER_SEARCH_API_TEMPLATE = "https://twitter.com/#!/search/%s";
 
     private static final Logger COMMON_LOGGER = Logger
             .getLogger(TwitterInterfaceEngine.class.getName());
@@ -51,13 +52,12 @@ public class TwitterInterfaceEngine {
         try {
     		try {
     			encodedTerms = java.net.URLEncoder.encode(
-    			        usingSearchTerms, "ISO-8859-1");
+    			        usingSearchTerms, ISO_CHARSET);
     		} catch (UnsupportedEncodingException ex) {
     			COMMON_LOGGER.log(Level.SEVERE, String.format(ERROR_WHILE_ENCODING_TEXT,
                         ex.getMessage()));
     		}
-        	result = getResponseFromTwitter(String.format(
-			        TWITTER_SEARCH_API_TEMPLATE, encodedTerms));
+        	result = getResponseFromTwitter(TWITTER_SEARCH_API_TEMPLATE, encodedTerms);
 		} catch (IOException ex) {
 			COMMON_LOGGER.log(Level.SEVERE, String.format(ERROR_WHILE_FETCHING_TWEETS_CONNECTING_TO_SERVER,
                     ex.getMessage()));
@@ -65,11 +65,11 @@ public class TwitterInterfaceEngine {
         return result;
     }
 
-    public String getResponseFromTwitter(String usingURL) throws IOException {
+    public String getResponseFromTwitter(String usingURL, String usingEncodedTerms) throws IOException {
         URL url = null;
         URI usingURI = null;
         try {
-            usingURI = new URI(usingURL);
+            usingURI = new URI(String.format(usingURL, usingEncodedTerms));
         } catch (URISyntaxException ex) {
             COMMON_LOGGER.log(Level.SEVERE, String.format(
                     ERROR_WHILE_CONVERTING_AN_URL_STRING_INTO_AN_URI,

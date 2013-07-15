@@ -22,13 +22,12 @@
  */
 package org.neomatrix369.apiworld.SearchForTweets;
 
-import java.io.IOException;
-
 import org.junit.Test;
 import org.neomatrix369.examples.search_tweets.TwitterInterfaceEngine;
 import static org.junit.Assert.*;
 
 public class TwitterSearchBehaviours {
+	private static final String SEARCH_TERM_WITH_SPACES = "  ";
 	private static final String SEARCH_TERMS_FAILURE_ERROR_MESSAGE = "Search with two terms fails.";
 	private static final String EMPTY_SEARCH = "";
 	private static final String ONE_TERM = "openjdk";
@@ -39,22 +38,34 @@ public class TwitterSearchBehaviours {
 		String noSearchTermsSupplied = EMPTY_SEARCH;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(noSearchTermsSupplied);
+		System.out.println(searchResult);
 		assertTrue(searchResult.isEmpty());
 	}
 	
 	@Test
-	public void shouldReturnOneTweetForSearchWhenAnyTerm() throws Exception {
+	public void shouldReturnNoTweetsForSearchWhenNoTermsContainsSpaces()  {
+		String noSearchTermsSupplied = SEARCH_TERM_WITH_SPACES;
+		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
+		String searchResult = searchTwitter.searchTweets(noSearchTermsSupplied);
+		System.out.println(searchResult);
+		assertTrue(searchResult.isEmpty());
+	}
+	
+	@Test
+	public void shouldReturnOneTweetWhenAnySearchTermIsPassed() throws Exception {
 		String oneSearchTermSupplied = ONE_TERM;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(oneSearchTermSupplied);
+		System.out.println(searchResult);
 		assertFalse(searchResult.isEmpty());
 	}
 	
 	@Test
-	public void shouldReturnAnyTweetForAnotherSearchTerm() throws Exception {
+	public void shouldReturnAnyTweetWhenAnotherSearchTermIsPassed() throws Exception {
 		String anySearchTermsSupplied = TWO_TERMS;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(anySearchTermsSupplied);
+		System.out.println(searchResult);
 		assertEquals(SEARCH_TERMS_FAILURE_ERROR_MESSAGE, false, searchResult.isEmpty());
 	}
 }

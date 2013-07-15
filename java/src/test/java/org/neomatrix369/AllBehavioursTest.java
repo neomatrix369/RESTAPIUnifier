@@ -50,6 +50,6 @@ import org.neomatrix369.apiworld.SearchForTweets.TwitterSearchBehaviours;
     TweetsDataStorageBehaviours.class,
     TwitterSearchBehaviours.class
 })
-public class AllBehavioursTest {
 
+public class AllBehavioursTest {
 }

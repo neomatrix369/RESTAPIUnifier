@@ -111,7 +111,7 @@ public class APIBuilderBehaviours {
 
 	
 	@Test
-	public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Keys() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_return_URL_with_API_key_and_skip_params_with_null_keys() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 
@@ -123,7 +123,7 @@ public class APIBuilderBehaviours {
 		String expected = "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&key2=value2&key3=value3";
 		assertThat(actual, is(expected));		
 	}
-
+	
 	@Test
 	public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Values() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
@@ -139,7 +139,7 @@ public class APIBuilderBehaviours {
 	}
 	
 	@Test
-	public void should_Return_URL_With_Encoded_Param() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	public void should_return_URL_with_encoded_param() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		apiBuilder.setCommand(API_BROWSE_COMMAND);
 		apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 		apiBuilder.addAURLParameter("key", UtilityFunctions.encodeToken("string with space"));
