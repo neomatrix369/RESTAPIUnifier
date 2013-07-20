@@ -11,6 +11,8 @@ Java 8 Compatibility
 --------------------
 ![Compatibility Badge](https://java.net/downloads/adoptopenjdk/compat.svg)
 
+<b>JSR 353 - JSON-processing API has been used as part of the implementation of this library.</b>
+
 Purpose and audience
 --------------------
 To simplify the use and maintainence of dependencies on external or internal APIs (RESTful APIs). Create an abstraction layer between your application and APIs from disparate vendors and increase cohesion, reduce coupling.
@@ -30,7 +32,7 @@ Examples implemented using RESTAPIUnifier
 <b>C#</b>
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
 - Examples are on the way. Credit for this task goes to @angiemai . She spent several hours going through the Java tests and writing tests and implementations in C# during the Yahoo! Europe Hackday in London to accomplish the feat!
-
+/
 <b><i>Note: each of the examples require their own settings file containing properties. Also most of them expect you to have your API key atleast to access their services. Information for these requirements are mentioned within comments of each if the source codes.</i></b>
 
 Timeline
@@ -41,6 +43,7 @@ Timeline
 * 23 April 2013: came across Import.IO (see below)
 * 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc
 * 27 April 2013: more improvements, added examples in Java & inception of C# version at Yahoo! Hack Europe: London
+* 20 July  2013: Heroku API implementation, OAuth - first steps in place, further refactoring.
 
 Implementations based on the principles behind this idea
 --------------------------------------------------------
