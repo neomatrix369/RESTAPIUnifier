@@ -24,6 +24,7 @@ package org.neomatrix369.apiworld;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.MalformedInputException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -108,10 +109,11 @@ public class APIReader {
      * @param requestProperties Map<String, String> 
      * @return List<String>
      * @throws FinalURLNotGeneratedException exception
+     * @throws IOException 
      */
     public List<String> executeURL(String requestMethod,
             Map<String, String> requestProperties)
-            throws FinalURLNotGeneratedException {
+            throws FinalURLNotGeneratedException, IOException {
         clearAllLastHttpResults();
         if (urlText == null) {
             throw new FinalURLNotGeneratedException();
@@ -138,11 +140,13 @@ public class APIReader {
                         urlConnection.getInputStream()));
             } catch (IOException ioe) {
                 showMessageDueToIOException(urlText, ioe);
+                throw new IOException();
             }
         } catch (MalformedURLException me) {
             showMessageDueToMalformedURLException(urlText, me);
+            throw new MalformedURLException();
         }
-        return new ArrayList<String>();
+        //return new ArrayList<String>();
     }
 
     /**
