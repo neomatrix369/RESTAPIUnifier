@@ -7,6 +7,10 @@ License
 -------
 Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RESTAPIUnifier/blob/master/LICENSE) in root and other directories.
 
+Java 8 Compatibility
+--------------------
+![Compatibility Badge](https://java.net/downloads/adoptopenjdk/compat.svg)
+
 Purpose and audience
 --------------------
 To simplify the use and maintainence of dependencies on external or internal APIs (RESTful APIs). Create an abstraction layer between your application and APIs from disparate vendors and increase cohesion, reduce coupling.
