@@ -24,7 +24,8 @@ Examples implemented using RESTAPIUnifier
 - Flickr API (search and getRecent) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/flickr_api
 - Twitter API (search) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/twitter_api
 - Import.IO API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/importio_api (underway)
-- YQL! - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/yql_api
+- YQL! API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/yql_api
+- Heroki API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/heroku_api
 
 <b>C#</b>
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
