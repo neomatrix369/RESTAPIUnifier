@@ -91,7 +91,7 @@ public class HerokuAPIBehaviours {
 			throws FinalURLNotGeneratedException, IOException,
 			BaseURLNotAssignedException, APIKeyNotAssignedException {
 		String actualResponse = HerokuAPI.authenticate();
-		System.out.println("========= Authentication Response ===============");
+		System.out.println("========= Authentication - API command Response ===============");
 		System.out.println(actualResponse);
 		System.out.println("=================================================");
 		assertThat(VALID_RESPONSE_FAILURE_MSG, actualResponse.isEmpty(),is(false));
@@ -100,7 +100,7 @@ public class HerokuAPIBehaviours {
 	@Test
 	public void should_return_a_response_when_the_account_command_is_invoked() throws BaseURLNotAssignedException, APIKeyNotAssignedException, FinalURLNotGeneratedException, IOException {
 		String actualResponse = HerokuAPI.invokeAccount();
-		System.out.println("========= Account Response ===============");
+		System.out.println("========= Account - API command Response ===============");
 		System.out.println(actualResponse);
 		System.out.println("=================================================");
 		assertThat("No response was returned from invoking the 'account' command from the Heroku server", actualResponse.isEmpty(), is(false));
