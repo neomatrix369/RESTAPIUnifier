@@ -41,36 +41,40 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HerokuAPIBehaviours {
-	private static final String AUTHORIZATION_FIELDNAME = "Authorization";
-	private static final String HEROKU_SETTINGS_LOCATION = "resources/heroku_settings.properties";
-	
-	private static final String FIELDNAME_APIKEY = "APIKey";
-	private static final String FIELDNAME_EMAIL = "emailaddress";
+/* ***** Heroku API *****
+ * Developers Guides
+ * https://devcenter.heroku.com
+ * 
+ * Building Scalable apps
+ * http://12factor.net
+ * 
+ * Overview of platform API
+ * http://bit.ly/heroku-api-blog
+ * 
+ * API quick start guide
+ * http://bit.ly/heroku-api-quick
+ * 
+ * API reference
+ * http://bit.ly/heroku-api-ref
+ */
+
+public class HerokuAPIBehaviours {	
 	private static final String NO_FIELDNAME_REQUIRED = "";
-	
-	private static final String FORMAT_TYPE_FIELD_NAME = "Accept";
-	private static final String RESULT_FORMAT_TYPE = "application/json";
+
 	private static final String NO_ERROR_RESPONSE_FAILURE_MSG = "No error response was returned by the API server";
 	private static final String EMPTY_RESPONSE_FAILURE_MSG = "An empty response was not returned by the API server";
 	private static final String VALID_RESPONSE_FAILURE_MSG = "A valid response was not returned by the API server";
-	private static final String EMPTY_STRING = "";
-	private static Map<String, String> param = new HashMap<String, String>();
-	private String username;
-	
+		
 	@Before
-	public void setup() throws IOException {
-		username = readPropertyFrom(HEROKU_SETTINGS_LOCATION,
-				FIELDNAME_EMAIL);		
+	public void setup() throws IOException{
+		HerokuAPI.initialiseSettings();
 	}
 	
 	@Test(expected = IOException.class)
 	public void should_Return_An_Error_Response_When_An_Empty_API_Is_Passed_In()
 			throws FinalURLNotGeneratedException, IOException,
 			BaseURLNotAssignedException, APIKeyNotAssignedException {
-		String apiKey = NO_FIELDNAME_REQUIRED;
-		param.put(username, apiKey);
-		String result = HerokuAPI.OAuth(param);
+		String result = HerokuAPI.authenticate(NO_FIELDNAME_REQUIRED);
 		assertThat(NO_ERROR_RESPONSE_FAILURE_MSG, result.isEmpty(), is(true));
 	}
 
@@ -78,9 +82,7 @@ public class HerokuAPIBehaviours {
 	public void should_Return_An_Error_Response_When_An_Invalid_API_Is_Passed_In()
 			throws FinalURLNotGeneratedException, IOException,
 			BaseURLNotAssignedException, APIKeyNotAssignedException {
-		String apiKey = "sdsdsdsdsd";
-		param.put(username, apiKey);
-		String response = HerokuAPI.OAuth(param);
+		String response = HerokuAPI.authenticate("sdsdsdsdsd");
 		assertThat(EMPTY_RESPONSE_FAILURE_MSG, response.isEmpty(), is(true));
 	}
 
@@ -88,12 +90,19 @@ public class HerokuAPIBehaviours {
 	public void should_return_a_response_when_a_valid_API_is_Passed_in()
 			throws FinalURLNotGeneratedException, IOException,
 			BaseURLNotAssignedException, APIKeyNotAssignedException {
-		String apiKey = readPropertyFrom(HEROKU_SETTINGS_LOCATION,
-				FIELDNAME_APIKEY);
-		param.put(FORMAT_TYPE_FIELD_NAME, RESULT_FORMAT_TYPE);
-		String httpBasicAuthFilterAuthentication = "Basic " + new String(Base64.encode(username + ":" + apiKey), "ASCII");      
-		param.put(AUTHORIZATION_FIELDNAME, httpBasicAuthFilterAuthentication);
-		String actualResponse = HerokuAPI.OAuth(param);
+		String actualResponse = HerokuAPI.authenticate();
+		System.out.println("========= Authentication Response ===============");
+		System.out.println(actualResponse);
+		System.out.println("=================================================");
 		assertThat(VALID_RESPONSE_FAILURE_MSG, actualResponse.isEmpty(),is(false));
+	}
+	
+	@Test
+	public void should_return_a_response_when_the_account_command_is_invoked() throws BaseURLNotAssignedException, APIKeyNotAssignedException, FinalURLNotGeneratedException, IOException {
+		String actualResponse = HerokuAPI.invokeAccount();
+		System.out.println("========= Account Response ===============");
+		System.out.println(actualResponse);
+		System.out.println("=================================================");
+		assertThat("No response was returned from invoking the 'account' command from the Heroku server", actualResponse.isEmpty(), is(false));
 	}
 }
