@@ -30,6 +30,9 @@ import java.util.Map;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
 import com.google.gson.Gson;
@@ -39,6 +42,9 @@ import static org.hamcrest.core.Is.*;
 import static org.neomatrix369.apiworld.ResultType.*;
 
 public class APIReaderBehaviours {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIReaderBehaviours.class);
+    
 	private static final String INVALID_JSON_RETURNED = "Invalid JSON returned.";
 	private static final String NO_RESULTS_RETURNED = "No results returned.";
 
@@ -55,7 +61,9 @@ public class APIReaderBehaviours {
 		apiReader.executeURL();
 		String result = apiReader.getFetchedResults();
 		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
-		System.out.println(result);
+		
+		LOGGER.info(result);
+		
 		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}
 
@@ -116,8 +124,10 @@ public class APIReaderBehaviours {
 		propertiesParam.put("test", "london");		
 		apiReader.executeURL("POST", propertiesParam);
 		
-		String result = apiReader.getFetchedResults();		
-		System.out.format("%s", result);
+		String result = apiReader.getFetchedResults();
+		
+		LOGGER.info(result);
+		
 		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
 		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
 	}	

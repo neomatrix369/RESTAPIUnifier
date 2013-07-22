@@ -29,12 +29,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Util class UtilityFunctions.
@@ -44,13 +46,10 @@ import org.jsoup.nodes.Document;
  */
 public final class UtilityFunctions {
 	
-    private static final Logger LOGGER = Logger.getLogger(UtilityFunctions.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
 
 	public static final String OPENING_BOX_BRACKET = "[";
 	public static final String CLOSING_BOX_BRACKET = "]";
-    
-    private static final String CURRENT_PATH_MSG = "Current path: ";
-    private static final String ERROR_DUE_TO_MSG = "Error due to: %s%n";
     
     public static final String PARAM_START = "?";
     public static final String COMMAND_URL_SEPARATOR = "/";
@@ -121,7 +120,7 @@ public final class UtilityFunctions {
         try {
             encodedToken = URLEncoder.encode(token, "UTF-8");
         } catch(UnsupportedEncodingException uee) {
-            LOGGER.warning("Invalid token.");
+            LOGGER.warn("Invalid token.");
         }
         
         return encodedToken;
@@ -158,11 +157,10 @@ public final class UtilityFunctions {
             prop.load(new FileReader(new File(propertyFilename)));
             return prop.getProperty(propertyName);
         } catch (FileNotFoundException e) {
-            System.out.format(ERROR_DUE_TO_MSG, e.getMessage());
-            String currentPath = new File(".").getCanonicalPath();
-            System.out.format(CURRENT_PATH_MSG + currentPath);
+            LOGGER.info("Current path: " + new File(".").getCanonicalPath());
+            LOGGER.error(e.getMessage());
         } catch (IOException e) {
-            System.out.format(ERROR_DUE_TO_MSG, e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return "";
     }
