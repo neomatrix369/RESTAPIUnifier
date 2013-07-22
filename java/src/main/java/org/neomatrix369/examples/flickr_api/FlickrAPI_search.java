@@ -28,9 +28,13 @@ import java.io.IOException;
 
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import org.neomatrix369.examples.flickr_api.BaseFlickrAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class FlickrAPI_search {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlickrAPI_search.class);
+    
     private FlickrAPI_search() {
         // Hide utility class constructor
     }
@@ -55,7 +59,7 @@ public final class FlickrAPI_search {
 
         FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&",
                 ResultType.JSON.toString(), "hello");
-        System.out.format("%s", flickrSearch.getFetchedResults());
+        LOGGER.info(flickrSearch.getFetchedResults());
     }
 }
 

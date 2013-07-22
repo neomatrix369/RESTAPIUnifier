@@ -22,15 +22,18 @@
  */
 package org.neomatrix369.examples.importio_api;
 
+import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
+
 import java.io.IOException;
 
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import org.neomatrix369.examples.importio_api.ImportIOAPI;
-
-import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ImportIOAPI_search {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImportIOAPI_search.class);
+    
     private ImportIOAPI_search() {
         // Hide utility class constructor
     }
@@ -61,7 +64,7 @@ public final class ImportIOAPI_search {
 
         ImportIOSearch importIOSearch = new ImportIOSearch("", username,
                 password);
-        System.out.format("%s", importIOSearch.getFetchedResults());
+        LOGGER.info(importIOSearch.getFetchedResults());
     }
 }
 

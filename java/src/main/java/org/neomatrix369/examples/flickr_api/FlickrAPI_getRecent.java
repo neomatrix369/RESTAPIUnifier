@@ -28,8 +28,13 @@ import java.io.IOException;
 
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class FlickrAPI_getRecent {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlickrAPI_getRecent.class);
+    
     private FlickrAPI_getRecent() {
         // Hide utility class constructor
     }
@@ -54,7 +59,7 @@ public final class FlickrAPI_getRecent {
                 "resources/flickr_settings.properties", "APIKey");
         FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey,
                 "&", ResultType.JSON.toString());
-        System.out.format("%s", flickrGetRecent.getFetchedResults());
+        LOGGER.info(flickrGetRecent.getFetchedResults());
     }
 }
 

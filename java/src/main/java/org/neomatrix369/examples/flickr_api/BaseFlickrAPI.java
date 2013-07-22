@@ -27,9 +27,13 @@ import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseFlickrAPI {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickrAPI.class);
+    
     private static final String FLICKR_API_PARAM = "api_key";
     private String baseURL = "http://api.flickr.com/services/rest";
     protected APIReader fetchedResults;
@@ -52,7 +56,7 @@ public class BaseFlickrAPI {
             apiBuilder.build();
             return new APIReader(apiBuilder);
         } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-            System.out.format("%s", e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return new APIReader(baseURL);

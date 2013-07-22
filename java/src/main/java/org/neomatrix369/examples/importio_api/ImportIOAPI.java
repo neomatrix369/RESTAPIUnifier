@@ -27,9 +27,13 @@ import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ImportIOAPI {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImportIOAPI.class);
+    
     private String baseURL = "https://api.import.io/auth/";
     protected APIReader fetchedResults;
 
@@ -50,7 +54,7 @@ public class ImportIOAPI {
             apiBuilder.build();
             return new APIReader(apiBuilder);
         } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-            System.out.format("%s", e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return new APIReader(baseURL);
