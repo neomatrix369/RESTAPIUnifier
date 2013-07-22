@@ -76,21 +76,14 @@ public final class UtilityFunctions {
     }
 
     /**
-     * .
+     * Checks if url has a separator using apache commons lang.
      * @param urlString String
      * @param commandUrlSeparator String
-     * @return booelan
+     * @return boolean
      */
     public static boolean doesHaveSeparator(String urlString,
             String commandUrlSeparator) {
-        
-        int lastCharIndex = urlString.length() - commandUrlSeparator.length();
-        if (lastCharIndex > 0) {
-            String trailingString = urlString.substring(lastCharIndex,
-                    lastCharIndex + commandUrlSeparator.length());
-            return trailingString.equals(commandUrlSeparator);
-        }
-        return false;
+        return StringUtils.endsWith(urlString, commandUrlSeparator);
     }
     
 
