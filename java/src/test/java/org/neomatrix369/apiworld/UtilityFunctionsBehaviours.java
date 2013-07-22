@@ -55,7 +55,7 @@ public class UtilityFunctionsBehaviours {
     
     @Test(expected = IllegalArgumentException.class) 
     public void should_Return_IllegalArgmentException_If_Null_Is_Passed_To_Encode_Token() {
-        encodeToken(null);        
+        Assert.fail(encodeToken(null));        
     }
     
     @Test

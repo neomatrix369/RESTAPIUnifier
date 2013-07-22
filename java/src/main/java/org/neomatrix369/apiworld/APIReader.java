@@ -22,17 +22,24 @@
  */
 package org.neomatrix369.apiworld;
 
-import java.io.*;
-import java.net.*;
-import java.nio.charset.MalformedInputException;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.CLOSING_BOX_BRACKET;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.OPENING_BOX_BRACKET;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.dropStartAndEndDelimeters;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import org.neomatrix369.apiworld.APIBuilder;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -40,6 +47,8 @@ import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
  *
  */
 public class APIReader {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIReader.class);
 
 	private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.";
     private static final String READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT = ">>> Reading results returned, this may take a moment...";
@@ -49,10 +58,6 @@ public class APIReader {
     private static final String INPUT_URL_STRING = ">>> Input URL String: %s";
     private static final String ERROR_DUE_TO = "Error due to: %s";
 
-    private static final Logger LOGGER = Logger.getLogger(APIReader.class
-            .getName());
-
-    private static final String STRING_WITH_NEW_LINE_FEED = "%s%n";
     private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
     private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s";
 
@@ -194,8 +199,8 @@ public class APIReader {
      */
     private void showMessageDueToMalformedURLException(String urlText,
             MalformedURLException me) {
-        LOGGER.severe(String.format(INPUT_URL_STRING, urlText));
-        LOGGER.severe(String.format(ERROR_DUE_TO, me.getMessage()));
+        LOGGER.error(String.format(INPUT_URL_STRING, urlText));
+        LOGGER.error(String.format(ERROR_DUE_TO, me.getMessage()));
     }
 
     /**
@@ -204,8 +209,8 @@ public class APIReader {
      * @param ioe IOException
      */
     private void showMessageDueToIOException(String urlText, IOException ioe) {
-        LOGGER.severe(String.format(ERROR_CONNECTING_TO_THE_WEBSITE, urlText));
-        LOGGER.severe(String.format(ERROR_DUE_TO, ioe.getMessage()));
+        LOGGER.error(String.format(ERROR_CONNECTING_TO_THE_WEBSITE, urlText));
+        LOGGER.error(String.format(ERROR_DUE_TO, ioe.getMessage()));
     }
 
     /**
@@ -222,8 +227,7 @@ public class APIReader {
      */
     public void displayResult() {
         if (urlText == null) {
-            LOGGER.warning(String.format(STRING_WITH_NEW_LINE_FEED,
-                    NO_HTTP_CONNECTIONS_MADE));
+            LOGGER.warn(NO_HTTP_CONNECTIONS_MADE);
             return;
         }
 
@@ -235,7 +239,7 @@ public class APIReader {
      */
     private void displayResults() {
         displayMessageAboutLastRetrieval(urlText);
-        System.out.format(STRING_WITH_NEW_LINE_FEED, lastHttpResult.toString());
+        LOGGER.info(lastHttpResult.toString());
     }
     
     /**
