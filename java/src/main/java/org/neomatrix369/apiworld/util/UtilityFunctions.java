@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -63,26 +64,15 @@ public final class UtilityFunctions {
         
     }
 
-    
-
     /**
-     * .
+     * Removes the trailing separator using apache commons lang.
      * @param urlParameterTokens String
      * @param paramSeparator String
      * @return String
      */
     public static String dropTrailingSeparator(String urlParameterTokens,
             String paramSeparator) {
-        int lastCharIndex = urlParameterTokens.length()
-                - paramSeparator.length();
-        if (lastCharIndex > 0) {
-            String trailingString = urlParameterTokens.substring(lastCharIndex,
-                    lastCharIndex + paramSeparator.length());
-            if (trailingString.equals(paramSeparator)) {
-                return urlParameterTokens.substring(0, lastCharIndex);
-            }
-        }
-        return urlParameterTokens;
+        return StringUtils.substringBeforeLast(urlParameterTokens, paramSeparator);
     }
 
     /**
