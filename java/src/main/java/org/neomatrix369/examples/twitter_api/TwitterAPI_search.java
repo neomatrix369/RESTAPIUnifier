@@ -24,8 +24,13 @@ package org.neomatrix369.examples.twitter_api;
 
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class TwitterAPI_search {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(TwitterAPI_search.class);
+    
     private TwitterAPI_search() {
         // Hide utility class constructor
     }
@@ -51,7 +56,7 @@ public final class TwitterAPI_search {
             FinalURLNotGeneratedException {
         TwitterSearch twitterSearch = new TwitterSearch("", "?",
                 ResultType.JSON.toString(), "hello");
-        System.out.format("%s", twitterSearch.getFetchedResults());
+        LOGGER.info(twitterSearch.getFetchedResults());
     }
 }
 

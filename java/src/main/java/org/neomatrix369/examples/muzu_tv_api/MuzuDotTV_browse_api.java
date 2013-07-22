@@ -30,6 +30,8 @@ import java.util.Properties;
 
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  Create Date: Saturday 21 April 2012 13:18 PM
@@ -37,6 +39,8 @@ import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
  */
 public final class MuzuDotTV_browse_api {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_browse_api.class);
+    
     private MuzuDotTV_browse_api() {
         // Hide utility class constructor
     }
@@ -70,11 +74,11 @@ public final class MuzuDotTV_browse_api {
 
             MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
                     "views", "0", null, null, null, ResultType.JSON.toString());
-            System.out.format("%s", muzuBrowse.getFetchedResults());
+            LOGGER.info(muzuBrowse.getFetchedResults());
         } catch (FileNotFoundException e) {
-            System.out.format("Error due to: %s%n", e.getMessage());
+            LOGGER.error(e.getMessage());
         } catch (IOException e) {
-            System.out.format("Error due to: %s%n", e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

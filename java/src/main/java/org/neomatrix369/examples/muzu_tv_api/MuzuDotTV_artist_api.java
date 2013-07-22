@@ -29,12 +29,16 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  Create Date: Saturday 21 April 2012 13:18 PM
  Max queries: 10000
  */
 public final class MuzuDotTV_artist_api {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_artist_api.class);
 
     private MuzuDotTV_artist_api() {
         // Hide utility class constructor
@@ -68,11 +72,11 @@ public final class MuzuDotTV_artist_api {
                     "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid="
                             + muzuAPIKey);
 
-            System.out.format("%s", muzuArtist.getFetchedResults());
+            LOGGER.info(muzuArtist.getFetchedResults());
         } catch (FileNotFoundException e) {
-            System.out.format("Error due to: %s%n", e.getMessage());
+            LOGGER.error(e.getMessage());
         } catch (IOException e) {
-            System.out.format("Error due to: %s%n", e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

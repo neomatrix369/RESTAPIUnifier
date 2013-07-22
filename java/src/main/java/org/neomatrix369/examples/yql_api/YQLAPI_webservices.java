@@ -25,9 +25,13 @@ package org.neomatrix369.examples.yql_api;
 
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import org.neomatrix369.examples.yql_api.BaseYQLAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class YQLAPI_webservices {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(YQLAPI_webservices.class);
+    
     private YQLAPI_webservices() {
         // Hide utility class constructor
     }
@@ -53,11 +57,11 @@ public final class YQLAPI_webservices {
             FinalURLNotGeneratedException {
         YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?",
                 ResultType.JSON.toString(), "show tables");
-        System.out.format("%s", yqlAPIWebServices.getFetchedResults());
+        LOGGER.info(yqlAPIWebServices.getFetchedResults());
 
         yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(),
                 "show tables", null);
-        System.out.format("%s", yqlAPIWebServices.getFetchedResults());
+        LOGGER.info(yqlAPIWebServices.getFetchedResults());
     }
 }
 

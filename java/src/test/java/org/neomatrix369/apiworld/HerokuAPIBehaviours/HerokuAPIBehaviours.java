@@ -22,24 +22,19 @@
  */
 package org.neomatrix369.apiworld.HerokuAPIBehaviours;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import com.sun.jersey.core.util.Base64;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import org.neomatrix369.examples.heroku_api.HerokuAPI;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
-
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
+import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.neomatrix369.examples.heroku_api.HerokuAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /* ***** Heroku API *****
  * Developers Guides
@@ -59,6 +54,10 @@ import java.util.Map;
  */
 
 public class HerokuAPIBehaviours {	
+    
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(HerokuAPIBehaviours.class);
+    
 	private static final String NO_FIELDNAME_REQUIRED = "";
 
 	private static final String NO_ERROR_RESPONSE_FAILURE_MSG = "No error response was returned by the API server";
@@ -91,18 +90,18 @@ public class HerokuAPIBehaviours {
 			throws FinalURLNotGeneratedException, IOException,
 			BaseURLNotAssignedException, APIKeyNotAssignedException {
 		String actualResponse = HerokuAPI.authenticate();
-		System.out.println("========= Authentication - API command Response ===============");
-		System.out.println(actualResponse);
-		System.out.println("=================================================");
+		LOGGER.info("========= Authentication - API command Response ===============");
+		LOGGER.info(actualResponse);
+		LOGGER.info("=================================================");
 		assertThat(VALID_RESPONSE_FAILURE_MSG, actualResponse.isEmpty(),is(false));
 	}
 	
 	@Test
 	public void should_return_a_response_when_the_account_command_is_invoked() throws BaseURLNotAssignedException, APIKeyNotAssignedException, FinalURLNotGeneratedException, IOException {
 		String actualResponse = HerokuAPI.invokeAccount();
-		System.out.println("========= Account - API command Response ===============");
-		System.out.println(actualResponse);
-		System.out.println("=================================================");
+		LOGGER.info("========= Account - API command Response ===============");
+		LOGGER.info(actualResponse);
+		LOGGER.info("=================================================");
 		assertThat("No response was returned from invoking the 'account' command from the Heroku server", actualResponse.isEmpty(), is(false));
 	}
 }

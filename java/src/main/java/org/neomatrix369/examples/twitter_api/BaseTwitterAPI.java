@@ -27,8 +27,12 @@ import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BaseTwitterAPI {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTwitterAPI.class);
 
     private String baseURL = "http://search.twitter.com/";
     protected APIReader fetchedResults;
@@ -51,7 +55,7 @@ public class BaseTwitterAPI {
             apiBuilder.build();
             return new APIReader(apiBuilder);
         } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-            System.out.format("%s", e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return new APIReader(baseURL);
