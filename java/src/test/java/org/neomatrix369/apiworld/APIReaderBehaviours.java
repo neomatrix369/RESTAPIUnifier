@@ -35,8 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
 
-import com.google.gson.Gson;
-
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.*;
 import static org.neomatrix369.apiworld.ResultType.*;
@@ -113,11 +111,8 @@ public class APIReaderBehaviours {
 				username, password);
 		APIReader apiReader = new APIReader(url);
 		apiReader.executeURL("POST", null);
-		Gson resultJson = new Gson();
-		resultJson.toJson(apiReader.getFetchedResults());
 		
-		url = 
-				"http://query.import.io/store/connector/d56b49bf-c668-47af-b893-9834bae3001d/_query?AUTH=c6eug4h43lidpjbmwk66vxb01q62yfkl8cxzics6gktnrt1oybecn0r3v21hnhm8yv2a9ov3r&location=london";
+		url = "http://query.import.io/store/connector/d56b49bf-c668-47af-b893-9834bae3001d/_query?AUTH=c6eug4h43lidpjbmwk66vxb01q62yfkl8cxzics6gktnrt1oybecn0r3v21hnhm8yv2a9ov3r&location=london";
 		apiReader = new APIReader(url);
 		Map<String, String> propertiesParam = new HashMap<String, String>();
 		propertiesParam.put("AUTH", "");
