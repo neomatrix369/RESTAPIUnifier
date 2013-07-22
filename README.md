@@ -32,7 +32,7 @@ Examples implemented using RESTAPIUnifier
 <b>C#</b>
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
 - Examples are on the way. Credit for this task goes to @angiemai . She spent several hours going through the Java tests and writing tests and implementations in C# during the Yahoo! Europe Hackday in London to accomplish the feat!
-/
+
 <b><i>Note: each of the examples require their own settings file containing properties. Also most of them expect you to have your API key atleast to access their services. Information for these requirements are mentioned within comments of each if the source codes.</i></b>
 
 Timeline
@@ -43,8 +43,8 @@ Timeline
 * 23 April 2013: came across Import.IO (see below)
 * 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc
 * 27 April 2013: more improvements, added examples in Java & inception of C# version at Yahoo! Hack Europe: London
-*    9 May 2013: University student from Brazil is going to use the RestAPIUnifier for his thesis work (with help from the contributors and his professors).
-* 20 July  2013: Heroku API implementation, OAuth - first steps in place, further refactoring.
+*    <i>9 May 2013: University student from Brazil is going to use the RestAPIUnifier for his thesis work (with help from the contributors and his professors).</i>
+* 20 July  2013: Heroku API implementation, OAuth - first steps in place. <b>Won Heroku "star prize" (1st of 5 winners) at Hacked.IO, O2 Indigo, London.</b>
 
 Implementations based on the principles behind this idea
 --------------------------------------------------------
