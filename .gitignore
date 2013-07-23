@@ -16,8 +16,8 @@
 sonar-project.properties
 target/
 !/.gitignore
-resources/
-
+#resources/
+res/
 
 # Csharp files
 obj/
