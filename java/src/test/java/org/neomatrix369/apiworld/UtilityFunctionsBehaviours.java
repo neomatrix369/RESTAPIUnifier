@@ -81,7 +81,7 @@ public class UtilityFunctionsBehaviours {
     public void should_drop_begin_and_end_delimeters_in_an_Empty_String() {
     	String inputString = "[]";
     	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-				CLOSING_BOX_BRACKET);
+    	        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));
 		String expectedString = "";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
     }
@@ -90,9 +90,9 @@ public class UtilityFunctionsBehaviours {
     public void should_drop_double_begin_and_end_delimeters_in_an_Empty_String() {
     	String inputString = "[[]]";
     	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-				CLOSING_BOX_BRACKET);
+    	        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));
     	actualString = dropStartAndEndDelimeters(actualString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-				CLOSING_BOX_BRACKET);    	
+    	        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));    	
 		String expectedString = "";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
     }
@@ -101,7 +101,7 @@ public class UtilityFunctionsBehaviours {
     public void should_drop_begin_and_end_delimeters_in_a_Simple_String() {
     	String inputString = "[{'some': 'value'}]";
     	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-				CLOSING_BOX_BRACKET);
+    	        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));
 		String expectedString = "{'some': 'value'}";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
     }
@@ -110,9 +110,9 @@ public class UtilityFunctionsBehaviours {
     public void should_drop_double_begin_and_end_delimeters_in_a_Simple_String() {
     	String inputString = "[[{'some': 'value'}]]";
     	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-				CLOSING_BOX_BRACKET);
+    	        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));
     	actualString = dropStartAndEndDelimeters(actualString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-				CLOSING_BOX_BRACKET);    	
+    	        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));    	
 		String expectedString = "{'some': 'value'}";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
     }

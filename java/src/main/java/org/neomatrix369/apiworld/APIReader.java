@@ -22,7 +22,6 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.util.UtilityFunctions.CLOSING_BOX_BRACKET;
 import static org.neomatrix369.apiworld.util.UtilityFunctions.dropStartAndEndDelimeters;
 
 import java.io.BufferedReader;
@@ -255,9 +254,9 @@ public class APIReader {
     public String getFetchedResults() {
 		String result = lastHttpResult.toString();
 		while (result.startsWith(Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"))
-				&& result.endsWith(CLOSING_BOX_BRACKET)) {
+				&& result.endsWith(Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"))) {
 			result = dropStartAndEndDelimeters(result, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
-					CLOSING_BOX_BRACKET);
+			        Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET"));
 		}
 		return result;
     }

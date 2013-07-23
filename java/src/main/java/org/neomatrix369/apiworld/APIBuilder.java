@@ -43,7 +43,7 @@ public class APIBuilder {
     private String commandString;
     private String finalURL;
     private Map<String, String> urlParameters = new LinkedHashMap<String, String>();
-    private String paramStart = PARAM_START;
+    private String paramStart = Keys.INSTANCE.getKey("PARAM_START");
     private boolean apiKeyIsRequired = true;
 
     /**
@@ -117,14 +117,14 @@ public class APIBuilder {
                             eachKeyValuePair.getKey(), Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR"),
                             eachKeyValuePair.getValue());
                     urlParameterTokens = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"),
-                            urlParameterTokens, eachToken, PARAM_SEPARATOR);
+                            urlParameterTokens, eachToken, Keys.INSTANCE.getKey("PARAM_SEPARATOR"));
                 }
             }
 
             urlParameterTokens = dropTrailingSeparator(urlParameterTokens,
-                    PARAM_SEPARATOR);
+                    Keys.INSTANCE.getKey("PARAM_SEPARATOR"));
             this.finalURL = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), finalURL,
-                    PARAM_SEPARATOR, urlParameterTokens);
+                    Keys.INSTANCE.getKey("PARAM_SEPARATOR"), urlParameterTokens);
         }
     }
 
@@ -139,9 +139,9 @@ public class APIBuilder {
 
         this.finalURL = baseURL.trim();
         if ((commandString != null) && (!commandString.isEmpty())) {
-            if (!doesHaveSeparator(this.finalURL, COMMAND_URL_SEPARATOR)) {
+            if (!doesHaveSeparator(this.finalURL, Keys.INSTANCE.getKey("COMMAND_URL_SEPARATOR"))) {
                 this.finalURL = String.format(Keys.INSTANCE.getKey("TWO_TOKENS"), finalURL,
-                        COMMAND_URL_SEPARATOR);
+                        Keys.INSTANCE.getKey("COMMAND_URL_SEPARATOR"));
             }
 
             this.finalURL = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), finalURL,

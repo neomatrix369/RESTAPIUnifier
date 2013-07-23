@@ -49,12 +49,6 @@ public final class UtilityFunctions {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
 
-	public static final String CLOSING_BOX_BRACKET = "]";
-    
-    public static final String PARAM_START = "?";
-    public static final String COMMAND_URL_SEPARATOR = "/";
-    public static final String PARAM_SEPARATOR = "&";
-
     /**
      * Hide Utility Class Constructor - Utility classes should not have a
      * public or default constructor.
