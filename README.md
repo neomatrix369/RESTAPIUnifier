@@ -13,7 +13,7 @@ Java 8 Compatibility
 
 <b>JSR 353 - JSON-processing API has been used as part of the implementation of this library.</b>
 
-We are supporters of @adoptopenjdk and @adoptajsr programs!
+We are supporters of the @adoptopenjdk and @adoptajsr programs!
 
 Purpose and audience
 --------------------
