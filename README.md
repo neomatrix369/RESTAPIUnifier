@@ -13,6 +13,8 @@ Java 8 Compatibility
 
 <b>JSR 353 - JSON-processing API has been used as part of the implementation of this library.</b>
 
+We are supporters of @adoptopenjdk and @adoptajsr programs!
+
 Purpose and audience
 --------------------
 To simplify the use and maintainence of dependencies on external or internal APIs (RESTful APIs). Create an abstraction layer between your application and APIs from disparate vendors and increase cohesion, reduce coupling.
