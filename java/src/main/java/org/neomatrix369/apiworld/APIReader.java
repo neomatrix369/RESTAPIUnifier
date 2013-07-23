@@ -50,17 +50,6 @@ public class APIReader {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(APIReader.class);
 
-	private static final String CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT = ">>> Connecting to URL: <%s>, this may take a moment.";
-    private static final String READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT = ">>> Reading results returned, this may take a moment...";
-    private static final String READING_COMPLETED = ">>> Reading completed...";
-    private static final String CONNECTION_CLOSED = ">>> Connection closed!";
-    private static final String ERROR_CONNECTING_TO_THE_WEBSITE = ">>> Error connecting to the website: %s";
-    private static final String INPUT_URL_STRING = ">>> Input URL String: %s";
-    private static final String ERROR_DUE_TO = "Error due to: %s";
-
-    private static final String NO_HTTP_CONNECTIONS_MADE = ">>> No http connections made.";
-    private static final String DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL = ">>> Displaying last retrieved results from %s";
-
     private List<String> lastHttpResult = new ArrayList<String>();
     private String urlText;
 
@@ -159,7 +148,7 @@ public class APIReader {
      * @param urlText String
      */
     private void showMessageWhileMakingConnection(String urlText) {
-        LOGGER.info(String.format(CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT,
+        LOGGER.info(String.format(Keys.INSTANCE.getKey("CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT"),
                 urlText));
     }
 
@@ -174,19 +163,19 @@ public class APIReader {
         BufferedReader httpResult = null;
         try {
             httpResult = new BufferedReader(isr);
-            LOGGER.info(READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT);
+            LOGGER.info(Keys.INSTANCE.getKey("READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT"));
 
             String inputLine;
             while ((inputLine = httpResult.readLine()) != null) {
                 addToLastHttpResults(inputLine);
             }
 
-            LOGGER.info(READING_COMPLETED);
+            LOGGER.info(Keys.INSTANCE.getKey("READING_COMPLETED"));
         } finally {
             if (httpResult != null) {
                 httpResult.close();
             }
-            LOGGER.info(CONNECTION_CLOSED);
+            LOGGER.info(Keys.INSTANCE.getKey("CONNECTION_CLOSED"));
         }
 
         return lastHttpResult;
@@ -199,8 +188,8 @@ public class APIReader {
      */
     private void showMessageDueToMalformedURLException(String urlText,
             MalformedURLException me) {
-        LOGGER.error(String.format(INPUT_URL_STRING, urlText));
-        LOGGER.error(String.format(ERROR_DUE_TO, me.getMessage()));
+        LOGGER.error(String.format(Keys.INSTANCE.getKey("INPUT_URL_STRING"), urlText));
+        LOGGER.error(String.format(Keys.INSTANCE.getKey("ERROR_DUE_TO"), me.getMessage()));
     }
 
     /**
@@ -209,8 +198,8 @@ public class APIReader {
      * @param ioe IOException
      */
     private void showMessageDueToIOException(String urlText, IOException ioe) {
-        LOGGER.error(String.format(ERROR_CONNECTING_TO_THE_WEBSITE, urlText));
-        LOGGER.error(String.format(ERROR_DUE_TO, ioe.getMessage()));
+        LOGGER.error(String.format(Keys.INSTANCE.getKey("ERROR_CONNECTING_TO_THE_WEBSITE"), urlText));
+        LOGGER.error(String.format(Keys.INSTANCE.getKey("ERROR_DUE_TO"), ioe.getMessage()));
     }
 
     /**
@@ -227,7 +216,7 @@ public class APIReader {
      */
     public void displayResult() {
         if (urlText == null) {
-            LOGGER.warn(NO_HTTP_CONNECTIONS_MADE);
+            LOGGER.warn(Keys.INSTANCE.getKey("NO_HTTP_CONNECTIONS_MADE"));
             return;
         }
 
@@ -247,7 +236,7 @@ public class APIReader {
      * @param urlText String
      */
     private void displayMessageAboutLastRetrieval(String urlText) {
-        LOGGER.info(String.format(DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL,
+        LOGGER.info(String.format(Keys.INSTANCE.getKey("DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL"),
                 urlText));
     }
 
