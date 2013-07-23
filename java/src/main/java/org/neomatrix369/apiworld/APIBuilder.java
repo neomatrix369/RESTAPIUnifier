@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import org.neomatrix369.apiworld.util.Keys;
 
 /**
  * 
@@ -37,9 +38,6 @@ import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
  */
 public class APIBuilder {
 
-    private static final String THREE_TOKENS = "%s%s%s";
-    private static final String TWO_TOKENS = "%s%s";
-    private static final String KEY_VALUE_SEPARATOR = "=";
     private String baseURL;
     private String apiKey;
     private String commandString;
@@ -85,7 +83,7 @@ public class APIBuilder {
         validateAPIKey();
 
         if ((apiKey != null) && (!apiKey.isEmpty())) {
-            this.finalURL = String.format(TWO_TOKENS, finalURL, apiKey);
+            this.finalURL = String.format(Keys.INSTANCE.getKey("TWO_TOKENS"), finalURL, apiKey);
         }
     }
 
@@ -115,17 +113,17 @@ public class APIBuilder {
             for (Map.Entry<String, String> eachKeyValuePair : urlParameters
                     .entrySet()) {
                 if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
-                    String eachToken = String.format(THREE_TOKENS,
-                            eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
+                    String eachToken = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"),
+                            eachKeyValuePair.getKey(), Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR"),
                             eachKeyValuePair.getValue());
-                    urlParameterTokens = String.format(THREE_TOKENS,
+                    urlParameterTokens = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"),
                             urlParameterTokens, eachToken, PARAM_SEPARATOR);
                 }
             }
 
             urlParameterTokens = dropTrailingSeparator(urlParameterTokens,
                     PARAM_SEPARATOR);
-            this.finalURL = String.format(THREE_TOKENS, finalURL,
+            this.finalURL = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), finalURL,
                     PARAM_SEPARATOR, urlParameterTokens);
         }
     }
@@ -142,11 +140,11 @@ public class APIBuilder {
         this.finalURL = baseURL.trim();
         if ((commandString != null) && (!commandString.isEmpty())) {
             if (!doesHaveSeparator(this.finalURL, COMMAND_URL_SEPARATOR)) {
-                this.finalURL = String.format(TWO_TOKENS, finalURL,
+                this.finalURL = String.format(Keys.INSTANCE.getKey("TWO_TOKENS"), finalURL,
                         COMMAND_URL_SEPARATOR);
             }
 
-            this.finalURL = String.format(THREE_TOKENS, finalURL,
+            this.finalURL = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), finalURL,
                     commandString, paramStart);
         }
     }
@@ -186,7 +184,7 @@ public class APIBuilder {
      * @param value String
      */
     public void setAPIKey(String key, String value) {
-        this.apiKey = String.format(THREE_TOKENS, key, KEY_VALUE_SEPARATOR, value);
+        this.apiKey = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), key, Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR"), value);
         apiKeyIsRequired = true;
     }
 
