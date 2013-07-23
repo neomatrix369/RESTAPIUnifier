@@ -18,6 +18,9 @@ target/
 !/.gitignore
 #resources/
 res/
+*.properties
+!Keys.properties
+!logback.xml
 
 # Csharp files
 obj/
