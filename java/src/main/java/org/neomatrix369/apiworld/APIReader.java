@@ -23,7 +23,6 @@
 package org.neomatrix369.apiworld;
 
 import static org.neomatrix369.apiworld.util.UtilityFunctions.CLOSING_BOX_BRACKET;
-import static org.neomatrix369.apiworld.util.UtilityFunctions.OPENING_BOX_BRACKET;
 import static org.neomatrix369.apiworld.util.UtilityFunctions.dropStartAndEndDelimeters;
 
 import java.io.BufferedReader;
@@ -38,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
+import org.neomatrix369.apiworld.util.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -265,9 +265,9 @@ public class APIReader {
      */
     public String getFetchedResults() {
 		String result = lastHttpResult.toString();
-		while (result.startsWith(OPENING_BOX_BRACKET)
+		while (result.startsWith(Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"))
 				&& result.endsWith(CLOSING_BOX_BRACKET)) {
-			result = dropStartAndEndDelimeters(result, OPENING_BOX_BRACKET,
+			result = dropStartAndEndDelimeters(result, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 					CLOSING_BOX_BRACKET);
 		}
 		return result;

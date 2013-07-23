@@ -49,7 +49,6 @@ public final class UtilityFunctions {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
 
-	public static final String OPENING_BOX_BRACKET = "[";
 	public static final String CLOSING_BOX_BRACKET = "]";
     
     public static final String PARAM_START = "?";

@@ -24,6 +24,8 @@ package org.neomatrix369.apiworld;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.neomatrix369.apiworld.util.Keys;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.neomatrix369.apiworld.util.UtilityFunctions.*;
@@ -78,7 +80,7 @@ public class UtilityFunctionsBehaviours {
     @Test
     public void should_drop_begin_and_end_delimeters_in_an_Empty_String() {
     	String inputString = "[]";
-    	String actualString = dropStartAndEndDelimeters(inputString, OPENING_BOX_BRACKET,
+    	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 				CLOSING_BOX_BRACKET);
 		String expectedString = "";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
@@ -87,9 +89,9 @@ public class UtilityFunctionsBehaviours {
     @Test
     public void should_drop_double_begin_and_end_delimeters_in_an_Empty_String() {
     	String inputString = "[[]]";
-    	String actualString = dropStartAndEndDelimeters(inputString, OPENING_BOX_BRACKET,
+    	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 				CLOSING_BOX_BRACKET);
-    	actualString = dropStartAndEndDelimeters(actualString, OPENING_BOX_BRACKET,
+    	actualString = dropStartAndEndDelimeters(actualString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 				CLOSING_BOX_BRACKET);    	
 		String expectedString = "";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
@@ -98,7 +100,7 @@ public class UtilityFunctionsBehaviours {
     @Test
     public void should_drop_begin_and_end_delimeters_in_a_Simple_String() {
     	String inputString = "[{'some': 'value'}]";
-    	String actualString = dropStartAndEndDelimeters(inputString, OPENING_BOX_BRACKET,
+    	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 				CLOSING_BOX_BRACKET);
 		String expectedString = "{'some': 'value'}";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
@@ -107,9 +109,9 @@ public class UtilityFunctionsBehaviours {
     @Test
     public void should_drop_double_begin_and_end_delimeters_in_a_Simple_String() {
     	String inputString = "[[{'some': 'value'}]]";
-    	String actualString = dropStartAndEndDelimeters(inputString, OPENING_BOX_BRACKET,
+    	String actualString = dropStartAndEndDelimeters(inputString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 				CLOSING_BOX_BRACKET);
-    	actualString = dropStartAndEndDelimeters(actualString, OPENING_BOX_BRACKET,
+    	actualString = dropStartAndEndDelimeters(actualString, Keys.INSTANCE.getKey("OPENING_BOX_BRACKET"),
 				CLOSING_BOX_BRACKET);    	
 		String expectedString = "{'some': 'value'}";
 		assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
