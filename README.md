@@ -11,9 +11,11 @@ Java 8 Compatibility
 --------------------
 ![Compatibility Badge](https://java.net/downloads/adoptopenjdk/compat.svg)
 
+[Find out how you can also use the above logo on your web assets](https://java.net/projects/adoptopenjdk/pages/TestingJava8)
+
 <b>JSR 353 - JSON-processing API has been used as part of the implementation of this library.</b>
 
-We are supporters of the @adoptopenjdk and @adoptajsr programs!
+We are supporters of the <b>[@adoptopenjdk](https://twitter.com/adoptopenjdk)</b> and <b>[@adoptajsr](https://twitter.com/adoptajsr)</b> programs!
 
 Purpose and audience
 --------------------
