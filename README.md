@@ -9,9 +9,9 @@ Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RE
 
 Java 8 Compatibility
 --------------------
-![Compatibility Badge](https://java.net/downloads/adoptopenjdk/compat.svg)
+<b>[Find out how you can also use this logo with your F/OSS projects](https://java.net/projects/adoptopenjdk/pages/TestingJava8)</b>
 
-[Find out how you can also use the above logo on your web assets](https://java.net/projects/adoptopenjdk/pages/TestingJava8)
+![Compatibility Badge](https://java.net/downloads/adoptopenjdk/compat.svg)
 
 <b>JSR 353 - JSON-processing API has been used as part of the implementation of this library.</b>
 
