@@ -39,8 +39,6 @@ import org.neomatrix369.apiworld.util.Keys;
 import com.sun.jersey.core.util.Base64;
 
 public class HerokuAPI {
-	private static final String EMPTY_STRING = "";
-	
 	private static final String baseURL = "https://api.heroku.com/%s";
 	private static final boolean APIKEY_NOT_REQUIRED = false;
 	
