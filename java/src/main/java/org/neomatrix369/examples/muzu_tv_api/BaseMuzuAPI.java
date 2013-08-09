@@ -26,6 +26,7 @@ import org.neomatrix369.apiworld.APIBuilder;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import org.neomatrix369.apiworld.util.Keys;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,6 @@ public class BaseMuzuAPI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzuAPI.class);
     
-    private static final String MUZUID_URL_PARAM = "muzuid";
     private String baseURL = "http://www.muzu.tv/api/";
     protected APIReader fetchedResults;
 
@@ -43,7 +43,7 @@ public class BaseMuzuAPI {
         APIBuilder apiBuilder = new APIBuilder();
         apiBuilder.addBaseURL(baseURL);
         apiBuilder.setCommand(apiCommand);
-        apiBuilder.setAPIKey(MUZUID_URL_PARAM, apiKey);
+        apiBuilder.setAPIKey(Keys.INSTANCE.getKey("MUZUID_URL_PARAM"), apiKey);
         int paramCtr = 0;
         for (String eachValue : params) {
             apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
