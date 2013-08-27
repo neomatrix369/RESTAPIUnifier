@@ -1,22 +1,144 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>APIUnifier</groupId>
-	<artifactId>APIUnifier</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>org.neomatrix369</groupId>
+	<artifactId>RESTAPIUnifier</artifactId>
+	<version>1.0.0</version>
+
+	<packaging>jar</packaging>
+	<description>RESTAPIUnifier - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc..</description>
+	<inceptionYear>${project.inceptionYear}</inceptionYear>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.inceptionYear>2013</project.inceptionYear>
+
+		<jdk.version>1.7</jdk.version>
+		<surefire.version>2.14.1</surefire.version>
+		<sonar.host.url>http://heliofrota.com:9000/</sonar.host.url>
+		<license.licenseName>LICENSE_short_header</license.licenseName>
+		<license.licenseResolver>${project.baseUri}/</license.licenseResolver>
+		
+        <slf4j.version>1.6.4</slf4j.version>
+        <logback.version>1.0.1</logback.version>
+	</properties>
+
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
+	<licenses>
+		<license>
+			<name>GPL v2</name>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>neomatrix369</name>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>neomatrix369</name>
+			<timezone>GMT</timezone>
+		</developer>
+		<developer>
+			<name>angiemae</name>
+			<timezone>GMT</timezone>
+		</developer>
+		<developer>
+			<name>Helio Frota</name>
+			<timezone>UTC−03:00</timezone>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/neomatrix369/RESTAPIUnifier/issues</url>
+	</issueManagement>
+
 	<build>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.0</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
 				</configuration>
+			</plugin>
+
+			<!-- Use the following maven command to format source files with license 
+				headers $ mvn license:format Use the following maven command to perform license 
+				checks on source files $ mvn license:check Use the following maven command 
+				to remove license headers from source files $ mvn license:remove -->
+
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<basedir>${basedir}</basedir>
+					<header>${basedir}/LICENSE_short_header</header>
+					<validHeaders>
+						<validHeader>/LICENSE_short_header</validHeader>
+					</validHeaders>
+					<quiet>false</quiet>
+					<failIfMissing>true</failIfMissing>
+					<aggregate>true</aggregate>
+					<properties>
+						<owner>mani</owner>
+						<year>${project.inceptionYear}</year>
+						<email>sadhak001@gmail.com</email>
+					</properties>
+					<includes>
+						<include>src/**</include>
+						<include>**/test/**</include>
+					</includes>
+					<useDefaultExcludes>true</useDefaultExcludes>
+					<excludes>
+						<exclude>**/LICENSE*/**</exclude>
+						<exclude>**/src/test/resources/**</exclude>
+						<exclude>**/src/test/data/**</exclude>
+						<exclude>**/*.json</exclude>
+						<exclude>**/*.txt</exclude>
+					</excludes>
+					<useDefaultMapping>true</useDefaultMapping>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<id>check-headers</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<testSourceDirectory>src/test/java</testSourceDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -25,15 +147,64 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>1.7.1</version>
-		</dependency>
-		
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-		</dependency>		
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-core</artifactId>
+			<version>1.1.5</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+		
 	</dependencies>
+
 </project>

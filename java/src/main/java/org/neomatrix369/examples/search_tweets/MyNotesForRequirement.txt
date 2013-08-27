@@ -1,0 +1,23 @@
+
+searches using the twitter API - should the twitter API be implemented or can it be a mock as well?
+- mock first then replace with library (test first)
+  - <done>, revisit (library and better tests) - see bottom
+
+The results should be queryable, in English, and filtered according to whether the query 
+term appears embedded in a word, in a hashtag, within the tweet text, in the username.
+- mock - test first
+   - test for term found in tweet message (body)
+   - test for term found in hastag
+   - test for term in username 
+- <done>, see bottom
+
+- use Class with the above fields - later refactor to something else
+
+store in a flatfile
+- mock - test first 
+
+TODO
+ - replace all assertTrue with assertThat construct overall
+ - remove duplications in implementations and test code (including data) - no literals hanging around!
+ - add negative tests (use triagulations)
+ - ensure asserts have verbose messages 

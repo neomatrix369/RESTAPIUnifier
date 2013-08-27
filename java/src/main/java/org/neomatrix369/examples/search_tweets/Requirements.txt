@@ -1,0 +1,10 @@
+Create a module of java code that searches the twitter API for a term at regular intervals 
+(ie every hour) and stores the results. 
+
+The results should be queryable, in English, and filtered according to whether the query 
+term appears embedded in a word, in a hashtag, within the tweet text, in the username.
+
+The storage layer does not need to be implemented, it can be mocked.
+Demonstrate OO design, use any libraries you wish. 
+
+The task should take around 2 hours.

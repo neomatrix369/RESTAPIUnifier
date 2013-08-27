@@ -1,5 +1,10 @@
 *.class
 
+# Eclipse stuff #
+.settings/
+.classpath
+.project
+
 # Package Files #
 *.jar
 *.war
@@ -11,11 +16,15 @@
 sonar-project.properties
 target/
 !/.gitignore
-resources/
-
+#resources/
+res/
+*.properties
+!Keys.properties
+!logback.xml
 
 # Csharp files
 obj/
 bin/
 App.config
 *.sln
+*.json
