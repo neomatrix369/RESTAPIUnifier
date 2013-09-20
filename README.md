@@ -9,15 +9,15 @@ Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RE
 
 Use the following maven command to format source files with license headers 
 
-        $ mvn license:format 
+<code>  $ mvn license:format </code>
         
 Use the following maven command to perform license checks on source files 
 
-        $ mvn license:check 
+<code>  $ mvn license:check </code> 
 
 Use the following maven command to remove license headers from source files 
 
-        $ mvn license:remove
+<code>  $ mvn license:remove </code>
 
 
 Java 8 Compatibility
