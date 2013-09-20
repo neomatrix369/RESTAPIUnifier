@@ -3,6 +3,9 @@
 # 
 # The APIKey is needed to get authentication from heroku.com to be
 # able to make any API calls.
+#
+# Copy the file to heroku_settings.properties and fill in the correct values
+# for APIKey and emailaddress.
 
 APIKey=[API_KEY]
 emailaddress=[EMAIL_ADDRESS]
