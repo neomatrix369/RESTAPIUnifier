@@ -1,0 +1,8 @@
+# 
+# Get your API key for heroku from https://dashboard.heroku.com/account
+# 
+# The APIKey is needed to get authentication from heroku.com to be
+# able to make any API calls.
+
+APIKey=[API_KEY]
+emailaddress=[EMAIL_ADDRESS]
