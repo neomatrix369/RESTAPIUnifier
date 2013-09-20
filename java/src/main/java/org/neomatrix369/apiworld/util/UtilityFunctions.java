@@ -114,15 +114,27 @@ public final class UtilityFunctions {
      * @return boolean
      */
     public static boolean isAValidJSONText(String resultAsString) {
-        boolean valid = false;
-        try {
-            new JSONObject(resultAsString);
-            valid = true;
-        }
-        catch(JSONException ex) { 
-            valid = false;
-        }
-        return valid;
+	try {
+	    new JSONObject(resultAsString);
+	    return true;
+	} catch (JSONException ex) {
+	    return false;
+	}
+    }
+
+    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) throws IOException {
+	Properties prop = new Properties();
+	try {
+	    prop.load(new FileReader(new File(propertyFilename)));
+	    return prop.getProperty(propertyName);
+	} catch (FileNotFoundException e) {
+	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
+	    LOGGER.error(e.getMessage());
+
+	} catch (IOException e) {
+	    LOGGER.error(e.getMessage());
+	}
+	return "";
     }
 
     /**
@@ -141,13 +153,11 @@ public final class UtilityFunctions {
 	try {
 	    prop.load(new FileReader(new File(propertyFilename)));
 	    return prop.getProperty(propertyName);
-	} catch (FileNotFoundException e) {
+	} catch (IOException exeption) {
 	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
-	    LOGGER.error(e.getMessage());
-	} catch (IOException e) {
-	    LOGGER.error(e.getMessage());
+	    LOGGER.error(exeption.getMessage());
+	    throw exeption;
 	}
-	return "";
     }
 
     public static Document stringToXML(String string) {
