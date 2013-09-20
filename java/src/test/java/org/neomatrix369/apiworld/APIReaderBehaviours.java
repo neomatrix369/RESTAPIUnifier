@@ -46,6 +46,7 @@ public class APIReaderBehaviours {
     private static final Logger LOGGER = LoggerFactory.getLogger(APIReaderBehaviours.class);
 
     private static final String INVALID_JSON_RETURNED = "Invalid JSON returned.";
+    private static final String INVALID_XML_RETURNED = "Invalid XML returned.";
     private static final String NO_RESULTS_RETURNED = "No results returned.";
 
     @Test
@@ -72,7 +73,7 @@ public class APIReaderBehaviours {
 	apiReader.executeURL();
 	String result = apiReader.getFetchedResults();
 	assertThat("Empty result returned.", result.isEmpty(), is(false));
-	assertThat(INVALID_JSON_RETURNED, isAValidXML(result), is(true));
+	assertThat(INVALID_XML_RETURNED, isAValidXML(result), is(true));
     }
 
     @Ignore
