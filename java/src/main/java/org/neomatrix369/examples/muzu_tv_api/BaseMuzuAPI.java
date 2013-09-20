@@ -34,36 +34,34 @@ import org.slf4j.LoggerFactory;
 public class BaseMuzuAPI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzuAPI.class);
-    
-    private static final String MUZUID_URL_PARAM = "muzuid";
+
     private String baseURL = "http://www.muzu.tv/api/";
     protected APIReader fetchedResults;
 
-    protected APIReader buildAPIReadyToExecute(String apiKey,
-            String apiCommand, String[] arrayURLParamCodes, String... params) {
-        APIBuilder apiBuilder = new APIBuilder(baseURL);
-        apiBuilder.setCommand(apiCommand);
-        apiBuilder.setAPIKey(MUZUID_URL_PARAM, apiKey);
-        int paramCtr = 0;
-        for (String eachValue : params) {
-            apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
-                    UtilityFunctions.encodeToken(eachValue));
-        }
+    protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String[] arrayURLParamCodes,
+	    String... params) {
+	APIBuilder apiBuilder = new APIBuilder(baseURL);
+	apiBuilder.setCommand(apiCommand);
+	apiBuilder.setAPIKey(Keys.INSTANCE.getKey("MUZUID_URL_PARAM"), apiKey);
+	int paramCtr = 0;
+	for (String eachValue : params) {
+	    apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));
+	}
 
-        try {
-            apiBuilder.build();
-            return new APIReader(apiBuilder);
-        } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-            LOGGER.error(e.getMessage());
-        }
+	try {
+	    apiBuilder.build();
+	    return new APIReader(apiBuilder);
+	} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
+	    LOGGER.error(e.getMessage());
+	}
 
-        return new APIReader(baseURL);
+	return new APIReader(baseURL);
     }
 
     public String getFetchedResults() {
-        if (fetchedResults != null) {
-            return fetchedResults.getFetchedResults();
-        }
-        return "";
+	if (fetchedResults != null) {
+	    return fetchedResults.getFetchedResults();
+	}
+	return "";
     }
 }
