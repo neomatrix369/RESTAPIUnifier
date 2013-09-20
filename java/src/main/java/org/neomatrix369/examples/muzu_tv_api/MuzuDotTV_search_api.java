@@ -28,7 +28,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
@@ -41,9 +40,9 @@ import org.slf4j.LoggerFactory;
 public final class MuzuDotTV_search_api {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_search_api.class);
-    
+
     private MuzuDotTV_search_api() {
-        // Hide utility class constructor
+	// Hide utility class constructor
     }
 
     /**
@@ -59,41 +58,35 @@ public final class MuzuDotTV_search_api {
      * 
      */
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException {
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileReader(new File(
-                    "resources/muzu_settings.properties")));
-            String muzuAPIKey = prop.getProperty("APIKey");
+    public static void main(String[] args) throws InterruptedException, FinalURLNotGeneratedException {
+	Properties prop = new Properties();
+	try {
+	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
+	    String muzuAPIKey = prop.getProperty("APIKey");
 
-            /**
-             * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&format=json&
-             * mySearch=the+script
-             * 
-             */
-            MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script",
-                    null, ResultType.JSON.toString());
-            LOGGER.info(muzuSearch.getFetchedResults());
-        } catch (FileNotFoundException e) {
-            LOGGER.error(e.getMessage());
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
+	    /**
+	     * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&format=json&
+	     * mySearch=the+script
+	     * 
+	     */
+	    MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script", null, ResultType.JSON.toString());
+	    LOGGER.info(muzuSearch.getFetchedResults());
+	} catch (FileNotFoundException e) {
+	    LOGGER.error(e.getMessage());
+	} catch (IOException e) {
+	    LOGGER.error(e.getMessage());
+	}
     }
 }
 
 class MuzuSearch extends BaseMuzuAPI {
 
-    MuzuSearch(String apiKey, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = "search";
-        String[] arrayURLParamCodes = { "mySearch", "l", "format", "country",
-                "soundoff", "autostart", "videotype", "width", "height",
-                "includeAll" };
+    MuzuSearch(String apiKey, String... params) throws FinalURLNotGeneratedException {
+	String apiCommand = "search";
+	String[] arrayURLParamCodes = { "mySearch", "l", "format", "country", "soundoff", "autostart", "videotype",
+		"width", "height", "includeAll" };
 
-        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
+	fetchedResults.executeURL();
     }
 }
