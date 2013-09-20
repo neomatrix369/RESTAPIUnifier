@@ -28,6 +28,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Hashtable;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
@@ -49,22 +50,17 @@ public class APIBuilderBehaviours {
 	apiBuilder = new APIBuilder(baseURL);
     }
 
-    public void test() throws Exception {
-	APIConnection connection = new APIBuilder(baseURL).setAPIKey("", "").build();
-	new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+    // TODO: implement it further, an example of how APIBuilder & APIReader 
+    // should be transformed with the use of APIConnection
+	@Ignore("An example of how APIBuilder & APIReader should be transformed with the use of APIConnection")
+	public void should_Build_a_URL_execute_it() throws Exception {
+	APIConnection connection = new APIBuilder(baseURL).setAPIKey("", "")
+			.build();
+	new GenericAPICommandBuilder(connection, "authenticate")
+		.withParam("user", "alex").build().execute();
 
 	new TwitterAuthenticationCommand(connection, "alex").execute();
-    }
-
-    class GenericAPICommand {
-	public GenericAPICommand(APIConnection connection, String commandString, Hashtable parameters) {
-
 	}
-
-	public Object execute() {
-	    return null;
-	}
-    }
 
     @Test(expected = BaseURLNotAssignedException.class)
     public void should_Return_Exception_When_No_URL_Is_Supplied() throws BaseURLNotAssignedException,
@@ -82,14 +78,14 @@ public class APIBuilderBehaviours {
 
     @Test
     public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    APIKeyNotAssignedException {
 	apiBuilder.setNoAPIKeyRequired();
 	apiBuilder.build();
     }
 
     @Test
     public void should_Return_URL_With_Command_When_Passed_In() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+	APIKeyNotAssignedException {
 	apiBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 	apiBuilder.setCommand(API_BROWSE_COMMAND);
 	apiBuilder.build();

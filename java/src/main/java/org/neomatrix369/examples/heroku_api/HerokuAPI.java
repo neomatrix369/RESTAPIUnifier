@@ -38,6 +38,24 @@ import org.neomatrix369.apiworld.util.Keys;
 
 import com.sun.jersey.core.util.Base64;
 
+/**
+ * API provider URL: https://devcenter.heroku.com
+ * 
+ * Required settings file to run this example:
+ * resources/heroku_settings.properties
+ * 
+ * containing 
+ * APIKey=[xxxxx]
+ * emailaddres=[xxx@yyyy.com]
+ * 
+ * [xxxxx] = is APIKey needed to get authentication from heroku.com to be
+ * able to make any API calls.
+ * 
+ * [xxx@yyyy.com] = email address attached to the account
+ * 
+ */
+
+
 public class HerokuAPI {
     private static final String baseURL = "https://api.heroku.com/%s";
     private static final boolean APIKEY_NOT_REQUIRED = false;
