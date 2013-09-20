@@ -7,6 +7,19 @@ License
 -------
 Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RESTAPIUnifier/blob/master/LICENSE) in root and other directories.
 
+Use the following maven command to format source files with license headers 
+
+        $ mvn license:format 
+        
+Use the following maven command to perform license checks on source files 
+
+        $ mvn license:check 
+
+Use the following maven command to remove license headers from source files 
+
+        $ mvn license:remove
+
+
 Java 8 Compatibility
 --------------------
 <b>[Find out how you can also use this logo with your F/OSS projects](https://java.net/projects/adoptopenjdk/pages/TestingJava8)</b>
