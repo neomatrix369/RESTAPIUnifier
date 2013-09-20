@@ -42,8 +42,7 @@ public class BaseFlickrAPI {
     protected APIReader buildAPIReadyToExecute(String apiKey,
             String apiCommand, String paramStart, String[] arrayURLParamCodes,
             String... params) {
-        APIBuilder apiBuilder = new APIBuilder();
-        apiBuilder.addBaseURL(baseURL);
+        APIBuilder apiBuilder = new APIBuilder(baseURL);
         apiBuilder.setCommand(apiCommand);
         apiBuilder.setParamStart(paramStart);
         apiBuilder.setAPIKey(FLICKR_API_PARAM, apiKey);

@@ -41,8 +41,7 @@ public class BaseMuzuAPI {
 
     protected APIReader buildAPIReadyToExecute(String apiKey,
             String apiCommand, String[] arrayURLParamCodes, String... params) {
-        APIBuilder apiBuilder = new APIBuilder();
-        apiBuilder.addBaseURL(baseURL);
+        APIBuilder apiBuilder = new APIBuilder(baseURL);
         apiBuilder.setCommand(apiCommand);
         apiBuilder.setAPIKey(MUZUID_URL_PARAM, apiKey);
         int paramCtr = 0;
