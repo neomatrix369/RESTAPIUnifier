@@ -1,0 +1,7 @@
+# 
+# Get your API key for MUZU from http://www.muzu.tv/api/getYourApiKey/
+# 
+# The MUZU_ID is needed to get authentication from muzutv.com to be
+# able to make any API calls.
+
+APIKey=[MUZU_ID]
