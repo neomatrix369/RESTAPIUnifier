@@ -61,7 +61,7 @@ public class TwitterSearchBehaviours {
 		assertTrue(searchResult.isEmpty());
 	}
 	
-	@Test
+	@Test @Ignore
 	public void shouldReturnOneTweetWhenAnySearchTermIsPassed() throws Exception {
 		String oneSearchTermSupplied = ONE_TERM;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
@@ -70,7 +70,7 @@ public class TwitterSearchBehaviours {
 		assertFalse(searchResult.isEmpty());
 	}
 	
-	@Test
+	@Test @Ignore
 	public void shouldReturnAnyTweetWhenAnotherSearchTermIsPassed() throws Exception {
 		String anySearchTermsSupplied = TWO_TERMS;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();

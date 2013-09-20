@@ -41,11 +41,10 @@ public class BaseFlickrAPI {
     protected APIReader buildAPIReadyToExecute(String apiKey,
             String apiCommand, String paramStart, String[] arrayURLParamCodes,
             String... params) {
-        APIBuilder apiBuilder = new APIBuilder();
-        apiBuilder.addBaseURL(baseURL);
-        apiBuilder.setCommand(apiCommand);
-        apiBuilder.setParamStart(paramStart);
-        apiBuilder.setAPIKey(FLICKR_API_PARAM, apiKey);
+        APIBuilder apiBuilder = new APIBuilder(baseURL)
+        				.setCommand(apiCommand)
+        				.setParamStart(paramStart)
+        				.setAPIKey(FLICKR_API_PARAM, apiKey);
         int paramCtr = 0;
         for (String eachValue : params) {
             apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

@@ -46,14 +46,9 @@ public class APIBuilder {
     private String paramStart = Keys.INSTANCE.getKey("PARAM_START");
     private boolean apiKeyIsRequired = true;
 
-    /**
-     * .
-     * @param baseURL String
-     * @return APIBuilder
-     */
-    public APIBuilder addBaseURL(String baseURL) {
-        this.baseURL = baseURL;
-        return this;
+    
+    public APIBuilder(String baseURL) {
+    	this.baseURL = baseURL;
     }
 
     /**
@@ -62,13 +57,13 @@ public class APIBuilder {
      * @throws BaseURLNotAssignedException exception
      * @throws APIKeyNotAssignedException exception
      */
-    public APIBuilder build() throws BaseURLNotAssignedException,
+    public APIConnection build() throws BaseURLNotAssignedException,
             APIKeyNotAssignedException {
         buildFinalURLWithCommandString();
         buildFinalURLWithTheAPIKey();
         buildFinalURLWithParametersToken();
 
-        return this;
+        return new APIConnection();
     }
 
     /**
@@ -174,8 +169,9 @@ public class APIBuilder {
      * Sets the commandString attribute.
      * @param commandString String
      */
-    public void setCommand(String commandString) {
+    public APIBuilder setCommand(String commandString) {
         this.commandString = commandString;
+        return this;
     }
 
     /**
@@ -183,9 +179,10 @@ public class APIBuilder {
      * @param key String
      * @param value String
      */
-    public void setAPIKey(String key, String value) {
+    public APIBuilder setAPIKey(String key, String value) {
         this.apiKey = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), key, Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR"), value);
         apiKeyIsRequired = true;
+        return this;
     }
 
     /**
@@ -201,20 +198,23 @@ public class APIBuilder {
      * Sets the paramStart attribute. 
      * @param paramStart String
      */
-    public void setParamStart(String paramStart) {
+    public APIBuilder setParamStart(String paramStart) {
         this.paramStart = paramStart;
+        return this;
     }
 
     /**
      * Sets the apiKeyIsRequired attribute.
      * @param apiKeyIsRequired boolean
      */
-    public void setApiKeyIsRequired(boolean apiKeyIsRequired) {
+    public APIBuilder setApiKeyIsRequired(boolean apiKeyIsRequired) {
         this.apiKeyIsRequired = apiKeyIsRequired;
+        return this;
     }
 
-	public void setNoAPIKeyRequired() {
-		this.apiKeyIsRequired = false;		
+	public APIBuilder setNoAPIKeyRequired() {
+		this.apiKeyIsRequired = false;
+		return this;
 	}
     
 }

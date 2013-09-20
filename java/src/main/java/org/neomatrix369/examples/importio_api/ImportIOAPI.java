@@ -39,11 +39,10 @@ public class ImportIOAPI {
 
     protected APIReader buildAPIReadyToExecute(String apiCommand,
             String paramStart, String[] arrayURLParamCodes, String... params) {
-        APIBuilder apiBuilder = new APIBuilder();
-        apiBuilder.addBaseURL(baseURL);
-        apiBuilder.setCommand(apiCommand);
-        apiBuilder.setParamStart(paramStart);
-        apiBuilder.setApiKeyIsRequired(false);
+        APIBuilder apiBuilder = new APIBuilder(baseURL)
+        	.setCommand(apiCommand)
+        	.setParamStart(paramStart)
+        	.setApiKeyIsRequired(false);
         int paramCtr = 0;
         for (String eachValue : params) {
             apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

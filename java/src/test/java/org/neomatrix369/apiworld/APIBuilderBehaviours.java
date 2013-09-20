@@ -22,6 +22,8 @@
  */
 package org.neomatrix369.apiworld;
 
+import java.util.Hashtable;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,30 +49,44 @@ public class APIBuilderBehaviours {
 	@Before
 	public void setup() {
 		baseURL = MUZU_BASE_URL;
-		apiBuilder = new APIBuilder();
-		apiBuilder.addBaseURL(baseURL);
+		apiBuilder = new APIBuilder(baseURL);
 	}
-
+		
+	public void test() throws Exception{
+		APIConnection connection = new APIBuilder(baseURL).setAPIKey("", "").build();
+		new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+		
+		new TwitterAuthenticationCommand(connection, "alex").execute();
+	}
+	
+	class GenericAPICommand{
+		public GenericAPICommand(APIConnection connection, String commandString, Hashtable parameters){
+			
+		}
+		
+		public Object execute(){
+			return null;
+		}
+	}
+	
+	
 
 	@Test 
     (expected=BaseURLNotAssignedException.class)
 	public void should_Return_Exception_When_No_URL_Is_Supplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
 		baseURL = "";
-		apiBuilder = new APIBuilder();
-		apiBuilder.addBaseURL(baseURL);
+		apiBuilder = new APIBuilder(baseURL);
 		apiBuilder.build();
 	}
 
 
 	@Test (expected=APIKeyNotAssignedException.class)
 	public void should_Return_Exception_When_No_API_Key_Is_Supplied() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		apiBuilder.addBaseURL(baseURL);
 		apiBuilder.build();
 	}
 	
 	@Test 
 	public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-		apiBuilder.addBaseURL(baseURL);
 		apiBuilder.setNoAPIKeyRequired();
 		apiBuilder.build();
 	}

@@ -84,10 +84,9 @@ public class HerokuAPI {
 	}
 
 	public static String authenticate(Map<String, String> param) throws FinalURLNotGeneratedException, IOException, BaseURLNotAssignedException, APIKeyNotAssignedException {
-		APIBuilder apiBuilder = new APIBuilder();		
 		apiCommand = AUTHENTICATION_COMMAND;
-		apiBuilder.addBaseURL(String.format(baseURL, apiCommand));
-		apiBuilder.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
+		APIBuilder apiBuilder = new APIBuilder(String.format(baseURL, apiCommand))		
+				.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
 		apiBuilder.build();
 		APIReader apiReader = new APIReader(apiBuilder);		
 		apiReader.executeURL(HTTP_POST_METHOD, param);
@@ -95,10 +94,9 @@ public class HerokuAPI {
 	}
 
 	public static String invokeAccount() throws BaseURLNotAssignedException, APIKeyNotAssignedException, FinalURLNotGeneratedException, IOException {		
-		APIBuilder apiBuilder = new APIBuilder();
 		apiCommand = ACCOUNT_COMMAND;
-		apiBuilder.addBaseURL(String.format(baseURL, apiCommand));
-		apiBuilder.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
+		APIBuilder apiBuilder = new APIBuilder(String.format(baseURL, apiCommand))
+				.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
 		apiBuilder.build();
 		APIReader apiReader = new APIReader(apiBuilder);
 		prepareParamObjectWithAuthenticationDetails();
