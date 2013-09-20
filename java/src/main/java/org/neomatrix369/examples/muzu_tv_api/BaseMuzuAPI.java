@@ -26,6 +26,7 @@ import org.neomatrix369.apiworld.APIBuilder;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import org.neomatrix369.apiworld.util.Keys;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,9 +41,10 @@ public class BaseMuzuAPI {
 
     protected APIReader buildAPIReadyToExecute(String apiKey,
             String apiCommand, String[] arrayURLParamCodes, String... params) {
-        APIBuilder apiBuilder = new APIBuilder(baseURL)
-        		.setCommand(apiCommand)
-        		.setAPIKey(MUZUID_URL_PARAM, apiKey);
+        APIBuilder apiBuilder = new APIBuilder();
+        apiBuilder.addBaseURL(baseURL);
+        apiBuilder.setCommand(apiCommand);
+        apiBuilder.setAPIKey(MUZUID_URL_PARAM, apiKey);
         int paramCtr = 0;
         for (String eachValue : params) {
             apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
