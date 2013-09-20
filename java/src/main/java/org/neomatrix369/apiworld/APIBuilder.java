@@ -38,12 +38,19 @@ import org.neomatrix369.apiworld.util.Keys;
  */
 public class APIBuilder {
 
-    private String baseURL;
+    private static final String KEY_COMMAND_URL_SEPARATOR = Keys.INSTANCE.getKey("COMMAND_URL_SEPARATOR");
+	private static final String KEY_PARAM_SEPARATOR = Keys.INSTANCE.getKey("PARAM_SEPARATOR");
+	private static final String KEY_VALUE_SEPARATOR = Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR");
+	private static final String KEY_THREE_TOKENS = Keys.INSTANCE.getKey("THREE_TOKENS");
+	private static final String KEY_TWO_TOKENS = Keys.INSTANCE.getKey("TWO_TOKENS");
+	private static final String KEY_PARAM_START = Keys.INSTANCE.getKey("PARAM_START");
+	
+	private String baseURL;
     private String apiKey;
     private String commandString;
     private String finalURL;
     private Map<String, String> urlParameters = new LinkedHashMap<String, String>();
-    private String paramStart = Keys.INSTANCE.getKey("PARAM_START");
+    private String paramStart = KEY_PARAM_START;
     private boolean apiKeyIsRequired = true;
 
     
@@ -62,8 +69,7 @@ public class APIBuilder {
         buildFinalURLWithCommandString();
         buildFinalURLWithTheAPIKey();
         buildFinalURLWithParametersToken();
-
-        return new APIConnection();
+        return new APIConnection(finalURL);
     }
 
     /**
@@ -78,7 +84,7 @@ public class APIBuilder {
         validateAPIKey();
 
         if ((apiKey != null) && (!apiKey.isEmpty())) {
-            this.finalURL = String.format(Keys.INSTANCE.getKey("TWO_TOKENS"), finalURL, apiKey);
+            this.finalURL = String.format(KEY_TWO_TOKENS, finalURL, apiKey);
         }
     }
 
@@ -108,18 +114,18 @@ public class APIBuilder {
             for (Map.Entry<String, String> eachKeyValuePair : urlParameters
                     .entrySet()) {
                 if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
-                    String eachToken = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"),
-                            eachKeyValuePair.getKey(), Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR"),
-                            eachKeyValuePair.getValue());
-                    urlParameterTokens = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"),
-                            urlParameterTokens, eachToken, Keys.INSTANCE.getKey("PARAM_SEPARATOR"));
+					String eachToken = String.format(KEY_THREE_TOKENS,
+							eachKeyValuePair.getKey(), KEY_VALUE_SEPARATOR,
+							eachKeyValuePair.getValue());
+					urlParameterTokens = String.format(KEY_THREE_TOKENS,
+							urlParameterTokens, eachToken, KEY_PARAM_SEPARATOR);
                 }
             }
 
-            urlParameterTokens = dropTrailingSeparator(urlParameterTokens,
-                    Keys.INSTANCE.getKey("PARAM_SEPARATOR"));
-            this.finalURL = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), finalURL,
-                    Keys.INSTANCE.getKey("PARAM_SEPARATOR"), urlParameterTokens);
+			urlParameterTokens = dropTrailingSeparator(urlParameterTokens,
+					KEY_PARAM_SEPARATOR);
+			this.finalURL = String.format(KEY_THREE_TOKENS, finalURL,
+					KEY_PARAM_SEPARATOR, urlParameterTokens);
         }
     }
 
@@ -134,12 +140,12 @@ public class APIBuilder {
 
         this.finalURL = baseURL.trim();
         if ((commandString != null) && (!commandString.isEmpty())) {
-            if (!doesHaveSeparator(this.finalURL, Keys.INSTANCE.getKey("COMMAND_URL_SEPARATOR"))) {
-                this.finalURL = String.format(Keys.INSTANCE.getKey("TWO_TOKENS"), finalURL,
-                        Keys.INSTANCE.getKey("COMMAND_URL_SEPARATOR"));
+            if (!doesHaveSeparator(this.finalURL, KEY_COMMAND_URL_SEPARATOR)) {
+                this.finalURL = String.format(KEY_TWO_TOKENS, finalURL,
+                        KEY_COMMAND_URL_SEPARATOR);
             }
 
-            this.finalURL = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), finalURL,
+            this.finalURL = String.format(KEY_THREE_TOKENS, finalURL,
                     commandString, paramStart);
         }
     }
@@ -180,7 +186,7 @@ public class APIBuilder {
      * @param value String
      */
     public APIBuilder setAPIKey(String key, String value) {
-        this.apiKey = String.format(Keys.INSTANCE.getKey("THREE_TOKENS"), key, Keys.INSTANCE.getKey("KEY_VALUE_SEPARATOR"), value);
+        this.apiKey = String.format(KEY_THREE_TOKENS, key, KEY_VALUE_SEPARATOR, value);
         apiKeyIsRequired = true;
         return this;
     }
