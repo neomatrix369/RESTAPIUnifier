@@ -1,10 +1,10 @@
 package org.neomatrix369.apiworld;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.neomatrix369.examples.muzu_tv_api.BaseMuzuAPI;
 
 public class UriBuilderTest {
 
@@ -12,9 +12,7 @@ public class UriBuilderTest {
 	public void uriBuilder_should_assemble_non_empty_connection_uri()
 			throws Exception {
 
-		String baseURL = "http://www.muzu.tv/api/";
-
-		APIConnection connection = new UriBuilder(baseURL).setAPIKey("", "")
+		APIConnection connection = new UriBuilder(BaseMuzuAPI.MUZU_BASE_URL).setAPIKey("", "")
 				.build();
 
 		assertNotNull(connection);

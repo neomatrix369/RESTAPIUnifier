@@ -37,59 +37,46 @@ import org.slf4j.LoggerFactory;
  Max queries: 10000
  */
 public final class MuzuDotTV_artist_api {
-    
-    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_artist_api.class);
 
-    private MuzuDotTV_artist_api() {
-        // Hide utility class constructor
-    }
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(MuzuDotTV_artist_api.class);
 
-    /**
-     * API provider URL: http://www.muzu.tv/api/
-     * 
-     * Required settings file to run this example:
-     * resources/muzu_settings.properties
-     * 
-     * containing APIKey=[xxxxx]
-     * 
-     * [xxxxx] = is APIKey needed to get authentication from muzutv.com to be
-     * able to make any API calls.
-     * 
-     */
+	private MuzuDotTV_artist_api() {
+		// Hide utility class constructor
+	}
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException {
-        /**
-         * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
-         */
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileReader(new File(
-                    "resources/muzu_settings.properties")));
-            String muzuAPIKey = prop.getProperty("APIKey");
+	public static void main(String[] args) throws InterruptedException,
+			FinalURLNotGeneratedException {
+		/**
+		 * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
+		 */
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileReader(new File(
+					"resources/muzu_settings.properties")));
+			String muzuAPIKey = prop.getProperty("APIKey");
 
-            MuzuArtist muzuArtist = new MuzuArtist(
-                    "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid="
-                            + muzuAPIKey);
+			MuzuArtist muzuArtist = new MuzuArtist(BaseMuzuAPI.MUZU_BASE_URL
+					+ "artist/details/Bon+Jovi?muzuid=" + muzuAPIKey);
 
-            LOGGER.info(muzuArtist.getFetchedResults());
-        } catch (FileNotFoundException e) {
-            LOGGER.error(e.getMessage());
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
-    }
+			LOGGER.info(muzuArtist.getFetchedResults());
+		} catch (FileNotFoundException e) {
+			LOGGER.error(e.getMessage());
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage());
+		}
+	}
 }
 
 class MuzuArtist extends BaseMuzuAPI {
-    MuzuArtist(String apiKey, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = "artist";
-        String[] arrayURLParamCodes = { "artist_name", "format", "country",
-                "soundoff", "autostart", "videotype", "width", "height",
-                "includeAll" };
-        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
-    }
+	MuzuArtist(String apiKey, String... params)
+			throws FinalURLNotGeneratedException {
+		String apiCommand = "artist";
+		String[] arrayURLParamCodes = { "artist_name", "format", "country",
+				"soundoff", "autostart", "videotype", "width", "height",
+				"includeAll" };
+		fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand,
+				arrayURLParamCodes, params);
+		fetchedResults.executeURL();
+	}
 }

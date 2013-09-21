@@ -45,24 +45,8 @@ public final class MuzuDotTV_browse_api {
         // Hide utility class constructor
     }
 
-    /**
-     * API provider URL: http://www.muzu.tv/api/
-     * 
-     * Required settings file to run this example:
-     * resources/muzu_settings.properties
-     * 
-     * containing APIKey=[xxxxx]
-     * 
-     * [xxxxx] = is APIKey needed to get authentication from muzutv.com to be
-     * able to make any API calls.
-     * 
-     */
-
     public static void main(String[] args) throws InterruptedException,
             FinalURLNotGeneratedException {
-        /**
-         * "http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=a&g=pop";
-         */
         /**
          * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
          */
