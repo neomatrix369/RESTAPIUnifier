@@ -33,16 +33,18 @@ import org.slf4j.LoggerFactory;
 
 public class BaseMuzuAPI {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzuAPI.class);
+    private static final String KEY_MUZU_PARAM_URL = Keys.INSTANCE.getKey("MUZUID_URL_PARAM");
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzuAPI.class);
 
     private String baseURL = "http://www.muzu.tv/api/";
     protected APIReader fetchedResults;
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String[] arrayURLParamCodes,
 	    String... params) {
-	APIBuilder apiBuilder = new APIBuilder(baseURL);
-	apiBuilder.setCommand(apiCommand);
-	apiBuilder.setAPIKey(Keys.INSTANCE.getKey("MUZUID_URL_PARAM"), apiKey);
+	APIBuilder apiBuilder = new APIBuilder(baseURL)
+		.setCommand(apiCommand)
+		.setAPIKey(KEY_MUZU_PARAM_URL, apiKey);
 	int paramCtr = 0;
 	for (String eachValue : params) {
 	    apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));

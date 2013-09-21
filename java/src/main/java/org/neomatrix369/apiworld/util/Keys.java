@@ -34,11 +34,12 @@ public enum Keys {
     /** The instance. */
     INSTANCE;
 
-    /** Static bundle. */
+    private static final String CONSTANT_KEYS = "Keys";
+	/** Static bundle. */
     private static ResourceBundle bundle;
     
     static {
-       bundle = ResourceBundle.getBundle("Keys");
+       bundle = ResourceBundle.getBundle(CONSTANT_KEYS);
     }
 
     /**

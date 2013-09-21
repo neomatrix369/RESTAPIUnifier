@@ -30,7 +30,8 @@ import org.slf4j.LoggerFactory;
 
 public final class YQLAPI_webservices {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(YQLAPI_webservices.class);
+    private static final String COMMAND_SHOW_TABLES = "show tables";
+	private static final Logger LOGGER = LoggerFactory.getLogger(YQLAPI_webservices.class);
     
     private YQLAPI_webservices() {
         // Hide utility class constructor
@@ -56,20 +57,24 @@ public final class YQLAPI_webservices {
     public static void main(String[] args) throws InterruptedException,
             FinalURLNotGeneratedException {
         YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?",
-                ResultType.JSON.toString(), "show tables");
+                ResultType.JSON.toString(), COMMAND_SHOW_TABLES);
         LOGGER.info(yqlAPIWebServices.getFetchedResults());
 
         yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(),
-                "show tables", null);
+                COMMAND_SHOW_TABLES, null);
         LOGGER.info(yqlAPIWebServices.getFetchedResults());
     }
 }
 
 class YQLAPIWebServices extends BaseYQLAPI {
-    YQLAPIWebServices(String apiKey, String paramStart, String... params)
+    private static final String YQL_COMMAND = "yql";
+	private static final String FORMAT_NOTATION = "q";
+	private static final String FORMAT = "format";
+
+	YQLAPIWebServices(String apiKey, String paramStart, String... params)
             throws FinalURLNotGeneratedException {
-        String apiCommand = "yql";
-        String[] arrayURLParamCodes = { "format", "q" };
+        String apiCommand = YQL_COMMAND;
+        String[] arrayURLParamCodes = { FORMAT, FORMAT_NOTATION };
 
         fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
                 arrayURLParamCodes, params);

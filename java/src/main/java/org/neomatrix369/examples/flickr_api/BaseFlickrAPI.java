@@ -33,17 +33,19 @@ import org.slf4j.LoggerFactory;
 
 public class BaseFlickrAPI {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickrAPI.class);
+    private static final String KEY_FLICKR_API_PARAM = Keys.INSTANCE.getKey("FLICKR_API_PARAM");
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickrAPI.class);
 
     private String baseURL = "http://api.flickr.com/services/rest";
     protected APIReader fetchedResults;
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 	    String[] arrayURLParamCodes, String... params) {
-	APIBuilder apiBuilder = new APIBuilder(baseURL);
-	apiBuilder.setCommand(apiCommand);
-	apiBuilder.setParamStart(paramStart);
-	apiBuilder.setAPIKey(Keys.INSTANCE.getKey("FLICKR_API_PARAM"), apiKey);
+	APIBuilder apiBuilder = new APIBuilder(baseURL)
+		.setCommand(apiCommand)
+		.setParamStart(paramStart)
+		.setAPIKey(KEY_FLICKR_API_PARAM, apiKey);
 	int paramCtr = 0;
 	for (String eachValue : params) {
 	    apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));

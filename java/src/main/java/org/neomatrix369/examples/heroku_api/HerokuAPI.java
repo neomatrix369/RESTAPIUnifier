@@ -57,7 +57,21 @@ import com.sun.jersey.core.util.Base64;
 
 
 public class HerokuAPI {
-    private static final String baseURL = "https://api.heroku.com/%s";
+    private static final String BASIC = "Basic";
+    private static final String SPACE = " ";
+	private static final String COLON = ":";
+	private static final String ASCII = "ASCII";
+	private static final String KEY_HTTP_GET_METHOD = Keys.INSTANCE.getKey("HTTP_GET_METHOD");
+	private static final String KEY_ACCOUNT_COMMAND = Keys.INSTANCE.getKey("ACCOUNT_COMMAND");
+	private static final String KEY_HTTP_POST_METHOD = Keys.INSTANCE.getKey("HTTP_POST_METHOD");
+	private static final String KEY_AUTHENTICATION_COMMAND = Keys.INSTANCE.getKey("AUTHENTICATION_COMMAND");
+	private static final String KEY_AUTHORIZATION_FIELDNAME = Keys.INSTANCE.getKey("AUTHORIZATION_FIELDNAME");
+	private static final String KEY_RESULT_FORMAT_TYPE = Keys.INSTANCE.getKey("RESULT_FORMAT_TYPE");
+	private static final String KEY_FORMAT_TYPE_FIELD_NAME = Keys.INSTANCE.getKey("FORMAT_TYPE_FIELD_NAME");
+	private static final String KEY_FIELDNAME_APIKEY = Keys.INSTANCE.getKey("FIELDNAME_APIKEY");
+	private static final String KEY_FIELDNAME_EMAIL = Keys.INSTANCE.getKey("FIELDNAME_EMAIL");
+	private static final String HEROKU_SETTINGS_LOCATION = Keys.INSTANCE.getKey("HEROKU_SETTINGS_LOCATION");
+	private static final String baseURL = "https://api.heroku.com/%s";
     private static final boolean APIKEY_NOT_REQUIRED = false;
 
     private static Map<String, String> param = new HashMap<String, String>();
@@ -68,10 +82,8 @@ public class HerokuAPI {
     protected APIReader fetchedResults;
 
     public static void initialiseSettings() throws IOException {
-	emailaddress = readPropertyFrom(Keys.INSTANCE.getKey("HEROKU_SETTINGS_LOCATION"),
-		Keys.INSTANCE.getKey("FIELDNAME_EMAIL"));
-	apiKey = readPropertyFrom(Keys.INSTANCE.getKey("HEROKU_SETTINGS_LOCATION"),
-		Keys.INSTANCE.getKey("FIELDNAME_APIKEY"));
+	emailaddress = readPropertyFrom(HEROKU_SETTINGS_LOCATION, KEY_FIELDNAME_EMAIL);
+	apiKey = readPropertyFrom(HEROKU_SETTINGS_LOCATION, KEY_FIELDNAME_APIKEY);
     }
 
     public static String authenticate(String changedAPIKey) throws IOException, FinalURLNotGeneratedException,
@@ -87,32 +99,32 @@ public class HerokuAPI {
     }
 
     private static void prepareParamObjectWithAuthenticationDetails() throws UnsupportedEncodingException {
-	param.put(Keys.INSTANCE.getKey("FORMAT_TYPE_FIELD_NAME"), Keys.INSTANCE.getKey("RESULT_FORMAT_TYPE"));
-	String httpBasicAuthFilterAuthentication = "Basic "
-		+ new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
-	param.put(Keys.INSTANCE.getKey("AUTHORIZATION_FIELDNAME"), httpBasicAuthFilterAuthentication);
+	param.put(KEY_FORMAT_TYPE_FIELD_NAME, KEY_RESULT_FORMAT_TYPE);
+	String httpBasicAuthFilterAuthentication = BASIC + SPACE
+		+ new String(Base64.encode(emailaddress + COLON + apiKey), ASCII);
+	param.put(KEY_AUTHORIZATION_FIELDNAME, httpBasicAuthFilterAuthentication);
     }
 
     public static String authenticate(Map<String, String> param) throws FinalURLNotGeneratedException, IOException,
 	    BaseURLNotAssignedException, APIKeyNotAssignedException {
-	apiCommand = Keys.INSTANCE.getKey("AUTHENTICATION_COMMAND");
+	apiCommand = KEY_AUTHENTICATION_COMMAND;
 	APIBuilder apiBuilder = new APIBuilder(String.format(baseURL, apiCommand))
 		.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
 	apiBuilder.build();
 	APIReader apiReader = new APIReader(apiBuilder);
-	apiReader.executeURL(Keys.INSTANCE.getKey("HTTP_POST_METHOD"), param);
+	apiReader.executeURL(KEY_HTTP_POST_METHOD, param);
 	return apiReader.getFetchedResults();
     }
 
     public static String invokeAccount() throws BaseURLNotAssignedException, APIKeyNotAssignedException,
 	    FinalURLNotGeneratedException, IOException {
-	apiCommand = Keys.INSTANCE.getKey("ACCOUNT_COMMAND");
+	apiCommand = KEY_ACCOUNT_COMMAND;
 	APIBuilder apiBuilder = new APIBuilder(String.format(baseURL, apiCommand))
 		.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
 	apiBuilder.build();
 	APIReader apiReader = new APIReader(apiBuilder);
 	prepareParamObjectWithAuthenticationDetails();
-	apiReader.executeURL(Keys.INSTANCE.getKey("HTTP_GET_METHOD"), param);
+	apiReader.executeURL(KEY_HTTP_GET_METHOD, param);
 	return apiReader.getFetchedResults();
     }
 }

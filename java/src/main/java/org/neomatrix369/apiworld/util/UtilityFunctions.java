@@ -46,7 +46,12 @@ import org.slf4j.LoggerFactory;
  */
 public final class UtilityFunctions {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
+    private static final String GREATER_THAN = ">";
+	private static final String GREATER_THAN_AND_COMMA = ">,";
+	private static final String INVALID_TOKEN_WARNING = "Invalid token.";
+	private static final String UTF_8 = "UTF-8";
+	private static final String THE_TOKEN_CANNOT_BE_NULL_MSG = "The token cannot be null.";
+	private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
 
     /**
      * Hide Utility Class Constructor - Utility classes should not have a public
@@ -92,15 +97,15 @@ public final class UtilityFunctions {
     public static String encodeToken(String token) {
 
 	if (token == null) {
-	    throw new IllegalArgumentException("The token cannot be null.");
+	    throw new IllegalArgumentException(THE_TOKEN_CANNOT_BE_NULL_MSG);
 	}
 
 	String encodedToken = token;
 
 	try {
-	    encodedToken = URLEncoder.encode(token, "UTF-8");
+	    encodedToken = URLEncoder.encode(token, UTF_8);
 	} catch (UnsupportedEncodingException uee) {
-	    LOGGER.warn("Invalid token.");
+	    LOGGER.warn(INVALID_TOKEN_WARNING);
 	}
 
 	return encodedToken;
@@ -162,7 +167,7 @@ public final class UtilityFunctions {
 
     public static Document stringToXML(String string) {
 	String localString = string.substring(1, string.length() - 1);
-	localString = localString.replaceAll(">,", ">");
+	localString = localString.replaceAll(GREATER_THAN_AND_COMMA, GREATER_THAN);
 	return Jsoup.parse(localString);
     }
 
