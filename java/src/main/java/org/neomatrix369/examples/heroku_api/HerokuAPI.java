@@ -29,7 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neomatrix369.apiworld.APIBuilder;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
@@ -108,7 +108,7 @@ public class HerokuAPI {
     public static String authenticate(Map<String, String> param) throws FinalURLNotGeneratedException, IOException,
 	    BaseURLNotAssignedException, APIKeyNotAssignedException {
 	apiCommand = KEY_AUTHENTICATION_COMMAND;
-	APIBuilder apiBuilder = new APIBuilder(String.format(baseURL, apiCommand))
+	UriBuilder apiBuilder = new UriBuilder(String.format(baseURL, apiCommand))
 		.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
 	apiBuilder.build();
 	APIReader apiReader = new APIReader(apiBuilder);
@@ -119,7 +119,7 @@ public class HerokuAPI {
     public static String invokeAccount() throws BaseURLNotAssignedException, APIKeyNotAssignedException,
 	    FinalURLNotGeneratedException, IOException {
 	apiCommand = KEY_ACCOUNT_COMMAND;
-	APIBuilder apiBuilder = new APIBuilder(String.format(baseURL, apiCommand))
+	UriBuilder apiBuilder = new UriBuilder(String.format(baseURL, apiCommand))
 		.setApiKeyIsRequired(APIKEY_NOT_REQUIRED);
 	apiBuilder.build();
 	APIReader apiReader = new APIReader(apiBuilder);

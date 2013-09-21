@@ -25,7 +25,7 @@ package org.neomatrix369;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.neomatrix369.apiworld.APIBuilderBehaviours;
+import org.neomatrix369.apiworld.UriBuilderIntBehaviours;
 import org.neomatrix369.apiworld.APIReaderBehaviours;
 import org.neomatrix369.apiworld.UtilityFunctionsBehaviours;
 import org.neomatrix369.apiworld.HerokuAPIBehaviours.HerokuAPIBehaviours;
@@ -43,7 +43,7 @@ import org.neomatrix369.apiworld.SearchForTweets.TwitterSearchBehaviours;
 @RunWith(value = Suite.class)
 @SuiteClasses(value = {
     UtilityFunctionsBehaviours.class,
-    APIBuilderBehaviours.class,
+    UriBuilderIntBehaviours.class,
     APIReaderBehaviours.class,
    
     FetchTweetsPeriodicallyBehaviours.class,

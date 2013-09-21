@@ -28,7 +28,7 @@ public class GenericAPICommandBuilder {
 		// TODO Auto-generated constructor stub
 	}
 
-	public APIBuilder withParam(String string, String string2) {
+	public UriBuilder withParam(String string, String string2) {
 		// TODO Auto-generated method stub
 		return null;
 	}

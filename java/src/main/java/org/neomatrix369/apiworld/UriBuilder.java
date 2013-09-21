@@ -36,7 +36,7 @@ import org.neomatrix369.apiworld.util.Keys;
  * @author Mani Sarkar
  *
  */
-public class APIBuilder {
+public class UriBuilder {
 
     private static final String KEY_COMMAND_URL_SEPARATOR = Keys.INSTANCE.getKey("COMMAND_URL_SEPARATOR");
 	private static final String KEY_PARAM_SEPARATOR = Keys.INSTANCE.getKey("PARAM_SEPARATOR");
@@ -54,7 +54,7 @@ public class APIBuilder {
     private boolean apiKeyIsRequired = true;
 
     
-    public APIBuilder(String baseURL) {
+    public UriBuilder(String baseURL) {
     	this.baseURL = baseURL;
     }
 
@@ -175,7 +175,7 @@ public class APIBuilder {
      * Sets the commandString attribute.
      * @param commandString String
      */
-    public APIBuilder setCommand(String commandString) {
+    public UriBuilder setCommand(String commandString) {
         this.commandString = commandString;
         return this;
     }
@@ -185,7 +185,7 @@ public class APIBuilder {
      * @param key String
      * @param value String
      */
-    public APIBuilder setAPIKey(String key, String value) {
+    public UriBuilder setAPIKey(String key, String value) {
         this.apiKey = String.format(KEY_THREE_TOKENS, key, KEY_VALUE_SEPARATOR, value);
         apiKeyIsRequired = true;
         return this;
@@ -204,7 +204,7 @@ public class APIBuilder {
      * Sets the paramStart attribute. 
      * @param paramStart String
      */
-    public APIBuilder setParamStart(String paramStart) {
+    public UriBuilder setParamStart(String paramStart) {
         this.paramStart = paramStart;
         return this;
     }
@@ -213,12 +213,12 @@ public class APIBuilder {
      * Sets the apiKeyIsRequired attribute.
      * @param apiKeyIsRequired boolean
      */
-    public APIBuilder setApiKeyIsRequired(boolean apiKeyIsRequired) {
+    public UriBuilder setApiKeyIsRequired(boolean apiKeyIsRequired) {
         this.apiKeyIsRequired = apiKeyIsRequired;
         return this;
     }
 
-	public APIBuilder setNoAPIKeyRequired() {
+	public UriBuilder setNoAPIKeyRequired() {
 		this.apiKeyIsRequired = false;
 		return this;
 	}

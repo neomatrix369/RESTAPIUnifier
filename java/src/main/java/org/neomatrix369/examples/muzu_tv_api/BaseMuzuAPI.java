@@ -22,7 +22,7 @@
  */
 package org.neomatrix369.examples.muzu_tv_api;
 
-import org.neomatrix369.apiworld.APIBuilder;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
@@ -42,7 +42,7 @@ public class BaseMuzuAPI {
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String[] arrayURLParamCodes,
 	    String... params) {
-	APIBuilder apiBuilder = new APIBuilder(baseURL)
+	UriBuilder apiBuilder = new UriBuilder(baseURL)
 		.setCommand(apiCommand)
 		.setAPIKey(KEY_MUZU_PARAM_URL, apiKey);
 	int paramCtr = 0;

@@ -22,7 +22,7 @@
  */
 package org.neomatrix369.examples.flickr_api;
 
-import org.neomatrix369.apiworld.APIBuilder;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
@@ -42,7 +42,7 @@ public class BaseFlickrAPI {
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 	    String[] arrayURLParamCodes, String... params) {
-	APIBuilder apiBuilder = new APIBuilder(baseURL)
+	UriBuilder apiBuilder = new UriBuilder(baseURL)
 		.setCommand(apiCommand)
 		.setParamStart(paramStart)
 		.setAPIKey(KEY_FLICKR_API_PARAM, apiKey);

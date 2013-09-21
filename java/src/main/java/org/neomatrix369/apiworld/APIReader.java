@@ -68,7 +68,7 @@ public class APIReader {
 	 * @param apiBuilder
 	 *            APIBuilder
 	 */
-	public APIReader(APIBuilder apiBuilder) {
+	public APIReader(UriBuilder apiBuilder) {
 		this.urlText = apiBuilder.getFinalURL();
 	}
 
