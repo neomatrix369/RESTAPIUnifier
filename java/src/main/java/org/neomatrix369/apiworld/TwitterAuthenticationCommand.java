@@ -25,19 +25,24 @@ package org.neomatrix369.apiworld;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 
-class TwitterAuthenticationCommand{
-	private APIConnection connection;
+// use like this:
+//new GenericAPICommandBuilder(connection, "authenticate")
+//.withParam("user", "alex").build().execute();
+//
+//new TwitterAuthenticationCommand(connection, "alex").execute();
 
-	public TwitterAuthenticationCommand(String commandString, String user){
-		
-	}
-	
-	public TwitterAuthenticationCommand(APIConnection connection,
-			String user) {
-		this.connection = connection;
-	}
+class TwitterAuthenticationCommand {
+    private APIConnection connection;
 
-	public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException{
-		return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
-	}	
+    public TwitterAuthenticationCommand(String commandString, String user) {
+
+    }
+
+    public TwitterAuthenticationCommand(APIConnection connection, String user) {
+	this.connection = connection;
+    }
+
+    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+    }
 }

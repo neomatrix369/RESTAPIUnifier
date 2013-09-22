@@ -8,24 +8,15 @@ import org.neomatrix369.examples.muzu_tv_api.BaseMuzuAPI;
 
 public class UriBuilderTest {
 
-	@Test
-	public void uriBuilder_should_assemble_non_empty_connection_uri()
-			throws Exception {
+    @Test
+    public void uriBuilder_should_assemble_non_empty_connection_uri() throws Exception {
+	APIConnection connection = new UriBuilder(BaseMuzuAPI.MUZU_BASE_URL).setNoAPIKeyRequired().build();
+	assertNotNull(connection);
+    }
 
-		APIConnection connection = new UriBuilder(BaseMuzuAPI.MUZU_BASE_URL).setAPIKey("", "")
-				.build();
-
-		assertNotNull(connection);
-	}
-
-	@Ignore
-	@Test
-	public void connectionUri_should_start_with_base_url() throws Exception {
-//		assertThat()
-	}
+    @Ignore
+    @Test
+    public void connectionUri_should_start_with_base_url() throws Exception {
+	// assertThat()
+    }
 }
-
-// new GenericAPICommandBuilder(connection, "authenticate")
-// .withParam("user", "alex").build().execute();
-//
-// new TwitterAuthenticationCommand(connection, "alex").execute();
