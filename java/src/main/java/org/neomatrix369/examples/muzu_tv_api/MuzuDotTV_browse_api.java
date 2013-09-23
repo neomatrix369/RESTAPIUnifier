@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,43 +39,38 @@ import org.slf4j.LoggerFactory;
 public final class MuzuDotTV_browse_api {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_browse_api.class);
-    
+
     private MuzuDotTV_browse_api() {
-        // Hide utility class constructor
+	// Hide utility class constructor
     }
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException {
-        /**
-         * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
-         */
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileReader(new File(
-                    "resources/muzu_settings.properties")));
-            String muzuAPIKey = prop.getProperty("APIKey");
+    public static void main(String[] args) throws InterruptedException {
+	/**
+	 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
+	 */
+	Properties prop = new Properties();
+	try {
+	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
+	    String muzuAPIKey = prop.getProperty("APIKey");
 
-            MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null,
-                    "views", "0", null, null, null, ResultType.JSON.toString());
-            LOGGER.info(muzuBrowse.getFetchedResults());
-        } catch (FileNotFoundException e) {
-            LOGGER.error(e.getMessage());
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
+	    MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null, "views", "0", null, null, null,
+		    ResultType.JSON.toString());
+	    LOGGER.info(muzuBrowse.getFetchedResults());
+	} catch (FileNotFoundException e) {
+	    LOGGER.error(e.getMessage());
+	} catch (IOException e) {
+	    LOGGER.error(e.getMessage());
+	}
     }
 }
 
 class MuzuBrowse extends BaseMuzuAPI {
-    MuzuBrowse(String apiKey, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = "browse";
-        String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of",
-                "format", "country", "soundoff", "autostart", "videotype",
-                "width", "height", "includeAll" };
+    MuzuBrowse(String apiKey, String... params) {
+	String apiCommand = "browse";
+	String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of", "format", "country", "soundoff",
+		"autostart", "videotype", "width", "height", "includeAll" };
 
-        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
+	fetchedResults.executeUrl();
     }
 }

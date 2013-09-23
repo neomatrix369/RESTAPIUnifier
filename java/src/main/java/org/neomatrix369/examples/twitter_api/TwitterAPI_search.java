@@ -23,16 +23,15 @@
 package org.neomatrix369.examples.twitter_api;
 
 import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class TwitterAPI_search {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(TwitterAPI_search.class);
-    
+
     private TwitterAPI_search() {
-        // Hide utility class constructor
+	// Hide utility class constructor
     }
 
     /**
@@ -52,23 +51,19 @@ public final class TwitterAPI_search {
      * 
      */
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException {
-        TwitterSearch twitterSearch = new TwitterSearch("", "?",
-                ResultType.JSON.toString(), "hello");
-        LOGGER.info(twitterSearch.getFetchedResults());
+    public static void main(String[] args) throws InterruptedException {
+	TwitterSearch twitterSearch = new TwitterSearch("", "?", ResultType.JSON.toString(), "hello");
+	LOGGER.info(twitterSearch.getFetchedResults());
     }
 }
 
 class TwitterSearch extends BaseTwitterAPI {
 
-    TwitterSearch(String apiKey, String paramStart, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = String.format("search.%s", params[0]);
-        String[] arrayURLParamCodes = { null, "q" };
+    TwitterSearch(String apiKey, String paramStart, String... params) {
+	String apiCommand = String.format("search.%s", params[0]);
+	String[] arrayURLParamCodes = { null, "q" };
 
-        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+	fetchedResults.executeUrl();
     }
 }

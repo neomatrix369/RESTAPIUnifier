@@ -26,16 +26,15 @@ import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 
 import java.io.IOException;
 
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class ImportIOAPI_search {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportIOAPI_search.class);
-    
+
     private ImportIOAPI_search() {
-        // Hide utility class constructor
+	// Hide utility class constructor
     }
 
     /**
@@ -55,27 +54,21 @@ public final class ImportIOAPI_search {
      * 
      */
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException, IOException {
-        String username = readPropertyFrom(
-                "resources/importIO_settings.properties", "username");
-        String password = readPropertyFrom(
-                "resources/importIO_settings.properties", "password");
+    public static void main(String[] args) throws InterruptedException, IOException {
+	String username = readPropertyFrom("resources/importIO_settings.properties", "username");
+	String password = readPropertyFrom("resources/importIO_settings.properties", "password");
 
-        ImportIOSearch importIOSearch = new ImportIOSearch("", username,
-                password);
-        LOGGER.info(importIOSearch.getFetchedResults());
+	ImportIOSearch importIOSearch = new ImportIOSearch("", username, password);
+	LOGGER.info(importIOSearch.getFetchedResults());
     }
 }
 
 class ImportIOSearch extends ImportIOAPI {
-    ImportIOSearch(String paramStart, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = "login";
-        String[] arrayURLParamCodes = { "username", "password" };
+    ImportIOSearch(String paramStart, String... params) {
+	String apiCommand = "login";
+	String[] arrayURLParamCodes = { "username", "password" };
 
-        fetchedResults = buildAPIReadyToExecute(apiCommand, paramStart,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
+	fetchedResults = buildAPIReadyToExecute(apiCommand, paramStart, arrayURLParamCodes, params);
+	fetchedResults.executeUrl();
     }
 }

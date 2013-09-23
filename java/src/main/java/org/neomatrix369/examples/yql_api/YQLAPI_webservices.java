@@ -22,19 +22,17 @@
  */
 package org.neomatrix369.examples.yql_api;
 
-
 import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class YQLAPI_webservices {
-    
+
     private static final String COMMAND_SHOW_TABLES = "show tables";
-	private static final Logger LOGGER = LoggerFactory.getLogger(YQLAPI_webservices.class);
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(YQLAPI_webservices.class);
+
     private YQLAPI_webservices() {
-        // Hide utility class constructor
+	// Hide utility class constructor
     }
 
     /**
@@ -54,30 +52,26 @@ public final class YQLAPI_webservices {
      * 
      */
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException {
-        YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?",
-                ResultType.JSON.toString(), COMMAND_SHOW_TABLES);
-        LOGGER.info(yqlAPIWebServices.getFetchedResults());
+    public static void main(String[] args) throws InterruptedException {
+	YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.JSON.toString(),
+		COMMAND_SHOW_TABLES);
+	LOGGER.info(yqlAPIWebServices.getFetchedResults());
 
-        yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(),
-                COMMAND_SHOW_TABLES, null);
-        LOGGER.info(yqlAPIWebServices.getFetchedResults());
+	yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(), COMMAND_SHOW_TABLES, null);
+	LOGGER.info(yqlAPIWebServices.getFetchedResults());
     }
 }
 
 class YQLAPIWebServices extends BaseYQLAPI {
     private static final String YQL_COMMAND = "yql";
-	private static final String FORMAT_NOTATION = "q";
-	private static final String FORMAT = "format";
+    private static final String FORMAT_NOTATION = "q";
+    private static final String FORMAT = "format";
 
-	YQLAPIWebServices(String apiKey, String paramStart, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = YQL_COMMAND;
-        String[] arrayURLParamCodes = { FORMAT, FORMAT_NOTATION };
+    YQLAPIWebServices(String apiKey, String paramStart, String... params) {
+	String apiCommand = YQL_COMMAND;
+	String[] arrayURLParamCodes = { FORMAT, FORMAT_NOTATION };
 
-        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+	fetchedResults.executeUrl();
     }
 }

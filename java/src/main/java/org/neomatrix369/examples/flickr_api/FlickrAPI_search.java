@@ -27,16 +27,15 @@ import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 import java.io.IOException;
 
 import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class FlickrAPI_search {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FlickrAPI_search.class);
-    
+
     private FlickrAPI_search() {
-        // Hide utility class constructor
+	// Hide utility class constructor
     }
 
     /**
@@ -52,26 +51,21 @@ public final class FlickrAPI_search {
      * 
      */
 
-    public static void main(String[] args) throws InterruptedException,
-            FinalURLNotGeneratedException, IOException {
-        String flickrAPIKey = readPropertyFrom(
-                "resources/flickr_settings.properties", "APIKey");
+    public static void main(String[] args) throws InterruptedException, IOException {
+	String flickrAPIKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
 
-        FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&",
-                ResultType.JSON.toString(), "hello");
-        LOGGER.info(flickrSearch.getFetchedResults());
+	FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&", ResultType.JSON.toString(), "hello");
+	LOGGER.info(flickrSearch.getFetchedResults());
     }
 }
 
 class FlickrSearch extends BaseFlickrAPI {
 
-    FlickrSearch(String apiKey, String paramStart, String... params)
-            throws FinalURLNotGeneratedException {
-        String apiCommand = "?method=flickr.photos.search";
-        String[] arrayURLParamCodes = { "format", "text" };
+    FlickrSearch(String apiKey, String paramStart, String... params) {
+	String apiCommand = "?method=flickr.photos.search";
+	String[] arrayURLParamCodes = { "format", "text" };
 
-        fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart,
-                arrayURLParamCodes, params);
-        fetchedResults.executeURL();
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+	fetchedResults.executeUrl();
     }
 }

@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +44,7 @@ public final class MuzuDotTV_search_api {
 	// Hide utility class constructor
     }
 
-    public static void main(String[] args) throws InterruptedException, FinalURLNotGeneratedException {
+    public static void main(String[] args) throws InterruptedException {
 	Properties prop = new Properties();
 	try {
 	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
@@ -68,12 +67,12 @@ public final class MuzuDotTV_search_api {
 
 class MuzuSearch extends BaseMuzuAPI {
 
-    MuzuSearch(String apiKey, String... params) throws FinalURLNotGeneratedException {
+    MuzuSearch(String apiKey, String... params) {
 	String apiCommand = "search";
 	String[] arrayURLParamCodes = { "mySearch", "l", "format", "country", "soundoff", "autostart", "videotype",
 		"width", "height", "includeAll" };
 
 	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
-	fetchedResults.executeURL();
+	fetchedResults.executeUrl();
     }
 }

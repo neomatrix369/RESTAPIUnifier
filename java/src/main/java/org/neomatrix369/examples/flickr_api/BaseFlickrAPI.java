@@ -22,8 +22,8 @@
  */
 package org.neomatrix369.examples.flickr_api;
 
-import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 import org.neomatrix369.apiworld.util.Keys;
@@ -35,16 +35,14 @@ public class BaseFlickrAPI {
 
     private static final String KEY_FLICKR_API_PARAM = Keys.INSTANCE.getKey("FLICKR_API_PARAM");
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickrAPI.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickrAPI.class);
 
     private String baseURL = "http://api.flickr.com/services/rest";
     protected APIReader fetchedResults;
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 	    String[] arrayURLParamCodes, String... params) {
-	UriBuilder apiBuilder = new UriBuilder(baseURL)
-		.setCommand(apiCommand)
-		.setParamStart(paramStart)
+	UriBuilder apiBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
 		.setAPIKey(KEY_FLICKR_API_PARAM, apiKey);
 	int paramCtr = 0;
 	for (String eachValue : params) {
