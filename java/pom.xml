@@ -3,17 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.neomatrix369</groupId>
 	<artifactId>RESTAPIUnifier</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 	<description>RESTAPIUnifier - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc..</description>
-	<inceptionYear>${project.inceptionYear}</inceptionYear>
+	<inceptionYear>2013</inceptionYear>
 
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.inceptionYear>2013</project.inceptionYear>
 
 		<jdk.version>1.7</jdk.version>
 		<surefire.version>2.14.1</surefire.version>
@@ -91,7 +90,7 @@
 					<aggregate>true</aggregate>
 					<properties>
 						<owner>mani</owner>
-						<year>${project.inceptionYear}</year>
+						<year>2013</year>
 						<email>sadhak001@gmail.com</email>
 					</properties>
 					<includes>
