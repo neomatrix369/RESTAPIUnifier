@@ -84,7 +84,6 @@ public class APIReaderBehaviours {
 	APIReader apiReader = new APIReader(url);
 	apiReader.executeUrl("POST", null);
 	String result = apiReader.getFetchedResults();
-	apiReader.displayResult();
 	assertThat("Empty result returned.", result.isEmpty(), is(false));
 	assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
     }

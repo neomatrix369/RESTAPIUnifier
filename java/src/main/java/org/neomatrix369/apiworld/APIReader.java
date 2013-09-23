@@ -50,8 +50,6 @@ public class APIReader {
 
     private static final String KEY_CLOSING_BOX_BRACKET = Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET");
     private static final String KEY_OPENING_BOX_BRACKET = Keys.INSTANCE.getKey("OPENING_BOX_BRACKET");
-    private static final String KEY_DISPLAYING_LAST_RETRIEVED = Keys.INSTANCE
-	    .getKey("DISPLAYING_LAST_RETRIEVED_RESULTS_FROM_URL");
     private static final String KEY_READING_COMPLETED = Keys.INSTANCE.getKey("READING_COMPLETED");
     private static final String KEY_READING_RESULTS_RETURNED = Keys.INSTANCE
 	    .getKey("READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT");
@@ -119,11 +117,6 @@ public class APIReader {
 	return result;
     }
 
-    public void displayResult() {
-	displayMessageAboutLastRetrieval(url.toString());
-	LOGGER.info(lastHttpResult.toString());
-    }
-
     private void showMessageWhileMakingConnection(String urlText) {
 	LOGGER.info(String.format(KEY_CONNECTING_TO_URL, urlText));
     }
@@ -164,10 +157,6 @@ public class APIReader {
 	if (lastHttpResult != null) {
 	    lastHttpResult.clear();
 	}
-    }
-
-    private void displayMessageAboutLastRetrieval(String urlText) {
-	LOGGER.info(String.format(KEY_DISPLAYING_LAST_RETRIEVED, urlText));
     }
 
     private void addToLastHttpResults(String inputLine) {
