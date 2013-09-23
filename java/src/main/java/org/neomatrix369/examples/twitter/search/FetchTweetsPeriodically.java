@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.search_tweets;
+package org.neomatrix369.examples.twitter.search;
 
 import java.util.Timer;
 import java.util.TimerTask;

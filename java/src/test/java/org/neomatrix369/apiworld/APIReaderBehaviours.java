@@ -37,7 +37,7 @@ import java.util.Map;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.neomatrix369.examples.muzu_tv_api.BaseMuzuAPI;
+import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +52,7 @@ public class APIReaderBehaviours {
     @Test
     public void should_Fetch_Data_As_JSON_When_API_URL_Is_Passed_In() throws FileNotFoundException, IOException {
 	String apiKey = readPropertyFrom("resources/muzu_settings.properties", "APIKey");
-	String url = String.format(BaseMuzuAPI.MUZU_BASE_URL + "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, JSON);
+	String url = String.format(BaseMuzu.MUZU_BASE_URL + "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, JSON);
 	APIReader apiReader = new APIReader(url);
 	apiReader.executeUrl();
 	String result = apiReader.getFetchedResults();
@@ -66,7 +66,7 @@ public class APIReaderBehaviours {
     @Test
     public void should_Fetch_Data_As_XML_When_API_URL_Is_Passed_In() throws FileNotFoundException, IOException {
 	String apiKey = readPropertyFrom("resources/muzu_settings.properties", "APIKey");
-	String url = String.format(BaseMuzuAPI.MUZU_BASE_URL + "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, XML);
+	String url = String.format(BaseMuzu.MUZU_BASE_URL + "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, XML);
 	APIReader apiReader = new APIReader(url);
 	apiReader.executeUrl();
 	String result = apiReader.getFetchedResults();

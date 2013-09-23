@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.muzu_tv_api;
+package org.neomatrix369.examples.muzutv;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,34 +28,30 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.neomatrix369.apiworld.ResultType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- Create Date: Saturday 21 April 2012 13:18 PM
- Max queries: 10000
- */
-public final class MuzuDotTV_browse_api {
+public final class Artist {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_browse_api.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Artist.class);
 
-    private MuzuDotTV_browse_api() {
+    private Artist() {
 	// Hide utility class constructor
     }
 
     public static void main(String[] args) throws InterruptedException {
 	/**
-	 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
+	 * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
 	 */
 	Properties prop = new Properties();
 	try {
 	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
 	    String muzuAPIKey = prop.getProperty("APIKey");
 
-	    MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null, "views", "0", null, null, null,
-		    ResultType.JSON.toString());
-	    LOGGER.info(muzuBrowse.getFetchedResults());
+	    MuzuArtist muzuArtist = new MuzuArtist(BaseMuzu.MUZU_BASE_URL + "artist/details/Bon+Jovi?muzuid="
+		    + muzuAPIKey);
+
+	    LOGGER.info(muzuArtist.getFetchedResults());
 	} catch (FileNotFoundException e) {
 	    LOGGER.error(e.getMessage());
 	} catch (IOException e) {
@@ -64,12 +60,11 @@ public final class MuzuDotTV_browse_api {
     }
 }
 
-class MuzuBrowse extends BaseMuzuAPI {
-    MuzuBrowse(String apiKey, String... params) {
-	String apiCommand = "browse";
-	String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of", "format", "country", "soundoff",
-		"autostart", "videotype", "width", "height", "includeAll" };
-
+class MuzuArtist extends BaseMuzu {
+    MuzuArtist(String apiKey, String... params) {
+	String apiCommand = "artist";
+	String[] arrayURLParamCodes = { "artist_name", "format", "country", "soundoff", "autostart", "videotype",
+		"width", "height", "includeAll" };
 	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
 	fetchedResults.executeUrl();
     }

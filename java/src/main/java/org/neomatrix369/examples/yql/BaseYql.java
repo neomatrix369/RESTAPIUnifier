@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.twitter_api;
+package org.neomatrix369.examples.yql;
 
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
@@ -30,20 +30,20 @@ import org.neomatrix369.apiworld.util.UtilityFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BaseTwitterAPI {
-    
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTwitterAPI.class);
+public class BaseYql {
 
-    private String baseURL = "http://search.twitter.com/";
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseYql.class);
+    
+    private String baseURL = "http://query.yahooapis.com/v1/public/yql";
     protected APIReader fetchedResults;
 
     protected APIReader buildAPIReadyToExecute(String apiKey,
             String apiCommand, String paramStart, String[] arrayURLParamCodes,
             String... params) {
         UriBuilder apiBuilder = new UriBuilder(baseURL)
-        		.setCommand(apiCommand)
-        		.setParamStart(paramStart)
-        		.setApiKeyIsRequired(false);
+                    .setCommand(apiCommand)
+        			.setParamStart(paramStart)
+                    .setApiKeyIsRequired(false);
         int paramCtr = 0;
         for (String eachValue : params) {
             apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],

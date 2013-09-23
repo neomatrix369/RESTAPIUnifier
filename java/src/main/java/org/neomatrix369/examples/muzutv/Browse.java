@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.muzu_tv_api;
+package org.neomatrix369.examples.muzutv;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,31 +32,26 @@ import org.neomatrix369.apiworld.ResultType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- Create Date: Saturday 21 April 2012 13:18 PM
- Max queries: 10000
- */
-public final class MuzuDotTV_search_api {
+public final class Browse {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuDotTV_search_api.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Browse.class);
 
-    private MuzuDotTV_search_api() {
+    private Browse() {
 	// Hide utility class constructor
     }
 
     public static void main(String[] args) throws InterruptedException {
+	/**
+	 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
+	 */
 	Properties prop = new Properties();
 	try {
 	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
 	    String muzuAPIKey = prop.getProperty("APIKey");
 
-	    /**
-	     * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&format=json&
-	     * mySearch=the+script
-	     * 
-	     */
-	    MuzuSearch muzuSearch = new MuzuSearch(muzuAPIKey, "the script", null, ResultType.JSON.toString());
-	    LOGGER.info(muzuSearch.getFetchedResults());
+	    MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null, "views", "0", null, null, null,
+		    ResultType.JSON.toString());
+	    LOGGER.info(muzuBrowse.getFetchedResults());
 	} catch (FileNotFoundException e) {
 	    LOGGER.error(e.getMessage());
 	} catch (IOException e) {
@@ -65,12 +60,11 @@ public final class MuzuDotTV_search_api {
     }
 }
 
-class MuzuSearch extends BaseMuzuAPI {
-
-    MuzuSearch(String apiKey, String... params) {
-	String apiCommand = "search";
-	String[] arrayURLParamCodes = { "mySearch", "l", "format", "country", "soundoff", "autostart", "videotype",
-		"width", "height", "includeAll" };
+class MuzuBrowse extends BaseMuzu {
+    MuzuBrowse(String apiKey, String... params) {
+	String apiCommand = "browse";
+	String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of", "format", "country", "soundoff",
+		"autostart", "videotype", "width", "height", "includeAll" };
 
 	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, arrayURLParamCodes, params);
 	fetchedResults.executeUrl();

@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.heroku_api;
+package org.neomatrix369.examples.heroku;
 
 import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 
@@ -52,7 +52,7 @@ import com.sun.jersey.core.util.Base64;
  * 
  */
 
-public class HerokuAPI {
+public class Heroku {
     private static final String BASIC = "Basic";
     private static final String SPACE = " ";
     private static final String COLON = ":";

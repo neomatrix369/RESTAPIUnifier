@@ -20,49 +20,50 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr_api;
+package org.neomatrix369.examples.twitter;
 
-import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
+import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.Keys;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BaseFlickrAPI {
+public class BaseTwitter {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTwitter.class);
 
-    private static final String KEY_FLICKR_API_PARAM = Keys.INSTANCE.getKey("FLICKR_API_PARAM");
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickrAPI.class);
-
-    private String baseURL = "http://api.flickr.com/services/rest";
+    private String baseURL = "http://search.twitter.com/";
     protected APIReader fetchedResults;
 
-    protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
-	    String[] arrayURLParamCodes, String... params) {
-	UriBuilder apiBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
-		.setAPIKey(KEY_FLICKR_API_PARAM, apiKey);
-	int paramCtr = 0;
-	for (String eachValue : params) {
-	    apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));
-	}
+    protected APIReader buildAPIReadyToExecute(String apiKey,
+            String apiCommand, String paramStart, String[] arrayURLParamCodes,
+            String... params) {
+        UriBuilder apiBuilder = new UriBuilder(baseURL)
+        		.setCommand(apiCommand)
+        		.setParamStart(paramStart)
+        		.setApiKeyIsRequired(false);
+        int paramCtr = 0;
+        for (String eachValue : params) {
+            apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
+                    UtilityFunctions.encodeToken(eachValue));
+        }
 
-	try {
-	    apiBuilder.build();
-	    return new APIReader(apiBuilder);
-	} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
-	}
+        try {
+            apiBuilder.build();
+            return new APIReader(apiBuilder);
+        } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
+            LOGGER.error(e.getMessage());
+        }
 
-	return new APIReader(baseURL);
+        return new APIReader(baseURL);
     }
 
     public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
+        if (fetchedResults != null) {
+            return fetchedResults.getFetchedResults();
+        }
+        return "";
     }
 }

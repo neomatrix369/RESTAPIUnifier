@@ -28,11 +28,11 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.neomatrix369.apiworld.UriBuilderIntBehaviours;
 import org.neomatrix369.apiworld.APIReaderBehaviours;
 import org.neomatrix369.apiworld.UtilityFunctionsBehaviours;
-import org.neomatrix369.apiworld.HerokuAPIBehaviours.HerokuAPIBehaviours;
-import org.neomatrix369.apiworld.SearchForTweets.FetchTweetsPeriodicallyBehaviours;
-import org.neomatrix369.apiworld.SearchForTweets.SearchTermFilterBehaviours;
-import org.neomatrix369.apiworld.SearchForTweets.TweetsDataStorageBehaviours;
-import org.neomatrix369.apiworld.SearchForTweets.TwitterSearchBehaviours;
+import org.neomatrix369.apiworld.heroku.HerokuAPIBehaviours;
+import org.neomatrix369.apiworld.twitter.FetchTweetsPeriodicallyBehaviours;
+import org.neomatrix369.apiworld.twitter.SearchTermFilterBehaviours;
+import org.neomatrix369.apiworld.twitter.TweetsDataStorageBehaviours;
+import org.neomatrix369.apiworld.twitter.TwitterSearchBehaviours;
 
 /**
  * Suite class AllTests.

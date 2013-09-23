@@ -25,13 +25,13 @@ package org.neomatrix369.apiworld;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-import org.neomatrix369.examples.muzu_tv_api.BaseMuzuAPI;
+import org.neomatrix369.examples.muzutv.BaseMuzu;
 
 public class UriBuilderTest {
 
     @Test
     public void uriBuilder_should_assemble_non_empty_connection_uri() throws Exception {
-	APIConnection connection = new UriBuilder(BaseMuzuAPI.MUZU_BASE_URL).setNoAPIKeyRequired().build();
+	APIConnection connection = new UriBuilder(BaseMuzu.MUZU_BASE_URL).setNoAPIKeyRequired().build();
 	assertNotNull(connection);
     }
 

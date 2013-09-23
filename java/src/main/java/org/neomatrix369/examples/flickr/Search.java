@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr_api;
+package org.neomatrix369.examples.flickr;
 
 import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 
@@ -30,11 +30,11 @@ import org.neomatrix369.apiworld.ResultType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class FlickrAPI_getRecent {
+public final class Search {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlickrAPI_getRecent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Search.class);
 
-    private FlickrAPI_getRecent() {
+    private Search() {
 	// Hide utility class constructor
     }
 
@@ -52,18 +52,18 @@ public final class FlickrAPI_getRecent {
      */
 
     public static void main(String[] args) throws InterruptedException, IOException {
-
 	String flickrAPIKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
-	FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey, "&", ResultType.JSON.toString());
-	LOGGER.info(flickrGetRecent.getFetchedResults());
+
+	FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&", ResultType.JSON.toString(), "hello");
+	LOGGER.info(flickrSearch.getFetchedResults());
     }
 }
 
-class FlickrGetRecent extends BaseFlickrAPI {
+class FlickrSearch extends BaseFlickr {
 
-    FlickrGetRecent(String apiKey, String paramStart, String... params) {
-	String apiCommand = "?method=flickr.photos.getRecent";
-	String[] arrayURLParamCodes = { "format" };
+    FlickrSearch(String apiKey, String paramStart, String... params) {
+	String apiCommand = "?method=flickr.photos.search";
+	String[] arrayURLParamCodes = { "format", "text" };
 
 	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
 	fetchedResults.executeUrl();

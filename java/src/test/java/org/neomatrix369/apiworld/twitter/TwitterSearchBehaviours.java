@@ -20,12 +20,11 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld.SearchForTweets;
+package org.neomatrix369.apiworld.twitter;
 
 import org.junit.Test;
 import org.junit.Ignore;
-
-import org.neomatrix369.examples.search_tweets.TwitterInterfaceEngine;
+import org.neomatrix369.examples.twitter.search.TwitterInterfaceEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

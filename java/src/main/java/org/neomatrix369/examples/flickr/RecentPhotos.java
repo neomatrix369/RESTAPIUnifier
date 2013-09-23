@@ -20,55 +20,52 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.importio_api;
+package org.neomatrix369.examples.flickr;
 
 import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 
 import java.io.IOException;
 
+import org.neomatrix369.apiworld.ResultType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class ImportIOAPI_search {
+public final class RecentPhotos {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImportIOAPI_search.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecentPhotos.class);
 
-    private ImportIOAPI_search() {
+    private RecentPhotos() {
 	// Hide utility class constructor
     }
 
     /**
-     * API provider URL: http://docs.import.io/
+     * API provider URL: http://www.flickr.com/services/api/
      * 
      * Required settings file to run this example:
-     * resources/importio_settings.properties
+     * resources/flickr_settings.properties
      * 
-     * containing username=[yyyy] password=[zzzz]
+     * containing APIKey=[xxxxx]
      * 
-     * [yyyy] = username registered with import.io [zzzz] = password registered
-     * with import.io
-     * 
-     * API Key is handled differently via this API, an Auth token is return when
-     * a successful login occurs. Which can be further used along with secret
-     * key to perform further API actions.
+     * [xxxxx] = is APIKey needed to get authentication from flickr.com to be
+     * able to make any API calls.
      * 
      */
 
     public static void main(String[] args) throws InterruptedException, IOException {
-	String username = readPropertyFrom("resources/importIO_settings.properties", "username");
-	String password = readPropertyFrom("resources/importIO_settings.properties", "password");
 
-	ImportIOSearch importIOSearch = new ImportIOSearch("", username, password);
-	LOGGER.info(importIOSearch.getFetchedResults());
+	String flickrAPIKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
+	FlickrGetRecent flickrGetRecent = new FlickrGetRecent(flickrAPIKey, "&", ResultType.JSON.toString());
+	LOGGER.info(flickrGetRecent.getFetchedResults());
     }
 }
 
-class ImportIOSearch extends ImportIOAPI {
-    ImportIOSearch(String paramStart, String... params) {
-	String apiCommand = "login";
-	String[] arrayURLParamCodes = { "username", "password" };
+class FlickrGetRecent extends BaseFlickr {
 
-	fetchedResults = buildAPIReadyToExecute(apiCommand, paramStart, arrayURLParamCodes, params);
+    FlickrGetRecent(String apiKey, String paramStart, String... params) {
+	String apiCommand = "?method=flickr.photos.getRecent";
+	String[] arrayURLParamCodes = { "format" };
+
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
 	fetchedResults.executeUrl();
     }
 }

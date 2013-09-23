@@ -20,50 +20,56 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr_api;
-
-import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
-
-import java.io.IOException;
+package org.neomatrix369.examples.yql;
 
 import org.neomatrix369.apiworld.ResultType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class FlickrAPI_search {
+public final class Webservices {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FlickrAPI_search.class);
+    private static final String COMMAND_SHOW_TABLES = "show tables";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Webservices.class);
 
-    private FlickrAPI_search() {
+    private Webservices() {
 	// Hide utility class constructor
     }
 
     /**
-     * API provider URL: http://www.flickr.com/services/api/
+     * This example does not explicitly require an API key, but for other API
+     * calls an API key maybe required - see YQL's API documentation for further
+     * details.
+     * 
+     * API provider URL: http://developer.yahoo.com/yql/
      * 
      * Required settings file to run this example:
-     * resources/flickr_settings.properties
+     * resources/yql_settings.properties
      * 
      * containing APIKey=[xxxxx]
      * 
-     * [xxxxx] = is APIKey needed to get authentication from flickr.com to be
+     * [xxxxx] = is APIKey needed to get authentication from yahoo.com to be
      * able to make any API calls.
      * 
      */
 
-    public static void main(String[] args) throws InterruptedException, IOException {
-	String flickrAPIKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
+    public static void main(String[] args) throws InterruptedException {
+	YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.JSON.toString(),
+		COMMAND_SHOW_TABLES);
+	LOGGER.info(yqlAPIWebServices.getFetchedResults());
 
-	FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&", ResultType.JSON.toString(), "hello");
-	LOGGER.info(flickrSearch.getFetchedResults());
+	yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(), COMMAND_SHOW_TABLES, null);
+	LOGGER.info(yqlAPIWebServices.getFetchedResults());
     }
 }
 
-class FlickrSearch extends BaseFlickrAPI {
+class YQLAPIWebServices extends BaseYql {
+    private static final String YQL_COMMAND = "yql";
+    private static final String FORMAT_NOTATION = "q";
+    private static final String FORMAT = "format";
 
-    FlickrSearch(String apiKey, String paramStart, String... params) {
-	String apiCommand = "?method=flickr.photos.search";
-	String[] arrayURLParamCodes = { "format", "text" };
+    YQLAPIWebServices(String apiKey, String paramStart, String... params) {
+	String apiCommand = YQL_COMMAND;
+	String[] arrayURLParamCodes = { FORMAT, FORMAT_NOTATION };
 
 	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
 	fetchedResults.executeUrl();

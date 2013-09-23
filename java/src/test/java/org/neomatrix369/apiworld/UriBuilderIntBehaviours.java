@@ -30,12 +30,12 @@ import org.junit.Test;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
-import org.neomatrix369.examples.muzu_tv_api.BaseMuzuAPI;
+import org.neomatrix369.examples.muzutv.BaseMuzu;
 
 public class UriBuilderIntBehaviours {
 	private static final String MUZUID_KEY = "muzuid";
 	private static final String MUZUID_VALUE = "[MUZU_ID]";
-	private static final String MUZU_URL_WITH_BROWSE_AND_MUZU_ID = BaseMuzuAPI.MUZU_BASE_URL
+	private static final String MUZU_URL_WITH_BROWSE_AND_MUZU_ID = BaseMuzu.MUZU_BASE_URL
 			+ "browse?muzuid=[MUZU_ID]";
 	private static final String API_BROWSE_COMMAND = "browse";
 
@@ -44,7 +44,7 @@ public class UriBuilderIntBehaviours {
 
 	@Before
 	public void setup() {
-		baseURL = BaseMuzuAPI.MUZU_BASE_URL;
+		baseURL = BaseMuzu.MUZU_BASE_URL;
 		apiBuilder = new UriBuilder(baseURL);
 	}
 
@@ -88,7 +88,7 @@ public class UriBuilderIntBehaviours {
 		apiBuilder.addAURLParameter("key1", "value1");
 		apiBuilder.build();
 		String actual = apiBuilder.getFinalURL();
-		String expected = BaseMuzuAPI.MUZU_BASE_URL
+		String expected = BaseMuzu.MUZU_BASE_URL
 				+ "browse?muzuid=[MUZU_ID]&key1=value1";
 		assertThat(actual, is(expected));
 	}
@@ -102,7 +102,7 @@ public class UriBuilderIntBehaviours {
 		apiBuilder.addAURLParameter("key2", "value2");
 		apiBuilder.build();
 		String actual = apiBuilder.getFinalURL();
-		String expected = BaseMuzuAPI.MUZU_BASE_URL
+		String expected = BaseMuzu.MUZU_BASE_URL
 				+ "browse?muzuid=[MUZU_ID]&key1=value1&key2=value2";
 		assertThat(expected, is(actual));
 	}
@@ -118,7 +118,7 @@ public class UriBuilderIntBehaviours {
 		apiBuilder.addAURLParameter("key3", "value3");
 		apiBuilder.build();
 		String actual = apiBuilder.getFinalURL();
-		String expected = BaseMuzuAPI.MUZU_BASE_URL
+		String expected = BaseMuzu.MUZU_BASE_URL
 				+ "browse?muzuid=[MUZU_ID]&key2=value2&key3=value3";
 		assertThat(actual, is(expected));
 	}
@@ -134,7 +134,7 @@ public class UriBuilderIntBehaviours {
 		apiBuilder.addAURLParameter("key3", "value3");
 		apiBuilder.build();
 		String actual = apiBuilder.getFinalURL();
-		String expected = BaseMuzuAPI.MUZU_BASE_URL
+		String expected = BaseMuzu.MUZU_BASE_URL
 				+ "browse?muzuid=[MUZU_ID]&key1=value1&key3=value3";
 		assertThat(actual, is(expected));
 	}
@@ -148,7 +148,7 @@ public class UriBuilderIntBehaviours {
 				UtilityFunctions.encodeToken("string with space"));
 		apiBuilder.build();
 		String actual = apiBuilder.getFinalURL();
-		String expected = BaseMuzuAPI.MUZU_BASE_URL
+		String expected = BaseMuzu.MUZU_BASE_URL
 				+ "browse?muzuid=[MUZU_ID]&key=string+with+space";
 		assertThat(actual, is(expected));
 	}

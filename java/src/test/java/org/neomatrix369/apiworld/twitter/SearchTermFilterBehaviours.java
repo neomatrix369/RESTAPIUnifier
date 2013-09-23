@@ -20,14 +20,13 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld.SearchForTweets;
+package org.neomatrix369.apiworld.twitter;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import org.neomatrix369.examples.search_tweets.TweetsDataStorage;
+import org.neomatrix369.examples.twitter.search.TweetsDataStorage;
 
 public class SearchTermFilterBehaviours {
 	TweetsDataStorage storage;
