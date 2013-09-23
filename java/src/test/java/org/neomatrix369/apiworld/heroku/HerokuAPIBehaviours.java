@@ -68,7 +68,6 @@ import org.slf4j.LoggerFactory;
  * [xxx@yyyy.com] = email address attached to the account
  * 
  */
-
 public class HerokuAPIBehaviours {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HerokuAPIBehaviours.class);

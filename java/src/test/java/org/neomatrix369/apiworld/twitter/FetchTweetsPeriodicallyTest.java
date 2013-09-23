@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class FetchTweetsPeriodicallyBehaviours {
+public class FetchTweetsPeriodicallyTest {
 
 	// TODO: Complete shouldBeAbleToStartATimerTask() implementation
 	@Test @Ignore

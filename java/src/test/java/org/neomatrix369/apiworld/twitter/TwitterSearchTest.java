@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
-public class TwitterSearchBehaviours {
+public class TwitterSearchTest {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(TwitterSearchBehaviours.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TwitterSearchTest.class);
     
 	private static final String SEARCH_TERM_WITH_SPACES = "  ";
 	private static final String SEARCH_TERMS_FAILURE_ERROR_MESSAGE = "Search with two terms fails.";

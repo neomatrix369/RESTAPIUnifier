@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.examples.twitter.search.TweetsDataStorage;
 
-public class SearchTermFilterBehaviours {
+public class SearchTermFilterTest {
 	TweetsDataStorage storage;
 	
 	@Before

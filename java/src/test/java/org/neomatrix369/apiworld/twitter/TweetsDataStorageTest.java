@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.examples.twitter.search.TweetsDataStorage;
 
-public class TweetsDataStorageBehaviours {
+public class TweetsDataStorageTest {
     private static final String READ_WRITE_MISMATCH_ERROR_MESSAGE = "Written and read messages do not match! Data storage error";
     private static final String TWEETS_FILENAME = "testSaveTweets.json";
     TweetsDataStorage storage;

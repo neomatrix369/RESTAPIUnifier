@@ -47,11 +47,11 @@ import org.slf4j.LoggerFactory;
 public final class UtilityFunctions {
 
     private static final String GREATER_THAN = ">";
-	private static final String GREATER_THAN_AND_COMMA = ">,";
-	private static final String INVALID_TOKEN_WARNING = "Invalid token.";
-	private static final String UTF_8 = "UTF-8";
-	private static final String THE_TOKEN_CANNOT_BE_NULL_MSG = "The token cannot be null.";
-	private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
+    private static final String GREATER_THAN_AND_COMMA = ">,";
+    private static final String INVALID_TOKEN_WARNING = "Invalid token.";
+    private static final String UTF_8 = "UTF-8";
+    private static final String THE_TOKEN_CANNOT_BE_NULL_MSG = "The token cannot be null.";
+    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
 
     /**
      * Hide Utility Class Constructor - Utility classes should not have a public
@@ -111,13 +111,6 @@ public final class UtilityFunctions {
 	return encodedToken;
     }
 
-    /**
-     * .
-     * 
-     * @param resultAsString
-     *            String
-     * @return boolean
-     */
     public static boolean isAValidJSONText(String resultAsString) {
 	try {
 	    new JSONObject(resultAsString);
@@ -142,17 +135,6 @@ public final class UtilityFunctions {
 	return "";
     }
 
-    /**
-     * .
-     * 
-     * @param propertyFilename
-     *            String
-     * @param propertyName
-     *            String
-     * @return String
-     * @throws IOException
-     *             exception
-     */
     public static String readPropertyFrom(String propertyFilename, String propertyName) throws IOException {
 	Properties prop = new Properties();
 	try {
@@ -176,9 +158,9 @@ public final class UtilityFunctions {
 	return true;
     }
 
-    public static String dropStartAndEndDelimeters(String inputString, String startsWith, String endsWith) {
+    public static String dropStartAndEndDelimeters(String inputString, String startDelimiter, String endDelimiter) {
 	String result = inputString;
-	if (result.startsWith(startsWith)) {
+	if (result.startsWith(startDelimiter)) {
 	    if (result.length() == 1) {
 		result = "";
 	    } else {
@@ -186,7 +168,7 @@ public final class UtilityFunctions {
 	    }
 	}
 
-	if (result.endsWith(endsWith)) {
+	if (result.endsWith(endDelimiter)) {
 	    result = result.substring(0, result.length() - 1);
 	}
 
