@@ -91,7 +91,13 @@ public class BaseFlickr {
 
     public String extractJson(String flickrResponse) {
 	int beginIndex = flickrResponse.indexOf("{\"");
+	if (beginIndex == -1) {
+	    throw new IllegalStateException("begin index not found");
+	}
 	int endIndex = flickrResponse.lastIndexOf(")");
+	if (endIndex == -1) {
+	    throw new IllegalStateException("end index not found");
+	}
 	return flickrResponse.substring(beginIndex, endIndex);
     }
 }

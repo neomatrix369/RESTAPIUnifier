@@ -58,8 +58,6 @@ public class APIReaderBehaviours {
 	String result = apiReader.getFetchedResults();
 	assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
 
-	LOGGER.info(result);
-
 	assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
     }
 
