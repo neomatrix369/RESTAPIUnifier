@@ -22,6 +22,12 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import java.io.StringReader;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
@@ -30,6 +36,13 @@ import org.neomatrix369.apiworld.util.Keys;
 import org.neomatrix369.apiworld.util.UtilityFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+//http://www.flickr.com/services/api/response.json.html
+
+// EXAMPLE for successful flick return value
+// jsonFlickrApi({"method":{"_content":"flickr.test.echo"},
+// "format":{"_content":"json"},
+// "api_key":{"_content":"4cccadecce65a39cfcfee90b1c01c6a4"}, "stat":"ok"})
 
 public class BaseFlickr {
 
@@ -54,9 +67,9 @@ public class BaseFlickr {
 	    return new APIReader(apiBuilder);
 	} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
 	    LOGGER.error(e.getMessage());
+	    return new APIReader(baseURL);
 	}
 
-	return new APIReader(baseURL);
     }
 
     public String getFetchedResults() {
@@ -64,5 +77,21 @@ public class BaseFlickr {
 	    return fetchedResults.getFetchedResults();
 	}
 	return "";
+    }
+
+    public boolean isSuccess() {
+	return isSuccessfulResponse(getFetchedResults());
+    }
+
+    private boolean isSuccessfulResponse(String response) {
+	JsonReader jsonReader = Json.createReader(new StringReader(extractJson(response)));
+	JsonObject json = jsonReader.readObject();
+	return json.getString("stat").equals("ok");
+    }
+
+    public String extractJson(String flickrResponse) {
+	int beginIndex = flickrResponse.indexOf("{\"");
+	int endIndex = flickrResponse.lastIndexOf(")");
+	return flickrResponse.substring(beginIndex, endIndex);
     }
 }

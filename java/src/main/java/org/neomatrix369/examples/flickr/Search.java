@@ -22,46 +22,9 @@
  */
 package org.neomatrix369.examples.flickr;
 
-import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
+public class Search extends BaseFlickr {
 
-import java.io.IOException;
-
-import org.neomatrix369.apiworld.ResultType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public final class Search {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Search.class);
-
-    private Search() {
-	// Hide utility class constructor
-    }
-
-    /**
-     * API provider URL: http://www.flickr.com/services/api/
-     * 
-     * Required settings file to run this example:
-     * resources/flickr_settings.properties
-     * 
-     * containing APIKey=[xxxxx]
-     * 
-     * [xxxxx] = is APIKey needed to get authentication from flickr.com to be
-     * able to make any API calls.
-     * 
-     */
-
-    public static void main(String[] args) throws InterruptedException, IOException {
-	String flickrAPIKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
-
-	FlickrSearch flickrSearch = new FlickrSearch(flickrAPIKey, "&", ResultType.JSON.toString(), "hello");
-	LOGGER.info(flickrSearch.getFetchedResults());
-    }
-}
-
-class FlickrSearch extends BaseFlickr {
-
-    FlickrSearch(String apiKey, String paramStart, String... params) {
+    Search(String apiKey, String paramStart, String... params) {
 	String apiCommand = "?method=flickr.photos.search";
 	String[] arrayURLParamCodes = { "format", "text" };
 

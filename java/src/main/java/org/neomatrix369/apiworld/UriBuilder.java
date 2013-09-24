@@ -32,9 +32,7 @@ import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 
 /**
- * 
  * @author Mani Sarkar
- * 
  */
 public class UriBuilder {
 

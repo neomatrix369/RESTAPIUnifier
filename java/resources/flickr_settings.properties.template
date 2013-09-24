@@ -1,0 +1,14 @@
+# API Key URL: http://www.flickr.com/services/api/keys/
+# 
+# Required settings file to run this example:
+# 
+# containing APIKey=[xxxxx]
+# 
+# [xxxxx] = is APIKey needed to get authentication from flickr.com to be
+# able to make any API calls.
+#
+# Copy the file to flickr_settings.properties and fill in the correct values
+# for APIKey and Secret.
+
+APIKey=[API_KEY]
+Secret=[SECRET]

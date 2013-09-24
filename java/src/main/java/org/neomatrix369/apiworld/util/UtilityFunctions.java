@@ -140,10 +140,10 @@ public final class UtilityFunctions {
 	try {
 	    prop.load(new FileReader(new File(propertyFilename)));
 	    return prop.getProperty(propertyName);
-	} catch (IOException exeption) {
+	} catch (IOException exception) {
 	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
-	    LOGGER.error(exeption.getMessage());
-	    throw exeption;
+	    LOGGER.error(exception.getMessage());
+	    throw exception;
 	}
     }
 

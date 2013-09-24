@@ -20,30 +20,33 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld.twitter;
+package org.neomatrix369.examples.twitter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class FetchTweetsPeriodicallyTest {
 
-	// TODO: Complete shouldBeAbleToStartATimerTask() implementation
-	@Test @Ignore
-	public void shouldBeAbleToStartATimerTask() {
-		fail("Start timer task: not yet implemented");
-	}
+    // TODO: Complete shouldBeAbleToStartATimerTask() implementation
+    @Test
+    @Ignore
+    public void shouldBeAbleToStartATimerTask() {
+	fail("Start timer task: not yet implemented");
+    }
 
-	// TODO: Complete shouldFetchTweetsPeroidically() implementation
-	@Test @Ignore
-	public void shouldFetchTweetsPeroidically() {
-		fail("Fetch tweets periodically: not yet implemented");
-	}
-	
-	// TODO: Complete shouldBeAbleToStopATimerTask() implementation
-	@Test @Ignore
-	public void shouldBeAbleToStopATimerTask() {
-		fail("Stop timer task: not yet implemented");
-	}
+    // TODO: Complete shouldFetchTweetsPeroidically() implementation
+    @Test
+    @Ignore
+    public void shouldFetchTweetsPeroidically() {
+	fail("Fetch tweets periodically: not yet implemented");
+    }
+
+    // TODO: Complete shouldBeAbleToStopATimerTask() implementation
+    @Test
+    @Ignore
+    public void shouldBeAbleToStopATimerTask() {
+	fail("Stop timer task: not yet implemented");
+    }
 }

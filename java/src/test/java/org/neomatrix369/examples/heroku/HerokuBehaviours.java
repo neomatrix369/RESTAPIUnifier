@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld.heroku;
+package org.neomatrix369.examples.heroku;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -54,23 +54,9 @@ import org.slf4j.LoggerFactory;
  * 
  */
 
-/**
- * API provider URL: https://devcenter.heroku.com
- * 
- * Required settings file to run this example:
- * resources/heroku_settings.properties
- * 
- * containing APIKey=[xxxxx] emailaddres=[xxx@yyyy.com]
- * 
- * [xxxxx] = is APIKey needed to get authentication from heroku.com to be able
- * to make any API calls.
- * 
- * [xxx@yyyy.com] = email address attached to the account
- * 
- */
-public class HerokuAPIBehaviours {
+public class HerokuBehaviours {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HerokuAPIBehaviours.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HerokuBehaviours.class);
 
     private static final String NO_FIELDNAME_REQUIRED = "";
 

@@ -22,13 +22,21 @@
  */
 package org.neomatrix369.examples.flickr;
 
-public class RecentPhotos extends BaseFlickr {
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-    RecentPhotos(String apiKey, String paramStart, String... params) {
-	String apiCommand = "?method=flickr.photos.getRecent";
-	String[] arrayURLParamCodes = { "format" };
+import org.junit.Test;
 
-	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
-	fetchedResults.executeUrl();
+public class FlickrTest {
+
+    @Test
+    public void should_remove_jsonFlickrApi_to_receive_json_response() {
+	String flickrResponse = "jsonFlickrApi({\"method\":{\"_content\":\"flickr.test.echo\"}, \"format\":{\"_content\":\"json\"}, \"api_key\":{\"_content\":\"4cccadecce65a39cfcfee90b1c01c6a4\"}, \"stat\":\"ok\"})";
+	String jsonResponse = "{\"method\":{\"_content\":\"flickr.test.echo\"}, \"format\":{\"_content\":\"json\"}, \"api_key\":{\"_content\":\"4cccadecce65a39cfcfee90b1c01c6a4\"}, \"stat\":\"ok\"}";
+	assertThat(aFlickrRestApi().extractJson(flickrResponse), is(jsonResponse));
+    }
+
+    private BaseFlickr aFlickrRestApi() {
+	return new BaseFlickr();
     }
 }
