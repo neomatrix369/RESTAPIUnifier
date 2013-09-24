@@ -20,29 +20,8 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.examples.discogs;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+public class Discogs {
 
-// use like this:
-//new GenericAPICommandBuilder(connection, "authenticate")
-//.withParam("user", "alex").build().execute();
-//
-//new TwitterAuthenticationCommand(connection, "alex").execute();
-
-class TwitterAuthenticationCommand {
-    private APIConnection connection;
-
-    public TwitterAuthenticationCommand(String commandString, String user) {
-
-    }
-
-    public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
-    }
-
-    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
-    }
 }

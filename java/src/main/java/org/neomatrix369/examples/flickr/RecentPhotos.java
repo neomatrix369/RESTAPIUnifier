@@ -20,29 +20,15 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.examples.flickr;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+public class RecentPhotos extends BaseFlickr {
 
-// use like this:
-//new GenericAPICommandBuilder(connection, "authenticate")
-//.withParam("user", "alex").build().execute();
-//
-//new TwitterAuthenticationCommand(connection, "alex").execute();
+    RecentPhotos(String apiKey, String paramStart, String... params) {
+	String apiCommand = "?method=flickr.photos.getRecent";
+	String[] arrayURLParamCodes = { "format" };
 
-class TwitterAuthenticationCommand {
-    private APIConnection connection;
-
-    public TwitterAuthenticationCommand(String commandString, String user) {
-
-    }
-
-    public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
-    }
-
-    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+	fetchedResults.executeUrl();
     }
 }

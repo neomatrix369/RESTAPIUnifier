@@ -20,29 +20,33 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.examples.twitter;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import static org.junit.Assert.fail;
 
-// use like this:
-//new GenericAPICommandBuilder(connection, "authenticate")
-//.withParam("user", "alex").build().execute();
-//
-//new TwitterAuthenticationCommand(connection, "alex").execute();
+import org.junit.Ignore;
+import org.junit.Test;
 
-class TwitterAuthenticationCommand {
-    private APIConnection connection;
+public class FetchTweetsPeriodicallyTest {
 
-    public TwitterAuthenticationCommand(String commandString, String user) {
-
+    // TODO: Complete shouldBeAbleToStartATimerTask() implementation
+    @Test
+    @Ignore
+    public void shouldBeAbleToStartATimerTask() {
+	fail("Start timer task: not yet implemented");
     }
 
-    public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
+    // TODO: Complete shouldFetchTweetsPeroidically() implementation
+    @Test
+    @Ignore
+    public void shouldFetchTweetsPeroidically() {
+	fail("Fetch tweets periodically: not yet implemented");
     }
 
-    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+    // TODO: Complete shouldBeAbleToStopATimerTask() implementation
+    @Test
+    @Ignore
+    public void shouldBeAbleToStopATimerTask() {
+	fail("Stop timer task: not yet implemented");
     }
 }
