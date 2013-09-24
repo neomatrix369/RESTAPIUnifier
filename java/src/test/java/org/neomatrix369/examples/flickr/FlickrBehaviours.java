@@ -20,29 +20,37 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.examples.flickr;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
 
-// use like this:
-//new GenericAPICommandBuilder(connection, "authenticate")
-//.withParam("user", "alex").build().execute();
-//
-//new TwitterAuthenticationCommand(connection, "alex").execute();
+import java.io.IOException;
 
-class TwitterAuthenticationCommand {
-    private APIConnection connection;
+import org.junit.Before;
+import org.junit.Test;
+import org.neomatrix369.apiworld.ResultType;
 
-    public TwitterAuthenticationCommand(String commandString, String user) {
+public class FlickrBehaviours {
 
+    private String apiKey;
+
+    @Before
+    public void apiKey() throws IOException {
+	apiKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
     }
 
-    public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
+    @Test
+    public void recentPhotos() throws IOException {
+	RecentPhotos flickrGetRecent = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
+	assertThat(flickrGetRecent.isSuccess(), is(true));
     }
 
-    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+    @Test
+    public void search() throws Exception {
+	Search flickrSearch = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
+	assertThat(flickrSearch.isSuccess(), is(true));
     }
+
 }

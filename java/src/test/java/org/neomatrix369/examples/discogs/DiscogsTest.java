@@ -20,29 +20,40 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.examples.discogs;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.isA;
 
-// use like this:
-//new GenericAPICommandBuilder(connection, "authenticate")
-//.withParam("user", "alex").build().execute();
-//
-//new TwitterAuthenticationCommand(connection, "alex").execute();
+import org.json.JSONObject;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.neomatrix369.apiworld.APIReader;
 
-class TwitterAuthenticationCommand {
-    private APIConnection connection;
+public class DiscogsTest {
 
-    public TwitterAuthenticationCommand(String commandString, String user) {
-
+    @Ignore
+    @Test
+    public void a_restful_artist_returns_some_json() throws Exception {
+	assertThat(aRestCall().withUri("http://api.discogs.com/artists/45").GET(), isA(JSONObject.class));
     }
 
-    public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
+    private RestClient aRestCall() {
+	return null;
+    }
+}
+
+class RestClient {
+
+    public RestClient withUri(String uri) {
+	APIReader apiReader = new APIReader(uri);
+	apiReader.executeUrl();
+	return this;
     }
 
-    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+    public JSONObject GET() {
+	// TODO Auto-generated method stub
+	return null;
     }
+
 }

@@ -37,100 +37,77 @@ import java.util.Map;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.neomatrix369.apiworld.exception.FinalURLNotGeneratedException;
-import org.neomatrix369.examples.muzu_tv_api.BaseMuzuAPI;
+import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class APIReaderBehaviours {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(APIReaderBehaviours.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(APIReaderBehaviours.class);
 
-	private static final String INVALID_JSON_RETURNED = "Invalid JSON returned.";
-	private static final String INVALID_XML_RETURNED = "Invalid XML returned.";
-	private static final String NO_RESULTS_RETURNED = "No results returned.";
+    private static final String INVALID_JSON_RETURNED = "Invalid JSON returned.";
+    private static final String INVALID_XML_RETURNED = "Invalid XML returned.";
+    private static final String NO_RESULTS_RETURNED = "No results returned.";
 
-	@Test
-	public void should_Fetch_Data_As_JSON_When_API_URL_Is_Passed_In()
-			throws FileNotFoundException, IOException,
-			FinalURLNotGeneratedException {
-		String apiKey = readPropertyFrom("resources/muzu_settings.properties",
-				"APIKey");
-		String url = String.format(BaseMuzuAPI.MUZU_BASE_URL
-				+ "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, JSON);
-		APIReader apiReader = new APIReader(url);
-		apiReader.executeURL();
-		String result = apiReader.getFetchedResults();
-		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
+    @Test
+    public void should_Fetch_Data_As_JSON_When_API_URL_Is_Passed_In() throws FileNotFoundException, IOException {
+	String apiKey = readPropertyFrom("resources/muzu_settings.properties", "APIKey");
+	String url = String.format(BaseMuzu.MUZU_BASE_URL + "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, JSON);
+	APIReader apiReader = new APIReader(url);
+	apiReader.executeUrl();
+	String result = apiReader.getFetchedResults();
+	assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
 
-		LOGGER.info(result);
+	assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
+    }
 
-		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
-	}
+    @Test
+    public void should_Fetch_Data_As_XML_When_API_URL_Is_Passed_In() throws FileNotFoundException, IOException {
+	String apiKey = readPropertyFrom("resources/muzu_settings.properties", "APIKey");
+	String url = String.format(BaseMuzu.MUZU_BASE_URL + "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, XML);
+	APIReader apiReader = new APIReader(url);
+	apiReader.executeUrl();
+	String result = apiReader.getFetchedResults();
+	assertThat("Empty result returned.", result.isEmpty(), is(false));
+	assertThat(INVALID_XML_RETURNED, isAValidXML(result), is(true));
+    }
 
-	@Test
-	public void should_Fetch_Data_As_XML_When_API_URL_Is_Passed_In()
-			throws FileNotFoundException, IOException,
-			FinalURLNotGeneratedException {
-		String apiKey = readPropertyFrom("resources/muzu_settings.properties",
-				"APIKey");
-		String url = String.format(BaseMuzuAPI.MUZU_BASE_URL
-				+ "browse?muzuid=%s&af=a&g=pop&format=%s", apiKey, XML);
-		APIReader apiReader = new APIReader(url);
-		apiReader.executeURL();
-		String result = apiReader.getFetchedResults();
-		assertThat("Empty result returned.", result.isEmpty(), is(false));
-		assertThat(INVALID_XML_RETURNED, isAValidXML(result), is(true));
-	}
+    @Ignore
+    @Test
+    public void should_Return_Cookie_When_URL_Is_Invoked_With_A_Post_Method() throws IOException {
+	String username = readPropertyFrom("resources/importIO_settings.properties", "username");
+	String password = readPropertyFrom("resources/importIO_settings.properties", "password");
 
-	@Ignore
-	@Test
-	public void should_Return_Cookie_When_URL_Is_Invoked_With_A_Post_Method()
-			throws FinalURLNotGeneratedException, IOException {
-		String username = readPropertyFrom(
-				"resources/importIO_settings.properties", "username");
-		String password = readPropertyFrom(
-				"resources/importIO_settings.properties", "password");
+	String url = String.format("http://api.import.io//auth/login?username=%s&password=%s", username, password);
+	APIReader apiReader = new APIReader(url);
+	apiReader.executeUrl("POST", null);
+	String result = apiReader.getFetchedResults();
+	assertThat("Empty result returned.", result.isEmpty(), is(false));
+	assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
+    }
 
-		String url = String.format(
-				"http://api.import.io//auth/login?username=%s&password=%s",
-				username, password);
-		APIReader apiReader = new APIReader(url);
-		apiReader.executeURL("POST", null);
-		String result = apiReader.getFetchedResults();
-		apiReader.displayResult();
-		assertThat("Empty result returned.", result.isEmpty(), is(false));
-		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
-	}
+    @Test
+    @Ignore
+    public void should_Return_Results_When_URL_Is_Invoked_With_An_Auth_Cookie_And_Post_Method() throws IOException {
+	String username = readPropertyFrom("resources/importIO_settings.properties", "username");
+	String password = readPropertyFrom("resources/importIO_settings.properties", "password");
 
-	@Test
-	@Ignore
-	public void should_Return_Results_When_URL_Is_Invoked_With_An_Auth_Cookie_And_Post_Method()
-			throws FinalURLNotGeneratedException, IOException {
-		String username = readPropertyFrom(
-				"resources/importIO_settings.properties", "username");
-		String password = readPropertyFrom(
-				"resources/importIO_settings.properties", "password");
+	String url = String.format("http://api.import.io//auth/login?username=%s&password=%s", username, password);
+	APIReader apiReader = new APIReader(url);
+	apiReader.executeUrl("POST", null);
 
-		String url = String.format(
-				"http://api.import.io//auth/login?username=%s&password=%s",
-				username, password);
-		APIReader apiReader = new APIReader(url);
-		apiReader.executeURL("POST", null);
+	url = "http://query.import.io/store/connector/d56b49bf-c668-47af-b893-9834bae3001d/_query?AUTH=c6eug4h43lidpjbmwk66vxb01q62yfkl8cxzics6gktnrt1oybecn0r3v21hnhm8yv2a9ov3r&location=london";
+	apiReader = new APIReader(url);
+	Map<String, String> propertiesParam = new HashMap<String, String>();
+	propertiesParam.put("AUTH", "");
+	propertiesParam.put("test", "london");
+	apiReader.executeUrl("POST", propertiesParam);
 
-		url = "http://query.import.io/store/connector/d56b49bf-c668-47af-b893-9834bae3001d/_query?AUTH=c6eug4h43lidpjbmwk66vxb01q62yfkl8cxzics6gktnrt1oybecn0r3v21hnhm8yv2a9ov3r&location=london";
-		apiReader = new APIReader(url);
-		Map<String, String> propertiesParam = new HashMap<String, String>();
-		propertiesParam.put("AUTH", "");
-		propertiesParam.put("test", "london");
-		apiReader.executeURL("POST", propertiesParam);
+	String result = apiReader.getFetchedResults();
 
-		String result = apiReader.getFetchedResults();
+	LOGGER.info(result);
 
-		LOGGER.info(result);
-
-		assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
-		assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
-	}
+	assertThat(NO_RESULTS_RETURNED, result.isEmpty(), is(false));
+	assertThat(INVALID_JSON_RETURNED, isAValidJSONText(result), is(true));
+    }
 }

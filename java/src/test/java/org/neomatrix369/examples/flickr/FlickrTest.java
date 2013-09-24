@@ -20,29 +20,23 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.examples.flickr;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-// use like this:
-//new GenericAPICommandBuilder(connection, "authenticate")
-//.withParam("user", "alex").build().execute();
-//
-//new TwitterAuthenticationCommand(connection, "alex").execute();
+import org.junit.Test;
 
-class TwitterAuthenticationCommand {
-    private APIConnection connection;
+public class FlickrTest {
 
-    public TwitterAuthenticationCommand(String commandString, String user) {
-
+    @Test
+    public void should_remove_jsonFlickrApi_to_receive_json_response() {
+	String flickrResponse = "jsonFlickrApi({\"method\":{\"_content\":\"flickr.test.echo\"}, \"format\":{\"_content\":\"json\"}, \"api_key\":{\"_content\":\"4cccadecce65a39cfcfee90b1c01c6a4\"}, \"stat\":\"ok\"})";
+	String jsonResponse = "{\"method\":{\"_content\":\"flickr.test.echo\"}, \"format\":{\"_content\":\"json\"}, \"api_key\":{\"_content\":\"4cccadecce65a39cfcfee90b1c01c6a4\"}, \"stat\":\"ok\"}";
+	assertThat(aFlickrRestApi().extractJson(flickrResponse), is(jsonResponse));
     }
 
-    public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
-    }
-
-    public Object execute() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+    private BaseFlickr aFlickrRestApi() {
+	return new BaseFlickr();
     }
 }
