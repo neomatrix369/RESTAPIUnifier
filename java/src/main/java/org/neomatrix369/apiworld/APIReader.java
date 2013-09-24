@@ -60,8 +60,8 @@ public class APIReader {
     private List<String> lastHttpResult = new ArrayList<String>();
     private URL url;
 
-    public APIReader(UriBuilder apiBuilder) {
-	constructUrl(apiBuilder.getFinalURL());
+    public APIReader(UriBuilder uriBuilder) {
+	constructUrl(uriBuilder.getFinalURL());
     }
 
     public APIReader(String url) {
@@ -85,6 +85,7 @@ public class APIReader {
 	try {
 	    URLConnection urlConnection = url.openConnection();
 	    showMessageWhileMakingConnection(url.toString());
+	    urlConnection.connect();
 	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
 	} catch (IOException ioe) {
 	    showMessageDueToIOException(url.toString(), ioe);
@@ -102,6 +103,7 @@ public class APIReader {
 		}
 	    }
 	    showMessageWhileMakingConnection(url.toString());
+	    urlConnection.connect();
 	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
 	} catch (IOException ioe) {
 	    showMessageDueToIOException(url.toString(), ioe);

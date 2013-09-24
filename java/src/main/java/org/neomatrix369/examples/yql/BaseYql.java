@@ -40,19 +40,19 @@ public class BaseYql {
     protected APIReader buildAPIReadyToExecute(String apiKey,
             String apiCommand, String paramStart, String[] arrayURLParamCodes,
             String... params) {
-        UriBuilder apiBuilder = new UriBuilder(baseURL)
+        UriBuilder uriBuilder = new UriBuilder(baseURL)
                     .setCommand(apiCommand)
         			.setParamStart(paramStart)
                     .setApiKeyIsRequired(false);
         int paramCtr = 0;
         for (String eachValue : params) {
-            apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
+            uriBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
                     UtilityFunctions.encodeToken(eachValue));
         }
 
         try {
-            apiBuilder.build();
-            return new APIReader(apiBuilder);
+            uriBuilder.build();
+            return new APIReader(uriBuilder);
         } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
             LOGGER.error(e.getMessage());
         }

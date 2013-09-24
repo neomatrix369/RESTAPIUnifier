@@ -55,16 +55,16 @@ public class BaseFlickr {
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 	    String[] arrayURLParamCodes, String... params) {
-	UriBuilder apiBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
+	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
 		.setAPIKey(KEY_FLICKR_API_PARAM, apiKey);
 	int paramCtr = 0;
 	for (String eachValue : params) {
-	    apiBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));
+	    uriBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));
 	}
 
 	try {
-	    apiBuilder.build();
-	    return new APIReader(apiBuilder);
+	    uriBuilder.build();
+	    return new APIReader(uriBuilder);
 	} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
 	    LOGGER.error(e.getMessage());
 	    return new APIReader(baseURL);
@@ -92,10 +92,12 @@ public class BaseFlickr {
     public String extractJson(String flickrResponse) {
 	int beginIndex = flickrResponse.indexOf("{\"");
 	if (beginIndex == -1) {
+	    LOGGER.error(flickrResponse);
 	    throw new IllegalStateException("begin index not found");
 	}
 	int endIndex = flickrResponse.lastIndexOf(")");
 	if (endIndex == -1) {
+	    LOGGER.error("response: " + flickrResponse);
 	    throw new IllegalStateException("end index not found");
 	}
 	return flickrResponse.substring(beginIndex, endIndex);

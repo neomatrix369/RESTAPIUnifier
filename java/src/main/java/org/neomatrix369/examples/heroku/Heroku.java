@@ -40,10 +40,12 @@ public class Heroku {
     private static final String SPACE = " ";
     private static final String COLON = ":";
     private static final String ASCII = "ASCII";
+
+    private static final String AUTHENTICATION_COMMAND = "apps";
+    private static final String ACCOUNT_COMMAND = "account";
+
     private static final String KEY_HTTP_GET_METHOD = Keys.INSTANCE.getKey("HTTP_GET_METHOD");
-    private static final String KEY_ACCOUNT_COMMAND = Keys.INSTANCE.getKey("ACCOUNT_COMMAND");
     private static final String KEY_HTTP_POST_METHOD = Keys.INSTANCE.getKey("HTTP_POST_METHOD");
-    private static final String KEY_AUTHENTICATION_COMMAND = Keys.INSTANCE.getKey("AUTHENTICATION_COMMAND");
     private static final String KEY_AUTHORIZATION_FIELDNAME = Keys.INSTANCE.getKey("AUTHORIZATION_FIELDNAME");
     private static final String KEY_RESULT_FORMAT_TYPE = Keys.INSTANCE.getKey("RESULT_FORMAT_TYPE");
     private static final String KEY_FORMAT_TYPE_FIELD_NAME = Keys.INSTANCE.getKey("FORMAT_TYPE_FIELD_NAME");
@@ -53,7 +55,6 @@ public class Heroku {
     private Map<String, String> param = new HashMap<String, String>();
     private String emailaddress;
     private String apiKey;
-    private String apiCommand;
 
     protected APIReader fetchedResults;
 
@@ -76,21 +77,19 @@ public class Heroku {
 
     public String authenticate(Map<String, String> param) throws IOException, BaseURLNotAssignedException,
 	    APIKeyNotAssignedException {
-	apiCommand = KEY_AUTHENTICATION_COMMAND;
-	UriBuilder apiBuilder = new UriBuilder(String.format(baseURL, apiCommand));
-	apiBuilder.setApiKeyIsRequired(false);
-	apiBuilder.build();
-	APIReader apiReader = new APIReader(apiBuilder);
+	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, AUTHENTICATION_COMMAND));
+	uriBuilder.setApiKeyIsRequired(false);
+	uriBuilder.build();
+	APIReader apiReader = new APIReader(uriBuilder);
 	apiReader.executeUrl(KEY_HTTP_POST_METHOD, param);
 	return apiReader.getFetchedResults();
     }
 
     public String invokeAccount() throws BaseURLNotAssignedException, APIKeyNotAssignedException, IOException {
-	apiCommand = KEY_ACCOUNT_COMMAND;
-	UriBuilder apiBuilder = new UriBuilder(String.format(baseURL, apiCommand));
-	apiBuilder.setApiKeyIsRequired(false);
-	apiBuilder.build();
-	APIReader apiReader = new APIReader(apiBuilder);
+	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, ACCOUNT_COMMAND));
+	uriBuilder.setApiKeyIsRequired(false);
+	uriBuilder.build();
+	APIReader apiReader = new APIReader(uriBuilder);
 	prepareParamObjectWithAuthenticationDetails();
 	apiReader.executeUrl(KEY_HTTP_GET_METHOD, param);
 	return apiReader.getFetchedResults();
