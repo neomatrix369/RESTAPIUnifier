@@ -22,47 +22,11 @@
  */
 package org.neomatrix369.examples.muzutv;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class Artist extends BaseMuzu {
 
-public final class Artist {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Artist.class);
-
-    private Artist() {
-	// Hide utility class constructor
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-	/**
-	 * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
-	 */
-	Properties prop = new Properties();
-	try {
-	    prop.load(new FileReader(new File("resources/muzu.properties")));
-	    String muzuAPIKey = prop.getProperty("APIKey");
-
-	    MuzuArtist muzuArtist = new MuzuArtist(BaseMuzu.MUZU_BASE_URL + "artist/details/Bon+Jovi?muzuid="
-		    + muzuAPIKey);
-
-	    LOGGER.info(muzuArtist.getFetchedResults());
-	} catch (FileNotFoundException e) {
-	    LOGGER.error(e.getMessage());
-	} catch (IOException e) {
-	    LOGGER.error(e.getMessage());
-	}
-    }
-}
-
-class MuzuArtist extends BaseMuzu {
-
-    MuzuArtist(String apiKey, String... params) throws IOException {
+    public Artist(String apiKey, String... params) throws IOException {
 	String apiCommand = "artist";
 	String[] arrayURLParamCodes = { "artist_name", "format", "country", "soundoff", "autostart", "videotype",
 		"width", "height", "includeAll" };
