@@ -43,7 +43,7 @@ public final class Search {
     public static void main(String[] args) throws InterruptedException {
 	Properties prop = new Properties();
 	try {
-	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
+	    prop.load(new FileReader(new File("resources/muzu.properties")));
 	    String muzuAPIKey = prop.getProperty("APIKey");
 
 	    /**
@@ -63,7 +63,7 @@ public final class Search {
 
 class MuzuSearch extends BaseMuzu {
 
-    MuzuSearch(String apiKey, String... params) {
+    MuzuSearch(String apiKey, String... params) throws IOException {
 	String apiCommand = "search";
 	String[] arrayURLParamCodes = { "mySearch", "l", "format", "country", "soundoff", "autostart", "videotype",
 		"width", "height", "includeAll" };

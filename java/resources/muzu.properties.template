@@ -4,7 +4,7 @@
 # The MUZU_ID is needed to get authentication from muzutv.com to be
 # able to make any API calls.
 #
-# Copy the file to muzu_settings.properties and fill in the correct value
+# Copy the file to muzu.properties and fill in the correct value
 # for APIKey.
 
 APIKey=[MUZU_ID]

@@ -30,68 +30,54 @@ import java.util.Map;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.Keys;
 
 import com.sun.jersey.core.util.Base64;
 
 public class Heroku {
-    private static final String BASIC = "Basic";
-    private static final String SPACE = " ";
-    private static final String COLON = ":";
-    private static final String ASCII = "ASCII";
-
-    private static final String AUTHENTICATION_COMMAND = "apps";
-    private static final String ACCOUNT_COMMAND = "account";
-
-    private static final String KEY_HTTP_GET_METHOD = Keys.INSTANCE.getKey("HTTP_GET_METHOD");
-    private static final String KEY_HTTP_POST_METHOD = Keys.INSTANCE.getKey("HTTP_POST_METHOD");
-    private static final String KEY_AUTHORIZATION_FIELDNAME = Keys.INSTANCE.getKey("AUTHORIZATION_FIELDNAME");
-    private static final String KEY_RESULT_FORMAT_TYPE = Keys.INSTANCE.getKey("RESULT_FORMAT_TYPE");
-    private static final String KEY_FORMAT_TYPE_FIELD_NAME = Keys.INSTANCE.getKey("FORMAT_TYPE_FIELD_NAME");
 
     private static final String baseURL = "https://api.heroku.com/%s";
 
-    private Map<String, String> param = new HashMap<String, String>();
-    private String emailaddress;
-    private String apiKey;
+    private final String urlParameters;
+    private final Map<String, String> requestProperties = new HashMap<String, String>();
+    private final String emailaddress;
+    private final String apiKey;
 
     protected APIReader fetchedResults;
 
-    public Heroku(String apiKey, String emailaddress) {
+    public Heroku(String apiKey, String emailaddress) throws IOException {
 	this.apiKey = apiKey;
 	this.emailaddress = emailaddress;
+	String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
+	this.urlParameters = "Accept=application/vnd.heroku+json; version=3&Authorization=" + basic;
+	prepareParamObjectWithAuthenticationDetails();
     }
 
-    public String authenticate() throws IOException, BaseURLNotAssignedException, APIKeyNotAssignedException {
-	prepareParamObjectWithAuthenticationDetails();
-	return authenticate(param);
+    public String invokeAccount() throws APIKeyNotAssignedException, IOException {
+	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "account"));
+	uriBuilder.setApiKeyIsRequired(false);
+	uriBuilder.build();
+	APIReader apiReader = new APIReader(uriBuilder);
+	apiReader.executeGetUrl(requestProperties);
+	return apiReader.getFetchedResults();
+    }
+
+    public String authenticate() throws IOException, APIKeyNotAssignedException {
+	return authenticate(urlParameters);
     }
 
     private void prepareParamObjectWithAuthenticationDetails() throws UnsupportedEncodingException {
-	param.put(KEY_FORMAT_TYPE_FIELD_NAME, KEY_RESULT_FORMAT_TYPE);
-	String httpBasicAuthFilterAuthentication = BASIC + SPACE
-		+ new String(Base64.encode(emailaddress + COLON + apiKey), ASCII);
-	param.put(KEY_AUTHORIZATION_FIELDNAME, httpBasicAuthFilterAuthentication);
+	requestProperties.put("Accept", "application/vnd.heroku+json; version=3");
+	String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
+	requestProperties.put("Authorization", basic);
     }
 
-    public String authenticate(Map<String, String> param) throws IOException, BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
-	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, AUTHENTICATION_COMMAND));
+    private String authenticate(String urlParameters) throws IOException, APIKeyNotAssignedException {
+	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "apps"));
 	uriBuilder.setApiKeyIsRequired(false);
 	uriBuilder.build();
 	APIReader apiReader = new APIReader(uriBuilder);
-	apiReader.executeUrl(KEY_HTTP_POST_METHOD, param);
+	apiReader.executePostUrl(urlParameters);
 	return apiReader.getFetchedResults();
     }
 
-    public String invokeAccount() throws BaseURLNotAssignedException, APIKeyNotAssignedException, IOException {
-	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, ACCOUNT_COMMAND));
-	uriBuilder.setApiKeyIsRequired(false);
-	uriBuilder.build();
-	APIReader apiReader = new APIReader(uriBuilder);
-	prepareParamObjectWithAuthenticationDetails();
-	apiReader.executeUrl(KEY_HTTP_GET_METHOD, param);
-	return apiReader.getFetchedResults();
-    }
 }

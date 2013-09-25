@@ -22,9 +22,11 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import java.io.IOException;
+
 public class RecentPhotos extends BaseFlickr {
 
-    RecentPhotos(String apiKey, String paramStart, String... params) {
+    RecentPhotos(String apiKey, String paramStart, String... params) throws IOException {
 	String apiCommand = "?method=flickr.photos.getRecent";
 	String[] arrayURLParamCodes = { "format" };
 

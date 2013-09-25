@@ -23,17 +23,24 @@
 package org.neomatrix369.examples.heroku;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.neomatrix369.apiworld.util.Utils.readPropertyFrom;
 
 import java.io.IOException;
+import java.io.StringReader;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sun.jersey.core.util.Base64;
 
 /* ***** Heroku API *****
  * Developers Guides
@@ -55,10 +62,8 @@ import org.neomatrix369.apiworld.util.Keys;
 
 public class HerokuBehaviours {
 
-    private static final String VALID_RESPONSE_FAILURE_MSG = "A valid response was not returned by the API server";
-    private static final String KEY_FIELDNAME_APIKEY = Keys.INSTANCE.getKey("FIELDNAME_APIKEY");
-    private static final String KEY_FIELDNAME_EMAIL = Keys.INSTANCE.getKey("FIELDNAME_EMAIL");
-    private static final String HEROKU_SETTINGS_LOCATION = Keys.INSTANCE.getKey("HEROKU_SETTINGS_LOCATION");
+    private static final Logger LOGGER = LoggerFactory.getLogger(HerokuBehaviours.class);
+    private static final String HEROKU_SETTINGS_LOCATION = "resources/heroku.properties";
 
     private String emailaddress;
     private String apiKey;
@@ -67,22 +72,37 @@ public class HerokuBehaviours {
 
     @Before
     public void setup() throws IOException {
-	apiKey = readPropertyFrom(HEROKU_SETTINGS_LOCATION, KEY_FIELDNAME_APIKEY);
-	emailaddress = readPropertyFrom(HEROKU_SETTINGS_LOCATION, KEY_FIELDNAME_EMAIL);
+	apiKey = readPropertyFrom(HEROKU_SETTINGS_LOCATION, "APIKey");
+	emailaddress = readPropertyFrom(HEROKU_SETTINGS_LOCATION, "emailaddress");
 	heroku = new Heroku(apiKey, emailaddress);
     }
 
     @Test
-    @Ignore("Heroku API for Authentication needs to be debugged")
-    public void should_return_a_response_when_a_valid_API_is_Passed_in() throws IOException,
-	    BaseURLNotAssignedException, APIKeyNotAssignedException {
-	String actualResponse = heroku.authenticate();
-	assertThat(VALID_RESPONSE_FAILURE_MSG, actualResponse.isEmpty(), is(false));
+    public void should_create_an_app_with_correct_email__requires_authentication() throws Exception {
+
+	String accept = "application/vnd.heroku+json; version=3";
+	String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
+	String request = "https://api.heroku.com/apps";
+
+	APIReader apiReader = new APIReader(request);
+	apiReader.setHeader("Accept", accept).setHeader("Authorization", basic);
+
+	apiReader.executePostUrl();
+
+	assertThat(isSuccessfulAppCreationResponse(apiReader.getFetchedResults()), is(true));
+    }
+
+    private boolean isSuccessfulAppCreationResponse(String response) {
+	LOGGER.info("response: " + response);
+	JsonReader jsonReader = Json.createReader(new StringReader(response));
+	JsonObject json = jsonReader.readObject();
+
+	return json.getJsonObject("owner").getString("email").equals(emailaddress);
     }
 
     @Test
-    public void should_return_a_response_when_the_account_command_is_invoked() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException, IOException {
+    public void should_return_a_response_when_the_account_command_is_invoked() throws APIKeyNotAssignedException,
+	    IOException {
 	String actualResponse = heroku.invokeAccount();
 	assertThat("No response was returned from invoking the 'account' command from the Heroku server",
 		actualResponse.isEmpty(), is(false));

@@ -22,20 +22,21 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.util.UtilityFunctions.dropStartAndEndDelimeters;
+import static org.neomatrix369.apiworld.util.Utils.dropStartAndEndDelimeters;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.neomatrix369.apiworld.util.Keys;
+import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,17 +49,15 @@ public class APIReader {
     private static final String ERROR_DUE_TO = "Error due to: %s";
     private static final String INPUT_URL_STRING = ">>> Input URL String: %s";
 
-    private static final String KEY_CLOSING_BOX_BRACKET = Keys.INSTANCE.getKey("CLOSING_BOX_BRACKET");
-    private static final String KEY_OPENING_BOX_BRACKET = Keys.INSTANCE.getKey("OPENING_BOX_BRACKET");
-    private static final String KEY_READING_COMPLETED = Keys.INSTANCE.getKey("READING_COMPLETED");
-    private static final String KEY_READING_RESULTS_RETURNED = Keys.INSTANCE
-	    .getKey("READING_RESULTS_RETURNED_THIS_MAY_TAKE_A_MOMENT");
-    private static final String KEY_CONNECTING_TO_URL = Keys.INSTANCE
-	    .getKey("CONNECTING_TO_URL_THIS_MAY_TAKE_A_MOMENT");
+    private static final String READING_COMPLETED = ">>> Reading completed...";
+    private static final String CONNECTING_TO_URL = ">>> Connecting to URL: <%s>, this may take a moment.";
+    private static final String READING_RESULTS_RETURNED = ">>> Reading results returned, this may take a moment...";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(APIReader.class);
     private List<String> lastHttpResult = new ArrayList<String>();
     private URL url;
+
+    private Map<String, String> headers = new HashMap<String, String>();
 
     public APIReader(UriBuilder uriBuilder) {
 	constructUrl(uriBuilder.getFinalURL());
@@ -72,38 +71,83 @@ public class APIReader {
 	try {
 	    this.url = new URL(url);
 	} catch (MalformedURLException e) {
-	    showMessageDueToMalformedURLException(url.toString(), e);
+	    LOGGER.error(String.format(INPUT_URL_STRING, url));
+	    LOGGER.error(String.format(ERROR_DUE_TO, e.getMessage()));
 	    throw new IllegalArgumentException("Final URL does not exist.");
 	}
     }
 
-    /**
-     * open new GET connection and store in lasthttpresult.
-     */
-    public final void executeUrl() {
-	clearHttpResults();
-	try {
-	    URLConnection urlConnection = url.openConnection();
-	    showMessageWhileMakingConnection(url.toString());
-	    urlConnection.connect();
-	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
-	} catch (IOException ioe) {
-	    showMessageDueToIOException(url.toString(), ioe);
-	}
+    public APIReader setHeader(String header, String value) {
+	headers.put(header, value);
+	return this;
     }
 
-    public void executeUrl(String requestMethod, Map<String, String> requestProperties) throws IOException {
+    public final void executeUrl() throws IOException {
+	executeGetUrl(null);
+    }
+
+    public void executePostUrl() throws IOException {
+	executePostUrl(null);
+    }
+
+    public void executePostUrl(String urlParameters) throws IOException {
+
 	clearHttpResults();
 	try {
 	    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-	    urlConnection.setRequestMethod(requestMethod);
+
+	    urlConnection.setDoOutput(true);
+	    urlConnection.setDoInput(true);
+	    urlConnection.setInstanceFollowRedirects(false);
+
+	    urlConnection.setRequestMethod("POST");
+	    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+	    urlConnection.setRequestProperty("charset", "utf-8");
+
+	    for (Map.Entry<String, String> header : headers.entrySet()) {
+		urlConnection.setRequestProperty(header.getKey(), header.getValue());
+	    }
+
+	    // TODO: work with null
+	    // urlConnection.setRequestProperty("Content-Length", "" +
+	    // Integer.toString(urlParameters.getBytes().length));
+	    urlConnection.setUseCaches(false);
+
+	    if (urlParameters != null) {
+		writeUrlParameters(urlParameters, urlConnection);
+	    }
+
+	    LOGGER.info(String.format(CONNECTING_TO_URL, url));
+	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
+
+	    urlConnection.disconnect();
+	} catch (IOException ioe) {
+	    showMessageDueToIOException(url.toString(), ioe);
+	    // throw ioe;
+	}
+    }
+
+    private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
+	LOGGER.info("url parameter: " + urlParameters);
+	DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+	wr.writeBytes(urlParameters);
+	wr.flush();
+	wr.close();
+    }
+
+    public void executeGetUrl(Map<String, String> requestProperties) throws IOException {
+	clearHttpResults();
+	try {
+	    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+	    urlConnection.setRequestMethod("GET");
 	    if (requestProperties != null) {
-		for (Map.Entry<String, String> eachProperty : requestProperties.entrySet()) {
-		    urlConnection.setRequestProperty(eachProperty.getKey(), eachProperty.getValue());
+		for (Map.Entry<String, String> property : requestProperties.entrySet()) {
+		    urlConnection.setRequestProperty(property.getKey(), property.getValue());
 		}
 	    }
-	    showMessageWhileMakingConnection(url.toString());
-	    urlConnection.connect();
+
+	    LOGGER.info(String.format(CONNECTING_TO_URL, url));
 	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
 	} catch (IOException ioe) {
 	    showMessageDueToIOException(url.toString(), ioe);
@@ -113,41 +157,32 @@ public class APIReader {
 
     public String getFetchedResults() {
 	String result = lastHttpResult.toString();
-	while (result.startsWith(KEY_OPENING_BOX_BRACKET) && result.endsWith(KEY_CLOSING_BOX_BRACKET)) {
-	    result = dropStartAndEndDelimeters(result, KEY_OPENING_BOX_BRACKET, KEY_CLOSING_BOX_BRACKET);
+	while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
+	    result = dropStartAndEndDelimeters(result);
 	}
 	return result;
-    }
-
-    private void showMessageWhileMakingConnection(String urlText) {
-	LOGGER.info(String.format(KEY_CONNECTING_TO_URL, urlText));
     }
 
     private List<String> fetchDataFromURL(InputStreamReader isr) throws IOException {
 	BufferedReader httpResult = null;
 	try {
 	    httpResult = new BufferedReader(isr);
-	    LOGGER.info(KEY_READING_RESULTS_RETURNED);
+	    LOGGER.info(READING_RESULTS_RETURNED);
 
 	    String inputLine;
 	    while ((inputLine = httpResult.readLine()) != null) {
 		addToLastHttpResults(inputLine);
 	    }
 
-	    LOGGER.info(KEY_READING_COMPLETED);
+	    LOGGER.info(READING_COMPLETED);
 	} finally {
 	    if (httpResult != null) {
 		httpResult.close();
 	    }
-	    LOGGER.info(Keys.INSTANCE.getKey("CONNECTION_CLOSED"));
+	    LOGGER.info(">>> Connection closed!");
 	}
 
 	return lastHttpResult;
-    }
-
-    private void showMessageDueToMalformedURLException(String urlText, MalformedURLException me) {
-	LOGGER.error(String.format(INPUT_URL_STRING, urlText));
-	LOGGER.error(String.format(ERROR_DUE_TO, me.getMessage()));
     }
 
     private void showMessageDueToIOException(String urlText, IOException ioe) {

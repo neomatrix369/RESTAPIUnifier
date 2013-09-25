@@ -29,8 +29,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.neomatrix369.apiworld.util.Utils;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 
 public class UriBuilderTest {
@@ -54,30 +53,25 @@ public class UriBuilderTest {
 	assertNotNull(connection);
     }
 
-    @Test(expected = BaseURLNotAssignedException.class)
-    public void should_Return_Exception_When_No_URL_Is_Supplied() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
-	baseURL = "";
-	uriBuilder = new UriBuilder(baseURL);
-	uriBuilder.build();
+    @Test(expected = IllegalArgumentException.class)
+    public void should_Return_Exception_When_No_URL_Is_Supplied() throws APIKeyNotAssignedException {
+	String emptyBaseUrl = "";
+	uriBuilder = new UriBuilder(emptyBaseUrl);
     }
 
     @Test(expected = APIKeyNotAssignedException.class)
-    public void should_Return_Exception_When_No_API_Key_Is_Supplied() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_Return_Exception_When_No_API_Key_Is_Supplied() throws APIKeyNotAssignedException {
 	uriBuilder.build();
     }
 
     @Test
-    public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_Not_Return_Exception_When_No_API_Key_Required_Is_Set() throws APIKeyNotAssignedException {
 	uriBuilder.setNoAPIKeyRequired();
 	uriBuilder.build();
     }
 
     @Test
-    public void should_Return_URL_With_Command_When_Passed_In() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_Return_URL_With_Command_When_Passed_In() throws APIKeyNotAssignedException {
 	uriBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.build();
@@ -87,11 +81,10 @@ public class UriBuilderTest {
     }
 
     @Test
-    public void should_Return_URL_With_API_Key_And_Params_When_Passed_In() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_Return_URL_With_API_Key_And_Params_When_Passed_In() throws APIKeyNotAssignedException {
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
-	uriBuilder.addAURLParameter("key1", "value1");
+	uriBuilder.addUrlParameter("key1", "value1");
 	uriBuilder.build();
 	String actual = uriBuilder.getFinalURL();
 	String expected = BaseMuzu.MUZU_BASE_URL + "browse?muzuid=[MUZU_ID]&key1=value1";
@@ -99,12 +92,11 @@ public class UriBuilderTest {
     }
 
     @Test
-    public void should_Return_URL_With_API_Key_And_All_Valid_Params() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_Return_URL_With_API_Key_And_All_Valid_Params() throws APIKeyNotAssignedException {
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
-	uriBuilder.addAURLParameter("key1", "value1");
-	uriBuilder.addAURLParameter("key2", "value2");
+	uriBuilder.addUrlParameter("key1", "value1");
+	uriBuilder.addUrlParameter("key2", "value2");
 	uriBuilder.build();
 	String actual = uriBuilder.getFinalURL();
 	String expected = BaseMuzu.MUZU_BASE_URL + "browse?muzuid=[MUZU_ID]&key1=value1&key2=value2";
@@ -112,14 +104,13 @@ public class UriBuilderTest {
     }
 
     @Test
-    public void should_return_URL_with_API_key_and_skip_params_with_null_keys() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_return_URL_with_API_key_and_skip_params_with_null_keys() throws APIKeyNotAssignedException {
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 
-	uriBuilder.addAURLParameter(null, "value1");
-	uriBuilder.addAURLParameter("key2", "value2");
-	uriBuilder.addAURLParameter("key3", "value3");
+	uriBuilder.addUrlParameter(null, "value1");
+	uriBuilder.addUrlParameter("key2", "value2");
+	uriBuilder.addUrlParameter("key3", "value3");
 	uriBuilder.build();
 	String actual = uriBuilder.getFinalURL();
 	String expected = BaseMuzu.MUZU_BASE_URL + "browse?muzuid=[MUZU_ID]&key2=value2&key3=value3";
@@ -127,14 +118,13 @@ public class UriBuilderTest {
     }
 
     @Test
-    public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Values() throws BaseURLNotAssignedException,
-	    APIKeyNotAssignedException {
+    public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Values() throws APIKeyNotAssignedException {
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
 
-	uriBuilder.addAURLParameter("key1", "value1");
-	uriBuilder.addAURLParameter("key2", null);
-	uriBuilder.addAURLParameter("key3", "value3");
+	uriBuilder.addUrlParameter("key1", "value1");
+	uriBuilder.addUrlParameter("key2", null);
+	uriBuilder.addUrlParameter("key3", "value3");
 	uriBuilder.build();
 	String actual = uriBuilder.getFinalURL();
 	String expected = BaseMuzu.MUZU_BASE_URL + "browse?muzuid=[MUZU_ID]&key1=value1&key3=value3";
@@ -142,10 +132,10 @@ public class UriBuilderTest {
     }
 
     @Test
-    public void should_return_URL_with_encoded_param() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+    public void should_return_URL_with_encoded_param() throws APIKeyNotAssignedException {
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.setAPIKey(MUZUID_KEY, MUZUID_VALUE);
-	uriBuilder.addAURLParameter("key", UtilityFunctions.encodeToken("string with space"));
+	uriBuilder.addUrlParameter("key", Utils.encodeToken("string with space"));
 	uriBuilder.build();
 	String actual = uriBuilder.getFinalURL();
 	String expected = BaseMuzu.MUZU_BASE_URL + "browse?muzuid=[MUZU_ID]&key=string+with+space";

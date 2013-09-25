@@ -45,7 +45,7 @@ public final class Artist {
 	 */
 	Properties prop = new Properties();
 	try {
-	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
+	    prop.load(new FileReader(new File("resources/muzu.properties")));
 	    String muzuAPIKey = prop.getProperty("APIKey");
 
 	    MuzuArtist muzuArtist = new MuzuArtist(BaseMuzu.MUZU_BASE_URL + "artist/details/Bon+Jovi?muzuid="
@@ -61,7 +61,8 @@ public final class Artist {
 }
 
 class MuzuArtist extends BaseMuzu {
-    MuzuArtist(String apiKey, String... params) {
+
+    MuzuArtist(String apiKey, String... params) throws IOException {
 	String apiCommand = "artist";
 	String[] arrayURLParamCodes = { "artist_name", "format", "country", "soundoff", "autostart", "videotype",
 		"width", "height", "includeAll" };

@@ -22,40 +22,35 @@
  */
 package org.neomatrix369.examples.muzutv;
 
-import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.Keys;
-import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BaseMuzu {
 
     public static final String MUZU_BASE_URL = "http://www.muzu.tv/api/";
+    private static final String MUZU_PARAM_URL = "muzuid";
 
-	private static final String KEY_MUZU_PARAM_URL = Keys.INSTANCE.getKey("MUZUID_URL_PARAM");
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzu.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzu.class);
 
     private String baseURL = MUZU_BASE_URL;
     protected APIReader fetchedResults;
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String[] arrayURLParamCodes,
 	    String... params) {
-	UriBuilder uriBuilder = new UriBuilder(baseURL)
-		.setCommand(apiCommand)
-		.setAPIKey(KEY_MUZU_PARAM_URL, apiKey);
+	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setAPIKey(MUZU_PARAM_URL, apiKey);
 	int paramCtr = 0;
 	for (String eachValue : params) {
-	    uriBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++], UtilityFunctions.encodeToken(eachValue));
+	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
 	}
 
 	try {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
-	} catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
+	} catch (APIKeyNotAssignedException e) {
 	    LOGGER.error(e.getMessage());
 	}
 

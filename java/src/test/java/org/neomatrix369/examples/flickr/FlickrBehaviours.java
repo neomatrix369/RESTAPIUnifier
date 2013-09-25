@@ -24,7 +24,7 @@ package org.neomatrix369.examples.flickr;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.neomatrix369.apiworld.util.UtilityFunctions.readPropertyFrom;
+import static org.neomatrix369.apiworld.util.Utils.readPropertyFrom;
 
 import java.io.IOException;
 
@@ -37,20 +37,20 @@ public class FlickrBehaviours {
     private String apiKey;
 
     @Before
-    public void apiKey() throws IOException {
-	apiKey = readPropertyFrom("resources/flickr_settings.properties", "APIKey");
+    public void setup() throws IOException {
+	apiKey = readPropertyFrom("resources/flickr.properties", "APIKey");
     }
 
     @Test
     public void recentPhotos() throws IOException {
-	RecentPhotos flickrGetRecent = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
-	assertThat(flickrGetRecent.isSuccess(), is(true));
+	RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
+	assertThat(recentPhotos.isSuccess(), is(true));
     }
 
     @Test
     public void search() throws Exception {
-	Search flickrSearch = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
-	assertThat(flickrSearch.isSuccess(), is(true));
+	Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
+	assertThat(search.isSuccess(), is(true));
     }
 
 }

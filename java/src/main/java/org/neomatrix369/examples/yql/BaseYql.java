@@ -22,48 +22,43 @@
  */
 package org.neomatrix369.examples.yql;
 
-import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BaseYql {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseYql.class);
-    
+
     private String baseURL = "http://query.yahooapis.com/v1/public/yql";
     protected APIReader fetchedResults;
 
-    protected APIReader buildAPIReadyToExecute(String apiKey,
-            String apiCommand, String paramStart, String[] arrayURLParamCodes,
-            String... params) {
-        UriBuilder uriBuilder = new UriBuilder(baseURL)
-                    .setCommand(apiCommand)
-        			.setParamStart(paramStart)
-                    .setApiKeyIsRequired(false);
-        int paramCtr = 0;
-        for (String eachValue : params) {
-            uriBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
-                    UtilityFunctions.encodeToken(eachValue));
-        }
+    protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
+	    String[] arrayURLParamCodes, String... params) {
+	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
+		.setApiKeyIsRequired(false);
+	int paramCtr = 0;
+	for (String eachValue : params) {
+	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+	}
 
-        try {
-            uriBuilder.build();
-            return new APIReader(uriBuilder);
-        } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-            LOGGER.error(e.getMessage());
-        }
+	try {
+	    uriBuilder.build();
+	    return new APIReader(uriBuilder);
+	} catch (APIKeyNotAssignedException e) {
+	    LOGGER.error(e.getMessage());
+	}
 
-        return new APIReader(baseURL);
+	return new APIReader(baseURL);
     }
 
     public String getFetchedResults() {
-        if (fetchedResults != null) {
-            return fetchedResults.getFetchedResults();
-        }
-        return "";
+	if (fetchedResults != null) {
+	    return fetchedResults.getFetchedResults();
+	}
+	return "";
     }
 }

@@ -46,7 +46,7 @@ public final class Browse {
 	 */
 	Properties prop = new Properties();
 	try {
-	    prop.load(new FileReader(new File("resources/muzu_settings.properties")));
+	    prop.load(new FileReader(new File("resources/muzu.properties")));
 	    String muzuAPIKey = prop.getProperty("APIKey");
 
 	    MuzuBrowse muzuBrowse = new MuzuBrowse(muzuAPIKey, null, null, "views", "0", null, null, null,
@@ -61,7 +61,8 @@ public final class Browse {
 }
 
 class MuzuBrowse extends BaseMuzu {
-    MuzuBrowse(String apiKey, String... params) {
+
+    MuzuBrowse(String apiKey, String... params) throws IOException {
 	String apiCommand = "browse";
 	String[] arrayURLParamCodes = { "ft", "g", "ob", "vd", "af", "l", "of", "format", "country", "soundoff",
 		"autostart", "videotype", "width", "height", "includeAll" };

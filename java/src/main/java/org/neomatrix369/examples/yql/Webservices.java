@@ -22,6 +22,8 @@
  */
 package org.neomatrix369.examples.yql;
 
+import java.io.IOException;
+
 import org.neomatrix369.apiworld.ResultType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,17 +44,18 @@ public final class Webservices {
      * 
      * API provider URL: http://developer.yahoo.com/yql/
      * 
-     * Required settings file to run this example:
-     * resources/yql_settings.properties
+     * Required settings file to run this example: resources/yql.properties
      * 
      * containing APIKey=[xxxxx]
      * 
      * [xxxxx] = is APIKey needed to get authentication from yahoo.com to be
      * able to make any API calls.
      * 
+     * @throws IOException
+     * 
      */
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 	YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.JSON.toString(),
 		COMMAND_SHOW_TABLES);
 	LOGGER.info(yqlAPIWebServices.getFetchedResults());
@@ -67,7 +70,7 @@ class YQLAPIWebServices extends BaseYql {
     private static final String FORMAT_NOTATION = "q";
     private static final String FORMAT = "format";
 
-    YQLAPIWebServices(String apiKey, String paramStart, String... params) {
+    YQLAPIWebServices(String apiKey, String paramStart, String... params) throws IOException {
 	String apiCommand = YQL_COMMAND;
 	String[] arrayURLParamCodes = { FORMAT, FORMAT_NOTATION };
 
