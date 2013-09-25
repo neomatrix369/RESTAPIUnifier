@@ -27,8 +27,10 @@ import java.io.FileReader;
 import java.util.Properties;
 
 import org.junit.Test;
+import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.examples.muzutv.Artist;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
+import org.neomatrix369.examples.muzutv.Browse;
 
 public class MuzuBehaviours {
 
@@ -42,6 +44,19 @@ public class MuzuBehaviours {
 	String muzuAPIKey = prop.getProperty("APIKey");
 
 	Artist muzuArtist = new Artist(BaseMuzu.MUZU_BASE_URL + "artist/details/Bon+Jovi?muzuid=" + muzuAPIKey);
+    }
+
+    @Test
+    public void browse() throws Exception {
+	/**
+	 * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&vd=0&ob=views
+	 */
+	Properties prop = new Properties();
+	prop.load(new FileReader(new File("resources/muzu.properties")));
+	String muzuAPIKey = prop.getProperty("APIKey");
+
+	Browse muzuBrowse = new Browse(muzuAPIKey, null, null, "views", "0", null, null, null,
+		ResultType.JSON.toString());
 
     }
 }
