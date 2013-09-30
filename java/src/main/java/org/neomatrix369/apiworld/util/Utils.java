@@ -50,7 +50,7 @@ public final class Utils {
     private static final String INVALID_TOKEN_WARNING = "Invalid token.";
     private static final String UTF_8 = "UTF-8";
     private static final String THE_TOKEN_CANNOT_BE_NULL_MSG = "The token cannot be null.";
-    private static final Logger LOGGER = LoggerFactory.getLogger(Utils.class);
+    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
     /**
      * Hide Utility Class Constructor - Utility classes should not have a public
@@ -104,7 +104,7 @@ public final class Utils {
 	try {
 	    encodedToken = URLEncoder.encode(token, UTF_8);
 	} catch (UnsupportedEncodingException uee) {
-	    LOGGER.warn(INVALID_TOKEN_WARNING);
+	    logger.warn(INVALID_TOKEN_WARNING);
 	}
 
 	return encodedToken;
@@ -126,15 +126,15 @@ public final class Utils {
 	    return prop.getProperty(propertyName);
 	} catch (FileNotFoundException e) {
 	    try {
-		LOGGER.info("Current path: " + new File(".").getCanonicalPath());
+		logger.info("Current path: " + new File(".").getCanonicalPath());
 	    } catch (IOException e1) {
 
 	    }
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	    throw new IllegalStateException("Did not find property file.");
 
 	} catch (IOException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	    throw new IllegalStateException("IO Exception occurred");
 	}
     }
@@ -145,8 +145,8 @@ public final class Utils {
 	    prop.load(new FileReader(new File(propertyFilename)));
 	    return prop.getProperty(propertyName);
 	} catch (IOException exception) {
-	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
-	    LOGGER.error(exception.getMessage());
+	    logger.info("Current path: " + new File(".").getCanonicalPath());
+	    logger.error(exception.getMessage());
 	    throw exception;
 	}
     }

@@ -36,7 +36,7 @@ import org.neomatrix369.apiworld.APIReader;
 
 public class DiscogsBehaviours {
 
-    // private static final Logger LOGGER =
+    // private static final Logger logger =
     // LoggerFactory.getLogger(DiscogsBehaviours.class);
 
     @Test
@@ -48,7 +48,7 @@ public class DiscogsBehaviours {
     }
 
     private boolean isJsonResult(String response) {
-	// LOGGER.info(response);
+	// logger.info(response);
 	JsonReader jsonReader = Json.createReader(new StringReader(response));
 	JsonObject json = jsonReader.readObject();
 

@@ -63,7 +63,7 @@ import com.sun.jersey.core.util.Base64;
 
 public class HerokuBehaviours {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HerokuBehaviours.class);
+    private static final Logger logger = LoggerFactory.getLogger(HerokuBehaviours.class);
     private static final String HEROKU_SETTINGS_LOCATION = "resources/heroku.properties";
 
     private String emailaddress;
@@ -72,7 +72,7 @@ public class HerokuBehaviours {
     private Heroku heroku;
 
     private boolean isSuccessfulAppCreationResponse(String response) {
-	LOGGER.info("response: " + response);
+	logger.info("response: " + response);
 	JsonReader jsonReader = Json.createReader(new StringReader(response));
 	JsonObject json = jsonReader.readObject();
 

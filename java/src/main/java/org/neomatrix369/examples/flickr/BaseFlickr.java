@@ -47,7 +47,7 @@ public class BaseFlickr {
 
     private static final String FLICKR_API_PARAM = "api_key";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickr.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseFlickr.class);
 
     private String baseURL = "http://api.flickr.com/services/rest";
     protected APIReader apiReader;
@@ -69,7 +69,7 @@ public class BaseFlickr {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	    return new APIReader(baseURL);
 	}
 
@@ -84,12 +84,12 @@ public class BaseFlickr {
     public String extractJson(String flickrResponse) {
 	int beginIndex = flickrResponse.indexOf("{\"");
 	if (beginIndex == -1) {
-	    LOGGER.error(flickrResponse);
+	    logger.error(flickrResponse);
 	    throw new IllegalStateException("begin index not found");
 	}
 	int endIndex = flickrResponse.lastIndexOf(")");
 	if (endIndex == -1) {
-	    LOGGER.error("response: " + flickrResponse);
+	    logger.error("response: " + flickrResponse);
 	    throw new IllegalStateException("end index not found");
 	}
 	return flickrResponse.substring(beginIndex, endIndex);

@@ -44,7 +44,7 @@ public class TwitterInterfaceEngine {
     private static final String ERROR_WHILE_ACCESSING_THE_HTTP_SERVER = "Error while accessing the http server:%s. %n";
     private static final String TWITTER_SEARCH_API_TEMPLATE = "https://twitter.com/#!/search/%s";
 
-    private static final Logger COMMON_LOGGER = Logger.getLogger(TwitterInterfaceEngine.class.getName());
+    private static final Logger COMMON_logger = Logger.getLogger(TwitterInterfaceEngine.class.getName());
 
     public String searchTweets(String usingSearchTerms) {
 	String encodedTerms = "";
@@ -53,11 +53,11 @@ public class TwitterInterfaceEngine {
 	    try {
 		encodedTerms = java.net.URLEncoder.encode(usingSearchTerms, ISO_CHARSET);
 	    } catch (UnsupportedEncodingException ex) {
-		COMMON_LOGGER.log(Level.SEVERE, String.format(ERROR_WHILE_ENCODING_TEXT, ex.getMessage()));
+		COMMON_logger.log(Level.SEVERE, String.format(ERROR_WHILE_ENCODING_TEXT, ex.getMessage()));
 	    }
 	    result = getResponseFromTwitter(TWITTER_SEARCH_API_TEMPLATE, encodedTerms);
 	} catch (IOException ex) {
-	    COMMON_LOGGER.log(Level.SEVERE,
+	    COMMON_logger.log(Level.SEVERE,
 		    String.format(ERROR_WHILE_FETCHING_TWEETS_CONNECTING_TO_SERVER, ex.getMessage()));
 	}
 	return result;
@@ -69,7 +69,7 @@ public class TwitterInterfaceEngine {
 	try {
 	    usingURI = new URI(String.format(usingURL, usingEncodedTerms));
 	} catch (URISyntaxException ex) {
-	    COMMON_LOGGER.log(Level.SEVERE,
+	    COMMON_logger.log(Level.SEVERE,
 		    String.format(ERROR_WHILE_CONVERTING_AN_URL_STRING_INTO_AN_URI, ex.getMessage()));
 	}
 	HttpURLConnection httpURLConnection;
@@ -87,7 +87,7 @@ public class TwitterInterfaceEngine {
 	    }
 	    bufferReader.close();
 	} catch (Exception e) {
-	    COMMON_LOGGER.log(Level.SEVERE, String.format(ERROR_WHILE_ACCESSING_THE_HTTP_SERVER, e.getMessage()));
+	    COMMON_logger.log(Level.SEVERE, String.format(ERROR_WHILE_ACCESSING_THE_HTTP_SERVER, e.getMessage()));
 	}
 	return result;
     }

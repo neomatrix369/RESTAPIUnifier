@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class MuzuBehaviours {
 
     @SuppressWarnings("unused")
-    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuBehaviours.class);
+    private static final Logger logger = LoggerFactory.getLogger(MuzuBehaviours.class);
 
     private static final String MUZU_RSS_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <rss version=\"2.0\"";
     private static final String MUZU_XML_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <videos>,";

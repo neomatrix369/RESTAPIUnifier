@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class BaseTwitter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTwitter.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseTwitter.class);
 
     private String baseURL = "http://search.twitter.com/";
     protected APIReader fetchedResults;
@@ -49,7 +49,7 @@ public class BaseTwitter {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	}
 
 	return new APIReader(baseURL);

@@ -51,7 +51,7 @@ public class APIReader {
     private static final String CONNECTING_TO_URL = ">>> Connecting to URL: <%s>, this may take a moment.";
     private static final String READING_RESULTS_RETURNED = ">>> Reading results returned, this may take a moment...";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(APIReader.class);
+    private static final Logger logger = LoggerFactory.getLogger(APIReader.class);
     private List<String> lastHttpResult = new ArrayList<String>();
     private URL url;
 
@@ -69,8 +69,8 @@ public class APIReader {
 	try {
 	    this.url = new URL(url);
 	} catch (MalformedURLException e) {
-	    LOGGER.error(String.format(INPUT_URL_STRING, url));
-	    LOGGER.error(String.format(ERROR_DUE_TO, e.getMessage()));
+	    logger.error(String.format(INPUT_URL_STRING, url));
+	    logger.error(String.format(ERROR_DUE_TO, e.getMessage()));
 	    throw new IllegalArgumentException("Final URL does not exist.");
 	}
     }
@@ -115,7 +115,7 @@ public class APIReader {
 		writeUrlParameters(urlParameters, urlConnection);
 	    }
 
-	    LOGGER.info(String.format(CONNECTING_TO_URL, url));
+	    logger.info(String.format(CONNECTING_TO_URL, url));
 	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
 
 	    urlConnection.disconnect();
@@ -139,7 +139,7 @@ public class APIReader {
 		}
 	    }
 
-	    LOGGER.info(String.format(CONNECTING_TO_URL, url));
+	    logger.info(String.format(CONNECTING_TO_URL, url));
 	    fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
 	} catch (IOException ioe) {
 	    showMessageDueToIOException(url.toString(), ioe);
@@ -149,7 +149,7 @@ public class APIReader {
     }
 
     private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
-	LOGGER.info("url parameter: " + urlParameters);
+	logger.info("url parameter: " + urlParameters);
 	DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
 	wr.writeBytes(urlParameters);
 	wr.flush();
@@ -168,27 +168,27 @@ public class APIReader {
 	BufferedReader httpResult = null;
 	try {
 	    httpResult = new BufferedReader(isr);
-	    LOGGER.info(READING_RESULTS_RETURNED);
+	    logger.info(READING_RESULTS_RETURNED);
 
 	    String inputLine;
 	    while ((inputLine = httpResult.readLine()) != null) {
 		addToLastHttpResults(inputLine);
 	    }
 
-	    LOGGER.info(READING_COMPLETED);
+	    logger.info(READING_COMPLETED);
 	} finally {
 	    if (httpResult != null) {
 		httpResult.close();
 	    }
-	    LOGGER.info(">>> Connection closed!");
+	    logger.info(">>> Connection closed!");
 	}
 
 	return lastHttpResult;
     }
 
     private void showMessageDueToIOException(String urlText, IOException ioe) {
-	LOGGER.error(String.format(ERROR_CONNECTING, urlText));
-	LOGGER.error(String.format(ERROR_DUE_TO, ioe.getMessage()));
+	logger.error(String.format(ERROR_CONNECTING, urlText));
+	logger.error(String.format(ERROR_DUE_TO, ioe.getMessage()));
     }
 
     private void clearHttpResults() {

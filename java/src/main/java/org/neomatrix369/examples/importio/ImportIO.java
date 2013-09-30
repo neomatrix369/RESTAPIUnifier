@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 public class ImportIO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImportIO.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImportIO.class);
 
     private String baseURL = "https://api.import.io/auth/";
     protected APIReader apiReader;
@@ -55,14 +55,14 @@ public class ImportIO {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	}
 
 	return new APIReader(baseURL);
     }
 
     public static boolean isSuccessfulResponse(String response) {
-	LOGGER.info("response: " + response);
+	logger.info("response: " + response);
 	JsonReader jsonReader = Json.createReader(new StringReader(response));
 	JsonObject json = jsonReader.readObject();
 	return json.getString("status").equals("OK");

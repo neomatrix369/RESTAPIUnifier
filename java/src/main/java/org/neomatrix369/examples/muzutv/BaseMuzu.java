@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class BaseMuzu {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzu.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseMuzu.class);
 
     protected String apiKey;
     protected Map<String, String> parameters = new HashMap<String, String>();
@@ -72,7 +72,7 @@ public abstract class BaseMuzu {
 	    uriBuilder.build();
 	    this.apiReader = new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	    throw new IllegalStateException("No API Key assigned");
 	}
 

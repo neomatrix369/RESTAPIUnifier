@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class BaseYql {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseYql.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseYql.class);
 
     private String baseURL = "http://query.yahooapis.com/v1/public/yql";
     protected APIReader fetchedResults;
@@ -49,7 +49,7 @@ public class BaseYql {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	}
 
 	return new APIReader(baseURL);
