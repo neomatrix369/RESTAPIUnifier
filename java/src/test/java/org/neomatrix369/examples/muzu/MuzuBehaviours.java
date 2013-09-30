@@ -22,26 +22,117 @@
  */
 package org.neomatrix369.examples.muzu;
 
-import java.io.File;
-import java.io.FileReader;
-import java.util.Properties;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.startsWith;
 
+import org.junit.Ignore;
 import org.junit.Test;
-import org.neomatrix369.examples.muzutv.Artist;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
+import org.neomatrix369.examples.muzutv.data.Artist;
+import org.neomatrix369.examples.muzutv.data.Browse;
+import org.neomatrix369.examples.muzutv.data.Search;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MuzuBehaviours {
 
+    @SuppressWarnings("unused")
+    private static final Logger LOGGER = LoggerFactory.getLogger(MuzuBehaviours.class);
+
+    private static final String MUZU_RSS_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <rss version=\"2.0\"";
+    private static final String MUZU_XML_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <videos>,";
+
     @Test
-    public void artist() throws Exception {
-	/**
-	 * "http://www.muzu.tv/api/artist/details/Bon+Jovi?muzuid=[MUZU_ID]";
-	 */
-	Properties prop = new Properties();
-	prop.load(new FileReader(new File("resources/muzu.properties")));
-	String muzuAPIKey = prop.getProperty("APIKey");
+    public void artist_lookup_should_return_xml() throws Exception {
 
-	Artist muzuArtist = new Artist(BaseMuzu.MUZU_BASE_URL + "artist/details/Bon+Jovi?muzuid=" + muzuAPIKey);
+	BaseMuzu muzuArtist = new Artist().withName("yello").build();
+	String response = muzuArtist.executeUrl();
 
+	assertThat(response, startsWith(MUZU_RSS_RESPONSE_BEGINNING));
     }
+
+    @Test
+    public void browse_lookup_should_return_xml() throws Exception {
+
+	// http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=b&g=pop
+	BaseMuzu muzuBrowse = new Browse().withGenre("pop").withAlphaFilter("b").build();
+
+	String response = muzuBrowse.executeUrl();
+	assertThat(response, startsWith(MUZU_RSS_RESPONSE_BEGINNING));
+    }
+
+    @Test
+    public void should_be_rss_result_when_format_is_given_as_rss() throws Exception {
+	BaseMuzu muzuBrowse = new Browse().withGenre("pop").withFormat("rss").build();
+	// http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=b&g=pop&format=xml
+
+	String response = muzuBrowse.executeUrl();
+	assertThat(response, startsWith(MUZU_RSS_RESPONSE_BEGINNING));
+    }
+
+    @Test
+    public void should_be_xml_result_when_format_is_given_as_xml() throws Exception {
+	BaseMuzu muzuBrowse = new Browse().withGenre("pop").withFormat("xml").build();
+	// http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=b&g=pop&format=xml
+
+	String response = muzuBrowse.executeUrl();
+	assertThat(response, startsWith(MUZU_XML_RESPONSE_BEGINNING));
+    }
+
+    @Ignore
+    @Test
+    public void search() throws Exception {
+	// http://www.muzu.tv/api/searchDoc/
+
+	/*
+	 * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=the+script
+	 * http
+	 * ://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=beyonce&format
+	 * =[rss/xml]&country=gb&l=100
+	 * 
+	 * e.g. http://www.muzu.tv/api/search?muzuid=
+	 * [MUZU_ID]&mySearch=beyonce&format=rss&l=200&country=ie
+	 */
+
+	BaseMuzu search = new Search().withSearchTerm("beyonce").withFormat("rss").withLength(200).withCountry("ie")
+		.build();
+
+	String response = search.executeUrl();
+	assertThat(response, startsWith(MUZU_RSS_RESPONSE_BEGINNING));
+    }
+
+    @Test
+    public void search_with_format_xml_should_return_xml() throws Exception {
+	// http://www.muzu.tv/api/searchDoc/
+
+	/*
+	 * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=the+script
+	 * http
+	 * ://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=beyonce&format
+	 * =[rss/xml]&country=gb&l=100
+	 * 
+	 * e.g. http://www.muzu.tv/api/search?muzuid=
+	 * [MUZU_ID]&mySearch=beyonce&format=rss&l=200&country=ie
+	 */
+
+	BaseMuzu search = new Search().withSearchTerm("beyonce").withFormat("rss").withLength(200).withCountry("ie")
+		.build();
+
+	String response = search.executeUrl();
+
+	assertThat(response, startsWith(MUZU_RSS_RESPONSE_BEGINNING));
+    }
+
+    @Ignore
+    @Test
+    public void channel() throws Exception {
+	// http://www.muzu.tv/api/channelLookupDoc/
+    }
+
+    @Ignore
+    @Test
+    public void video() throws Exception {
+	// http://www.muzu.tv/api/videoLookupDoc/
+    }
+
 }

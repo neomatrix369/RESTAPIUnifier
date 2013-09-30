@@ -22,6 +22,7 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import java.io.IOException;
 import java.io.StringReader;
 
 import javax.json.Json;
@@ -49,7 +50,11 @@ public class BaseFlickr {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickr.class);
 
     private String baseURL = "http://api.flickr.com/services/rest";
-    protected APIReader fetchedResults;
+    protected APIReader apiReader;
+
+    public String executeUrl() throws IOException {
+	return apiReader.executeUrl();
+    }
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 	    String[] arrayURLParamCodes, String... params) {
@@ -70,18 +75,7 @@ public class BaseFlickr {
 
     }
 
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
-    }
-
-    public boolean isSuccess() {
-	return isSuccessfulResponse(getFetchedResults());
-    }
-
-    private boolean isSuccessfulResponse(String response) {
+    public boolean isSuccessfulResponse(String response) {
 	JsonReader jsonReader = Json.createReader(new StringReader(extractJson(response)));
 	JsonObject json = jsonReader.readObject();
 	return json.getString("stat").equals("ok");

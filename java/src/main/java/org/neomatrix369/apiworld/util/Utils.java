@@ -33,8 +33,6 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,8 +47,6 @@ public final class Utils {
     public static final String OPENING_BOX_BRACKET = "[";
     public static final String CLOSING_BOX_BRACKET = "]";
 
-    private static final String GREATER_THAN = ">";
-    private static final String GREATER_THAN_AND_COMMA = ">,";
     private static final String INVALID_TOKEN_WARNING = "Invalid token.";
     private static final String UTF_8 = "UTF-8";
     private static final String THE_TOKEN_CANNOT_BE_NULL_MSG = "The token cannot be null.";
@@ -123,19 +119,24 @@ public final class Utils {
 	}
     }
 
-    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) throws IOException {
+    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) {
 	Properties prop = new Properties();
 	try {
 	    prop.load(new FileReader(new File(propertyFilename)));
 	    return prop.getProperty(propertyName);
 	} catch (FileNotFoundException e) {
-	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
+	    try {
+		LOGGER.info("Current path: " + new File(".").getCanonicalPath());
+	    } catch (IOException e1) {
+
+	    }
 	    LOGGER.error(e.getMessage());
+	    throw new IllegalStateException("Did not find property file.");
 
 	} catch (IOException e) {
 	    LOGGER.error(e.getMessage());
+	    throw new IllegalStateException("IO Exception occurred");
 	}
-	return "";
     }
 
     public static String readPropertyFrom(String propertyFilename, String propertyName) throws IOException {
@@ -148,17 +149,6 @@ public final class Utils {
 	    LOGGER.error(exception.getMessage());
 	    throw exception;
 	}
-    }
-
-    public static Document stringToXML(String string) {
-	String localString = string.substring(1, string.length() - 1);
-	localString = localString.replaceAll(GREATER_THAN_AND_COMMA, GREATER_THAN);
-	return Jsoup.parse(localString);
-    }
-
-    public static Boolean isAValidXML(String result) {
-	stringToXML(result);
-	return true;
     }
 
     public static String dropStartAndEndDelimeters(String inputString) {

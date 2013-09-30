@@ -22,6 +22,10 @@
  */
 package org.neomatrix369.examples.muzutv;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
@@ -29,38 +33,48 @@ import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BaseMuzu {
-
-    public static final String MUZU_BASE_URL = "http://www.muzu.tv/api/";
-    private static final String MUZU_PARAM_URL = "muzuid";
+public abstract class BaseMuzu {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzu.class);
 
-    private String baseURL = MUZU_BASE_URL;
-    protected APIReader fetchedResults;
+    protected String apiKey;
+    protected Map<String, String> parameters = new HashMap<String, String>();
+    protected static final String FORMAT = "format";
 
-    protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String[] arrayURLParamCodes,
-	    String... params) {
-	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setAPIKey(MUZU_PARAM_URL, apiKey);
-	int paramCtr = 0;
-	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+    private static final String BASE_URL = "http://www.muzu.tv/api/";
+    private static final String API_KEY = "muzuid";
+
+    private APIReader apiReader;
+
+    public BaseMuzu() {
+	this.apiKey = Utils.readMandatoryPropertyFrom("resources/muzu.properties", "APIKey");
+    }
+
+    abstract protected String apiCommand();
+
+    public BaseMuzu build() {
+	buildAPIReadyToExecute(apiKey, parameters);
+	return this;
+    }
+
+    public String executeUrl() throws IOException {
+	return apiReader.executeUrl();
+    }
+
+    protected void buildAPIReadyToExecute(String apiKeyValue, Map<String, String> parameters) {
+	UriBuilder uriBuilder = new UriBuilder(BASE_URL).setCommand(apiCommand()).setAPIKey(API_KEY, apiKeyValue);
+
+	for (Map.Entry<String, String> param : parameters.entrySet()) {
+	    uriBuilder.addUrlParameter(param.getKey(), Utils.encodeToken(param.getValue()));
 	}
 
 	try {
 	    uriBuilder.build();
-	    return new APIReader(uriBuilder);
+	    this.apiReader = new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
 	    LOGGER.error(e.getMessage());
+	    throw new IllegalStateException("No API Key assigned");
 	}
 
-	return new APIReader(baseURL);
-    }
-
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
     }
 }

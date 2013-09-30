@@ -57,8 +57,7 @@ public class Heroku {
 	uriBuilder.setApiKeyIsRequired(false);
 	uriBuilder.build();
 	APIReader apiReader = new APIReader(uriBuilder);
-	apiReader.executeGetUrl(requestProperties);
-	return apiReader.getFetchedResults();
+	return apiReader.executeGetUrl(requestProperties);
     }
 
     public String authenticate() throws IOException, APIKeyNotAssignedException {
@@ -76,8 +75,7 @@ public class Heroku {
 	uriBuilder.setApiKeyIsRequired(false);
 	uriBuilder.build();
 	APIReader apiReader = new APIReader(uriBuilder);
-	apiReader.executePostUrl(urlParameters);
-	return apiReader.getFetchedResults();
+	return apiReader.executePostUrl(urlParameters);
     }
 
 }

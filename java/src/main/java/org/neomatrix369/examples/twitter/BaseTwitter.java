@@ -55,10 +55,4 @@ public class BaseTwitter {
 	return new APIReader(baseURL);
     }
 
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
-    }
 }

@@ -25,13 +25,10 @@ package org.neomatrix369.examples.yql;
 import java.io.IOException;
 
 import org.neomatrix369.apiworld.ResultType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Webservices {
 
     private static final String COMMAND_SHOW_TABLES = "show tables";
-    private static final Logger LOGGER = LoggerFactory.getLogger(Webservices.class);
 
     private Webservices() {
 	// Hide utility class constructor
@@ -58,10 +55,8 @@ public final class Webservices {
     public static void main(String[] args) throws InterruptedException, IOException {
 	YQLAPIWebServices yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.JSON.toString(),
 		COMMAND_SHOW_TABLES);
-	LOGGER.info(yqlAPIWebServices.getFetchedResults());
 
 	yqlAPIWebServices = new YQLAPIWebServices("", "?", ResultType.XML.toString(), COMMAND_SHOW_TABLES, null);
-	LOGGER.info(yqlAPIWebServices.getFetchedResults());
     }
 }
 

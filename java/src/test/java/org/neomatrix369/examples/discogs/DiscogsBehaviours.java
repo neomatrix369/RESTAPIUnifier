@@ -23,39 +23,36 @@
 package org.neomatrix369.examples.discogs;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.is;
 
-import java.io.IOException;
+import java.io.StringReader;
 
-import org.json.JSONObject;
-import org.junit.Ignore;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
 
-public class DiscogsTest {
+public class DiscogsBehaviours {
 
-    @Ignore
+    // private static final Logger LOGGER =
+    // LoggerFactory.getLogger(DiscogsBehaviours.class);
+
     @Test
-    public void a_restful_artist_returns_some_json() throws Exception {
-	assertThat(aRestCall().withUri("http://api.discogs.com/artists/45").GET(), isA(JSONObject.class));
-    }
-
-    private RestClient aRestCall() {
-	return new RestClient();
-    }
-}
-
-class RestClient {
-
-    public RestClient withUri(String uri) throws IOException {
-	APIReader apiReader = new APIReader(uri);
+    public void artist_endpoint_returns_some_json() throws Exception {
+	String request = "http://api.discogs.com/artists/45";
+	APIReader apiReader = new APIReader(request);
 	apiReader.executeUrl();
-	return this;
+	assertThat(isJsonResult(apiReader.executeUrl()), is(true));
     }
 
-    public JSONObject GET() {
-	// TODO Auto-generated method stub
-	return null;
+    private boolean isJsonResult(String response) {
+	// LOGGER.info(response);
+	JsonReader jsonReader = Json.createReader(new StringReader(response));
+	JsonObject json = jsonReader.readObject();
+
+	return json.getString("realname").equals("Richard David James");
     }
 
 }

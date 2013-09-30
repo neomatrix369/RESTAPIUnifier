@@ -30,7 +30,7 @@ public class Search extends BaseFlickr {
 	String apiCommand = "?method=flickr.photos.search";
 	String[] arrayURLParamCodes = { "format", "text" };
 
-	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
-	fetchedResults.executeUrl();
+	apiReader = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+	apiReader.executeUrl();
     }
 }

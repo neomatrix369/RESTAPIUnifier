@@ -22,8 +22,6 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.util.Utils.dropStartAndEndDelimeters;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -82,15 +80,15 @@ public class APIReader {
 	return this;
     }
 
-    public final void executeUrl() throws IOException {
-	executeGetUrl(null);
+    public String executeUrl() throws IOException {
+	return executeGetUrl(null);
     }
 
-    public void executePostUrl() throws IOException {
-	executePostUrl(null);
+    public String executePostUrl() throws IOException {
+	return executePostUrl(null);
     }
 
-    public void executePostUrl(String urlParameters) throws IOException {
+    public String executePostUrl(String urlParameters) throws IOException {
 
 	clearHttpResults();
 	try {
@@ -125,17 +123,11 @@ public class APIReader {
 	    showMessageDueToIOException(url.toString(), ioe);
 	    // throw ioe;
 	}
+
+	return getFetchedResults();
     }
 
-    private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
-	LOGGER.info("url parameter: " + urlParameters);
-	DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-	wr.writeBytes(urlParameters);
-	wr.flush();
-	wr.close();
-    }
-
-    public void executeGetUrl(Map<String, String> requestProperties) throws IOException {
+    public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
 	clearHttpResults();
 	try {
 	    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -153,12 +145,21 @@ public class APIReader {
 	    showMessageDueToIOException(url.toString(), ioe);
 	    throw ioe;
 	}
+	return getFetchedResults();
     }
 
-    public String getFetchedResults() {
+    private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
+	LOGGER.info("url parameter: " + urlParameters);
+	DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+	wr.writeBytes(urlParameters);
+	wr.flush();
+	wr.close();
+    }
+
+    private String getFetchedResults() {
 	String result = lastHttpResult.toString();
 	while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
-	    result = dropStartAndEndDelimeters(result);
+	    result = Utils.dropStartAndEndDelimeters(result);
 	}
 	return result;
     }

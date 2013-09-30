@@ -61,13 +61,6 @@ public class ImportIO {
 	return new APIReader(baseURL);
     }
 
-    public String getFetchedResults() {
-	if (apiReader != null) {
-	    return apiReader.getFetchedResults();
-	}
-	return "";
-    }
-
     public static boolean isSuccessfulResponse(String response) {
 	LOGGER.info("response: " + response);
 	JsonReader jsonReader = Json.createReader(new StringReader(response));

@@ -25,12 +25,8 @@ package org.neomatrix369.examples.twitter;
 import java.io.IOException;
 
 import org.neomatrix369.apiworld.ResultType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Search {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Search.class);
 
     private Search() {
 	// Hide utility class constructor
@@ -56,7 +52,6 @@ public final class Search {
 
     public static void main(String[] args) throws InterruptedException, IOException {
 	TwitterSearch twitterSearch = new TwitterSearch("", "?", ResultType.JSON.toString(), "hello");
-	LOGGER.info(twitterSearch.getFetchedResults());
     }
 }
 

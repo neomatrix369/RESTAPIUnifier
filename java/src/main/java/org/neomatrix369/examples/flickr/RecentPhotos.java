@@ -30,7 +30,7 @@ public class RecentPhotos extends BaseFlickr {
 	String apiCommand = "?method=flickr.photos.getRecent";
 	String[] arrayURLParamCodes = { "format" };
 
-	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
-	fetchedResults.executeUrl();
+	apiReader = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
     }
+
 }

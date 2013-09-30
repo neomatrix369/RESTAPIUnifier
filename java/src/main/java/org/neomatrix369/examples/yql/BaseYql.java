@@ -55,10 +55,4 @@ public class BaseYql {
 	return new APIReader(baseURL);
     }
 
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
-    }
 }
