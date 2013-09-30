@@ -22,6 +22,10 @@
  */
 package org.neomatrix369.examples.yql;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
@@ -29,30 +33,48 @@ import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BaseYql {
+public class Yql {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseYql.class);
+    private static final Logger logger = LoggerFactory.getLogger(Yql.class);
 
-    private String baseURL = "http://query.yahooapis.com/v1/public/yql";
-    protected APIReader fetchedResults;
+    private String baseURL = "http://query.yahooapis.com/v1/";
+    private APIReader apiReader;
+    private Map<String, String> parameters = new HashMap<String, String>();
 
-    protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
-	    String[] arrayURLParamCodes, String... params) {
-	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
-		.setApiKeyIsRequired(false);
-	int paramCtr = 0;
-	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+    public Yql withStatement(String statement) {
+	this.parameters.put("q", statement);
+	return this;
+    }
+
+    public Yql withFormat(String format) {
+	this.parameters.put("format", format);
+	return this;
+    }
+
+    public Yql buildUrl() {
+	buildAPIReadyToExecute(parameters);
+	return this;
+    }
+
+    public String executeUrl() throws IOException {
+	return apiReader.executeUrl();
+    }
+
+    protected void buildAPIReadyToExecute(Map<String, String> parameters) {
+
+	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand("public/yql").setNoAPIKeyRequired();
+
+	for (Map.Entry<String, String> param : parameters.entrySet()) {
+	    uriBuilder.addUrlParameter(param.getKey(), Utils.urlEncode(param.getValue()));
 	}
 
 	try {
 	    uriBuilder.build();
-	    return new APIReader(uriBuilder);
+	    this.apiReader = new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
 	    logger.error(e.getMessage());
+	    throw new IllegalStateException("No API Key assigned");
 	}
-
-	return new APIReader(baseURL);
     }
 
 }

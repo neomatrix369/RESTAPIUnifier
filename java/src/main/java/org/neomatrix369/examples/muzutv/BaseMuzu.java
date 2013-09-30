@@ -79,7 +79,7 @@ public abstract class BaseMuzu {
 	UriBuilder uriBuilder = new UriBuilder(BASE_URL).setCommand(apiCommand()).setAPIKey(API_KEY, apiKeyValue);
 
 	for (Map.Entry<String, String> param : parameters.entrySet()) {
-	    uriBuilder.addUrlParameter(param.getKey(), Utils.encodeToken(param.getValue()));
+	    uriBuilder.addUrlParameter(param.getKey(), Utils.urlEncode(param.getValue()));
 	}
 
 	try {

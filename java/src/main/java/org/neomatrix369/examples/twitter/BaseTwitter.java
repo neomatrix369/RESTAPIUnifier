@@ -42,7 +42,7 @@ public class BaseTwitter {
 		.setApiKeyIsRequired(false);
 	int paramCtr = 0;
 	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.urlEncode(eachValue));
 	}
 
 	try {

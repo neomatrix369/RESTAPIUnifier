@@ -93,7 +93,7 @@ public final class Utils {
      *            String
      * @return String
      */
-    public static String encodeToken(String token) {
+    public static String urlEncode(String token) {
 
 	if (token == null) {
 	    throw new IllegalArgumentException(THE_TOKEN_CANNOT_BE_NULL_MSG);

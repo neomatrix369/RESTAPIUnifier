@@ -48,7 +48,7 @@ public class ImportIO {
 		.setApiKeyIsRequired(false);
 	int paramCtr = 0;
 	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayUrlParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+	    uriBuilder.addUrlParameter(arrayUrlParamCodes[paramCtr++], Utils.urlEncode(eachValue));
 	}
 
 	try {

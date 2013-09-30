@@ -49,12 +49,12 @@ public class UtilityFunctionsTest {
 
     @Test
     public void should_Return_A_Plus_When_Space_Is_Passed_To_Encode_Token() {
-	Assert.assertEquals("+", Utils.encodeToken(" "));
+	Assert.assertEquals("+", Utils.urlEncode(" "));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void should_Return_IllegalArgmentException_If_Null_Is_Passed_To_Encode_Token() {
-	Utils.encodeToken(null);
+	Utils.urlEncode(null);
 	Assert.fail();
     }
 

@@ -134,7 +134,7 @@ public class UriBuilderTest {
     public void should_return_URL_with_encoded_param() throws APIKeyNotAssignedException {
 	uriBuilder.setCommand(API_BROWSE_COMMAND);
 	uriBuilder.setAPIKey(API_KEY, MUZUID_VALUE);
-	uriBuilder.addUrlParameter("key", Utils.encodeToken("string with space"));
+	uriBuilder.addUrlParameter("key", Utils.urlEncode("string with space"));
 	uriBuilder.build();
 	String actual = uriBuilder.getFinalURL();
 	String expected = MUZU_URL_WITH_BROWSE_AND_MUZU_ID + "&key=string+with+space";
