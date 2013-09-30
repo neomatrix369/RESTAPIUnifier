@@ -77,4 +77,16 @@ public abstract class BaseMuzu {
 	}
 
     }
+
+    /**
+     * The format of the response can be specified here. The two format types
+     * are rss and xml. Defaults to rss.
+     * 
+     * @param value
+     * @return
+     */
+    public BaseMuzu withFormat(String value) {
+	parameters.put(FORMAT, value);
+	return this;
+    }
 }

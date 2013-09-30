@@ -55,17 +55,4 @@ public class Browse extends BaseMuzu {
 	return this;
     }
 
-    /**
-     * The format of the response can be specified here. The two format types
-     * are rss and xml. Defaults to rss.
-     * 
-     * @param value
-     * @return
-     */
-    // TODO: probably move up as this is a valid parameter for all calls.
-    public BaseMuzu withFormat(String value) {
-	parameters.put(FORMAT, value);
-	return this;
-    }
-
 }
