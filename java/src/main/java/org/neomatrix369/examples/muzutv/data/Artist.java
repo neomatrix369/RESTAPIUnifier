@@ -48,4 +48,16 @@ public class Artist extends BaseMuzu {
 	return this;
     }
 
+    /**
+     * The number of items to return. Maximum allowed value is 1000. Defaults to
+     * 500.
+     * 
+     * @param i
+     * @return
+     */
+    public Artist withLength(int i) {
+	parameters.put(LENGTH, String.valueOf(i));
+	return this;
+    }
+
 }

@@ -24,10 +24,20 @@ package org.neomatrix369.examples.muzutv.data;
 
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 
+/**
+ * http://www.muzu.tv/api/searchDoc/
+ * 
+ * http://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=the+script http
+ * ://www.muzu.tv/api/search?muzuid=[MUZU_ID]&mySearch=beyonce&format
+ * =[rss/xml]&country=gb&l=100
+ * 
+ * e.g. http://www.muzu.tv/api/search?muzuid=
+ * [MUZU_ID]&mySearch=beyonce&format=rss&l=200&country=ie
+ * 
+ */
 public class Search extends BaseMuzu {
 
     private static final String COUNTRY = "country";
-    private static final String LENGTH = "l";
     private static final String MY_SEARCH = "mySearch";
 
     @Override
@@ -67,7 +77,7 @@ public class Search extends BaseMuzu {
      * @param value
      * @return
      */
-    public BaseMuzu withCountry(String value) {
+    public Search withCountry(String value) {
 	parameters.put(COUNTRY, value);
 	return this;
     }

@@ -30,6 +30,7 @@ import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.util.Utils;
+import org.neomatrix369.examples.muzutv.data.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,7 @@ public abstract class BaseMuzu {
     protected String apiKey;
     protected Map<String, String> parameters = new HashMap<String, String>();
     protected static final String FORMAT = "format";
+    protected static final String LENGTH = "l";
 
     private static final String BASE_URL = "http://www.muzu.tv/api/";
     private static final String API_KEY = "muzuid";
@@ -52,8 +54,20 @@ public abstract class BaseMuzu {
 
     abstract protected String apiCommand();
 
-    public BaseMuzu build() {
+    public BaseMuzu buildUrl() {
 	buildAPIReadyToExecute(apiKey, parameters);
+	return this;
+    }
+
+    /**
+     * The format of the response can be specified here. The two format types
+     * are rss and xml. Defaults to rss.
+     * 
+     * @param format
+     * @return
+     */
+    public BaseMuzu withFormat(Format format) {
+	parameters.put(FORMAT, format.toString());
 	return this;
     }
 
@@ -78,15 +92,4 @@ public abstract class BaseMuzu {
 
     }
 
-    /**
-     * The format of the response can be specified here. The two format types
-     * are rss and xml. Defaults to rss.
-     * 
-     * @param value
-     * @return
-     */
-    public BaseMuzu withFormat(String value) {
-	parameters.put(FORMAT, value);
-	return this;
-    }
 }
