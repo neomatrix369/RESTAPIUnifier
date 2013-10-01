@@ -38,13 +38,14 @@ public abstract class BaseMuzu {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseMuzu.class);
 
-    protected String apiKey;
-    protected Map<String, String> parameters = new HashMap<String, String>();
     protected static final String FORMAT = "format";
     protected static final String LENGTH = "l";
 
     private static final String BASE_URL = "http://www.muzu.tv/api/";
     private static final String API_KEY = "muzuid";
+
+    protected String apiKey;
+    protected Map<String, String> parameters = new HashMap<String, String>();
 
     private APIReader apiReader;
 
