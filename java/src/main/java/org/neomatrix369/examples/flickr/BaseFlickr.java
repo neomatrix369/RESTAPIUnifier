@@ -22,6 +22,7 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import java.io.IOException;
 import java.io.StringReader;
 
 import javax.json.Json;
@@ -46,10 +47,14 @@ public class BaseFlickr {
 
     private static final String FLICKR_API_PARAM = "api_key";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseFlickr.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseFlickr.class);
 
     private String baseURL = "http://api.flickr.com/services/rest";
-    protected APIReader fetchedResults;
+    protected APIReader apiReader;
+
+    public String executeUrl() throws IOException {
+	return apiReader.executeUrl();
+    }
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
 	    String[] arrayURLParamCodes, String... params) {
@@ -57,31 +62,20 @@ public class BaseFlickr {
 		.setAPIKey(FLICKR_API_PARAM, apiKey);
 	int paramCtr = 0;
 	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.urlEncode(eachValue));
 	}
 
 	try {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	    return new APIReader(baseURL);
 	}
 
     }
 
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
-    }
-
-    public boolean isSuccess() {
-	return isSuccessfulResponse(getFetchedResults());
-    }
-
-    private boolean isSuccessfulResponse(String response) {
+    public boolean isSuccessfulResponse(String response) {
 	JsonReader jsonReader = Json.createReader(new StringReader(extractJson(response)));
 	JsonObject json = jsonReader.readObject();
 	return json.getString("stat").equals("ok");
@@ -90,12 +84,12 @@ public class BaseFlickr {
     public String extractJson(String flickrResponse) {
 	int beginIndex = flickrResponse.indexOf("{\"");
 	if (beginIndex == -1) {
-	    LOGGER.error(flickrResponse);
+	    logger.error(flickrResponse);
 	    throw new IllegalStateException("begin index not found");
 	}
 	int endIndex = flickrResponse.lastIndexOf(")");
 	if (endIndex == -1) {
-	    LOGGER.error("response: " + flickrResponse);
+	    logger.error("response: " + flickrResponse);
 	    throw new IllegalStateException("end index not found");
 	}
 	return flickrResponse.substring(beginIndex, endIndex);

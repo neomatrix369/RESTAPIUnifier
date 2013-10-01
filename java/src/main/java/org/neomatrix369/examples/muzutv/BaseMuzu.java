@@ -22,45 +22,74 @@
  */
 package org.neomatrix369.examples.muzutv;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.util.Utils;
+import org.neomatrix369.examples.muzutv.data.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BaseMuzu {
+public abstract class BaseMuzu {
 
-    public static final String MUZU_BASE_URL = "http://www.muzu.tv/api/";
-    private static final String MUZU_PARAM_URL = "muzuid";
+    private static final Logger logger = LoggerFactory.getLogger(BaseMuzu.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseMuzu.class);
+    protected String apiKey;
+    protected Map<String, String> parameters = new HashMap<String, String>();
+    protected static final String FORMAT = "format";
+    protected static final String LENGTH = "l";
 
-    private String baseURL = MUZU_BASE_URL;
-    protected APIReader fetchedResults;
+    private static final String BASE_URL = "http://www.muzu.tv/api/";
+    private static final String API_KEY = "muzuid";
 
-    protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String[] arrayURLParamCodes,
-	    String... params) {
-	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setAPIKey(MUZU_PARAM_URL, apiKey);
-	int paramCtr = 0;
-	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+    private APIReader apiReader;
+
+    public BaseMuzu() {
+	this.apiKey = Utils.readMandatoryPropertyFrom("resources/muzu.properties", "APIKey");
+    }
+
+    abstract protected String apiCommand();
+
+    public BaseMuzu buildUrl() {
+	buildAPIReadyToExecute(apiKey, parameters);
+	return this;
+    }
+
+    /**
+     * The format of the response can be specified here. The two format types
+     * are rss and xml. Defaults to rss.
+     * 
+     * @param format
+     * @return
+     */
+    public BaseMuzu withFormat(Format format) {
+	parameters.put(FORMAT, format.toString());
+	return this;
+    }
+
+    public String executeUrl() throws IOException {
+	return apiReader.executeUrl();
+    }
+
+    protected void buildAPIReadyToExecute(String apiKeyValue, Map<String, String> parameters) {
+	UriBuilder uriBuilder = new UriBuilder(BASE_URL).setCommand(apiCommand()).setAPIKey(API_KEY, apiKeyValue);
+
+	for (Map.Entry<String, String> param : parameters.entrySet()) {
+	    uriBuilder.addUrlParameter(param.getKey(), Utils.urlEncode(param.getValue()));
 	}
 
 	try {
 	    uriBuilder.build();
-	    return new APIReader(uriBuilder);
+	    this.apiReader = new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
+	    throw new IllegalStateException("No API Key assigned");
 	}
 
-	return new APIReader(baseURL);
     }
 
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
-    }
 }

@@ -23,39 +23,36 @@
 package org.neomatrix369.examples.discogs;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.is;
 
-import java.io.IOException;
+import java.io.StringReader;
 
-import org.json.JSONObject;
-import org.junit.Ignore;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
 
-public class DiscogsTest {
+public class DiscogsBehaviours {
 
-    @Ignore
+    // private static final Logger logger =
+    // LoggerFactory.getLogger(DiscogsBehaviours.class);
+
     @Test
-    public void a_restful_artist_returns_some_json() throws Exception {
-	assertThat(aRestCall().withUri("http://api.discogs.com/artists/45").GET(), isA(JSONObject.class));
+    public void artist_endpoint_returns_some_json() throws Exception {
+	String request = "http://api.discogs.com/artists/45";
+	APIReader apiReader = new APIReader(request);
+	String response = apiReader.executeUrl();
+	assertThat(isJsonResult(response), is(true));
     }
 
-    private RestClient aRestCall() {
-	return new RestClient();
-    }
-}
+    private boolean isJsonResult(String response) {
+	// logger.info(response);
+	JsonReader jsonReader = Json.createReader(new StringReader(response));
+	JsonObject json = jsonReader.readObject();
 
-class RestClient {
-
-    public RestClient withUri(String uri) throws IOException {
-	APIReader apiReader = new APIReader(uri);
-	apiReader.executeUrl();
-	return this;
-    }
-
-    public JSONObject GET() {
-	// TODO Auto-generated method stub
-	return null;
+	return json.getString("realname").equals("Richard David James");
     }
 
 }

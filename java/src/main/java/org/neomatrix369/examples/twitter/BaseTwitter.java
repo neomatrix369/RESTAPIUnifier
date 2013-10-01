@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class BaseTwitter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseTwitter.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseTwitter.class);
 
     private String baseURL = "http://search.twitter.com/";
     protected APIReader fetchedResults;
@@ -42,23 +42,17 @@ public class BaseTwitter {
 		.setApiKeyIsRequired(false);
 	int paramCtr = 0;
 	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.encodeToken(eachValue));
+	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.urlEncode(eachValue));
 	}
 
 	try {
 	    uriBuilder.build();
 	    return new APIReader(uriBuilder);
 	} catch (APIKeyNotAssignedException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
 	}
 
 	return new APIReader(baseURL);
     }
 
-    public String getFetchedResults() {
-	if (fetchedResults != null) {
-	    return fetchedResults.getFetchedResults();
-	}
-	return "";
-    }
 }

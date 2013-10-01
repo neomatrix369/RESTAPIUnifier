@@ -20,39 +20,47 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr;
+package org.neomatrix369.examples.muzu.data;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.io.IOException;
+import static org.hamcrest.Matchers.startsWith;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.util.Utils;
+import org.neomatrix369.examples.muzu.VideoBaseFixture;
+import org.neomatrix369.examples.muzutv.BaseMuzu;
+import org.neomatrix369.examples.muzutv.data.Browse;
+import org.neomatrix369.examples.muzutv.data.Format;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class FlickrBehaviours {
+public class BrowseEndpointBehaviours extends VideoBaseFixture {
 
-    private String apiKey;
+    @SuppressWarnings("unused")
+    private static final Logger logger = LoggerFactory.getLogger(BrowseEndpointBehaviours.class);
+
+    private Browse aBrowser() {
+	return new Browse().withGenre("pop").withLength(1);
+    }
 
     @Before
-    public void setup() throws IOException {
-	apiKey = Utils.readPropertyFrom("resources/flickr.properties", "APIKey");
+    public void setup() {
+	super.setup();
     }
 
     @Test
-    public void recentPhotos() throws IOException {
-	RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
-	String response = recentPhotos.executeUrl();
-	assertThat(recentPhotos.isSuccessfulResponse(response), is(true));
+    public void should_be_rss_result_when_no_format_is_given_for_browse_endpoint() throws Exception {
+
+	String response = aBrowser().buildUrl().executeUrl();
+	assertResponseIsValidRss(response);
     }
 
     @Test
-    public void search() throws Exception {
-	Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
-	String response = search.executeUrl();
-	assertThat(search.isSuccessfulResponse(response), is(true));
+    public void should_be_xml_result_when_format_is_given_as_xml() throws Exception {
+	BaseMuzu muzuBrowse = aBrowser().withFormat(Format.XML).buildUrl();
+
+	String response = muzuBrowse.executeUrl();
+	assertThat(response, startsWith(xmlResponseBeginning));
     }
 
 }

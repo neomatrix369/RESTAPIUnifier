@@ -24,13 +24,13 @@ package org.neomatrix369.examples.importio;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.neomatrix369.apiworld.util.Utils.readPropertyFrom;
 
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.util.Utils;
 
 public class ImportIoBehaviours {
 
@@ -39,8 +39,8 @@ public class ImportIoBehaviours {
 
     @Before
     public void setup() throws IOException {
-	username = readPropertyFrom("resources/importio.properties", "username");
-	password = readPropertyFrom("resources/importio.properties", "password");
+	username = Utils.readPropertyFrom("resources/importio.properties", "username");
+	password = Utils.readPropertyFrom("resources/importio.properties", "password");
     }
 
     @Test
@@ -51,8 +51,8 @@ public class ImportIoBehaviours {
 
 	APIReader apiReader = new APIReader(request);
 
-	apiReader.executePostUrl(urlParameters);
-	assertThat(ImportIO.isSuccessfulResponse(apiReader.getFetchedResults()), is(true));
+	String response = apiReader.executePostUrl(urlParameters);
+	assertThat(ImportIO.isSuccessfulResponse(response), is(true));
     }
 
     // TODO: add test that does login first and stores cookie and then reuses

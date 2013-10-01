@@ -20,17 +20,17 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr;
+package org.neomatrix369.examples.muzu;
 
-import java.io.IOException;
+import org.junit.Before;
 
-public class RecentPhotos extends BaseFlickr {
+public abstract class VideoBaseFixture extends BaseFixture {
 
-    RecentPhotos(String apiKey, String paramStart, String... params) throws IOException {
-	String apiCommand = "?method=flickr.photos.getRecent";
-	String[] arrayURLParamCodes = { "format" };
-
-	apiReader = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+    @Before
+    public void setup() {
+	xmlResponseType = "videos";
+	rssDescription = "MUZU Music Videos";
+	super.setup();
     }
 
 }
