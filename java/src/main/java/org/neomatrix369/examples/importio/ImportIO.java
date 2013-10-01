@@ -22,47 +22,49 @@
  */
 package org.neomatrix369.examples.importio;
 
-import org.neomatrix369.apiworld.UriBuilder;
+import java.io.StringReader;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
-import org.neomatrix369.apiworld.util.UtilityFunctions;
+import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ImportIO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ImportIO.class);
-    
+    private static final Logger logger = LoggerFactory.getLogger(ImportIO.class);
+
     private String baseURL = "https://api.import.io/auth/";
-    protected APIReader fetchedResults;
+    protected APIReader apiReader;
 
-    protected APIReader buildAPIReadyToExecute(String apiCommand,
-            String paramStart, String[] arrayURLParamCodes, String... params) {
-        UriBuilder uriBuilder = new UriBuilder(baseURL)
-        	.setCommand(apiCommand)
-        	.setParamStart(paramStart)
-        	.setApiKeyIsRequired(false);
-        int paramCtr = 0;
-        for (String eachValue : params) {
-            uriBuilder.addAURLParameter(arrayURLParamCodes[paramCtr++],
-                    UtilityFunctions.encodeToken(eachValue));
-        }
+    protected APIReader buildAPIReadyToExecute(String apiCommand, String paramStart, String[] arrayUrlParamCodes,
+	    String... params) {
+	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
+		.setApiKeyIsRequired(false);
+	int paramCtr = 0;
+	for (String eachValue : params) {
+	    uriBuilder.addUrlParameter(arrayUrlParamCodes[paramCtr++], Utils.urlEncode(eachValue));
+	}
 
-        try {
-            uriBuilder.build();
-            return new APIReader(uriBuilder);
-        } catch (BaseURLNotAssignedException | APIKeyNotAssignedException e) {
-            LOGGER.error(e.getMessage());
-        }
+	try {
+	    uriBuilder.build();
+	    return new APIReader(uriBuilder);
+	} catch (APIKeyNotAssignedException e) {
+	    logger.error(e.getMessage());
+	}
 
-        return new APIReader(baseURL);
+	return new APIReader(baseURL);
     }
 
-    public String getFetchedResults() {
-        if (fetchedResults != null) {
-            return fetchedResults.getFetchedResults();
-        }
-        return "";
+    public static boolean isSuccessfulResponse(String response) {
+	logger.info("response: " + response);
+	JsonReader jsonReader = Json.createReader(new StringReader(response));
+	JsonObject json = jsonReader.readObject();
+	return json.getString("status").equals("OK");
     }
 }

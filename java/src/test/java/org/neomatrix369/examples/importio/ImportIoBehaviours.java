@@ -20,40 +20,43 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.discogs;
+package org.neomatrix369.examples.importio;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isA;
+import static org.hamcrest.Matchers.is;
 
-import org.json.JSONObject;
-import org.junit.Ignore;
+import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.util.Utils;
 
-public class DiscogsTest {
+public class ImportIoBehaviours {
 
-    @Ignore
+    private String username;
+    private String password;
+
+    @Before
+    public void setup() throws IOException {
+	username = Utils.readPropertyFrom("resources/importio.properties", "username");
+	password = Utils.readPropertyFrom("resources/importio.properties", "password");
+    }
+
     @Test
-    public void a_restful_artist_returns_some_json() throws Exception {
-	assertThat(aRestCall().withUri("http://api.discogs.com/artists/45").GET(), isA(JSONObject.class));
+    public void login_with_POST_method() throws Exception {
+
+	String urlParameters = String.format("username=%s&password=%s", username, password);
+	String request = "https://api.import.io/auth/login";
+
+	APIReader apiReader = new APIReader(request);
+
+	String response = apiReader.executePostUrl(urlParameters);
+	assertThat(ImportIO.isSuccessfulResponse(response), is(true));
     }
 
-    private RestClient aRestCall() {
-	return null;
-    }
-}
-
-class RestClient {
-
-    public RestClient withUri(String uri) {
-	APIReader apiReader = new APIReader(uri);
-	apiReader.executeUrl();
-	return this;
-    }
-
-    public JSONObject GET() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+    // TODO: add test that does login first and stores cookie and then reuses
+    // cookie to access another part, e.g. to get API Key. See
+    // http://docs.import.io/reference/auth.html#heading-getapikey
 
 }

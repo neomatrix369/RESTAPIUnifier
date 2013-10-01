@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 public final class FetchTweetsPeriodically {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FetchTweetsPeriodically.class);
+    private static final Logger logger = LoggerFactory.getLogger(FetchTweetsPeriodically.class);
 
     private static final String SERVER_STARTUP_MESSAGE = "Started fetching tweets every hour!%n";
     private static final int SECONDS_IN_AN_HOUR = 3600;
@@ -52,10 +52,10 @@ public final class FetchTweetsPeriodically {
 		// this is only to show that the system is receiving feeds, not
 		// initial requirements
 		// TODO: can be removed before production-ising
-		LOGGER.info(returnedTweets + "%n");
+		logger.info(returnedTweets + "%n");
 		saveThe(returnedTweets);
 	    } catch (Exception e) {
-		LOGGER.error(e.getMessage());
+		logger.error(e.getMessage());
 	    }
 	}
     }
@@ -66,7 +66,7 @@ public final class FetchTweetsPeriodically {
 	// program
 	// to see what it does for a shorted duration
 
-	LOGGER.info(SERVER_STARTUP_MESSAGE);
+	logger.info(SERVER_STARTUP_MESSAGE);
     }
 
     private void saveThe(String receivedTweets) {

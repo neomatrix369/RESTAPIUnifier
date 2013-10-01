@@ -20,20 +20,17 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld.exception;
+package org.neomatrix369.examples.muzu;
 
-/**
- * Custom exception class BaseURLNotAssignedException.
- * 
- * @author Mani Sarkar
- *
- */
-public class BaseURLNotAssignedException extends Exception {
-    /**
-	 * Generated serialVersionUID. 
-	 */
-    private static final long serialVersionUID = -4015789980098609213L;
+import org.junit.Before;
 
-    public BaseURLNotAssignedException() {
+public abstract class VideoBaseFixture extends BaseFixture {
+
+    @Before
+    public void setup() {
+	xmlResponseType = "videos";
+	rssDescription = "MUZU Music Videos";
+	super.setup();
     }
+
 }

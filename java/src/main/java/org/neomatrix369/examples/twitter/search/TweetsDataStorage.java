@@ -48,7 +48,7 @@ public class TweetsDataStorage {
     private static final boolean TERM_WAS_FOUND = true;
     private static final boolean TERM_WAS_NOT_FOUND = false;
 
-    private static final Logger COMMON_LOGGER = Logger
+    private static final Logger COMMON_logger = Logger
             .getLogger(TweetsDataStorage.class.getName());
 
     private String localStorageFile = "savedTweets.json";
@@ -103,7 +103,7 @@ public class TweetsDataStorage {
                     return TERM_WAS_FOUND;
                 }
             } catch (JSONException ex) {
-                COMMON_LOGGER.log(
+                COMMON_logger.log(
                         Level.SEVERE,
                         String.format(ERROR_WHILE_INTERATING_THROUGH_TWEETS,
                                 ex.getMessage()));
@@ -121,7 +121,7 @@ public class TweetsDataStorage {
             FileUtils
                     .writeStringToFile(new File(localFileName), receivedTweets);
         } catch (IOException ex) {
-            COMMON_LOGGER.log(Level.SEVERE,
+            COMMON_logger.log(Level.SEVERE,
                     String.format(ERROR_WHILE_SAVING_TWEETS, ex.getMessage()));
         }
     }
@@ -145,13 +145,13 @@ public class TweetsDataStorage {
                 resultsArray = jsonObject
                         .getJSONArray(TWITTER_JSON_RESULTS_TAG);
             } catch (JSONException ex) {
-                COMMON_LOGGER.log(
+                COMMON_logger.log(
                         Level.SEVERE,
                         String.format(ERROR_WHILE_PARSING_TWEETS,
                                 ex.getMessage()));
             }
         } catch (IOException ex) {
-            COMMON_LOGGER.log(Level.SEVERE,
+            COMMON_logger.log(Level.SEVERE,
                     String.format(ERROR_WHILE_LOADING_TWEETS, ex.getMessage()));
         }
         return resultsArray;

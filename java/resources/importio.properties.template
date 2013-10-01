@@ -1,0 +1,15 @@
+# API provider URL: http://docs.import.io/
+# 
+# Required settings file to run this example:
+# 
+# 
+# [yyyy] = username registered with import.io [zzzz] = password registered
+# with import.io
+# 
+# API Key is handled differently via this API, an Auth token is return when
+# a successful login occurs. Which can be further used along with secret
+# key to perform further API actions.
+
+apiKey=[API_KEY]
+username=[USERNAME] 
+password=[PASSWORD]

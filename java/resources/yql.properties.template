@@ -1,0 +1,7 @@
+# 
+# Get your API key for YQL from http://developer.yahoo.com/yql/
+# 
+# Copy the file to yql.properties and fill in the correct value
+# for APIKey.
+
+APIKey=[YOUR_API_KEY]

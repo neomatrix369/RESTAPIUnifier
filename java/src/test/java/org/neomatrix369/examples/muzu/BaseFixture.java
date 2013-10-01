@@ -20,17 +20,32 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr;
+package org.neomatrix369.examples.muzu;
 
-import java.io.IOException;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.startsWith;
 
-public class RecentPhotos extends BaseFlickr {
+import org.junit.Before;
 
-    RecentPhotos(String apiKey, String paramStart, String... params) throws IOException {
-	String apiCommand = "?method=flickr.photos.getRecent";
-	String[] arrayURLParamCodes = { "format" };
+public abstract class BaseFixture {
 
-	apiReader = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+    protected static final String RSS_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <rss version=\"2.0\"";
+
+    protected String xmlResponseType;
+    protected String xmlResponseBeginning;
+    protected String rssDescription;
+    protected String rssDescriptionTag;
+
+    @Before
+    public void setup() {
+	xmlResponseBeginning = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <" + xmlResponseType + ">,";
+	rssDescriptionTag = "<description>" + rssDescription + "</description>";
+    }
+
+    protected void assertResponseIsValidRss(String response) {
+	assertThat(response, startsWith(RSS_RESPONSE_BEGINNING));
+	assertThat(response, containsString(rssDescriptionTag));
     }
 
 }

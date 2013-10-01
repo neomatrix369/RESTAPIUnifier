@@ -20,7 +20,7 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.muzutv;
+package org.neomatrix369.examples.yql;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,45 +30,29 @@ import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.util.Utils;
-import org.neomatrix369.examples.muzutv.data.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class BaseMuzu {
+public class Yql {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseMuzu.class);
+    private static final Logger logger = LoggerFactory.getLogger(Yql.class);
 
-    protected static final String FORMAT = "format";
-    protected static final String LENGTH = "l";
-
-    private static final String BASE_URL = "http://www.muzu.tv/api/";
-    private static final String API_KEY = "muzuid";
-
-    protected String apiKey;
-    protected Map<String, String> parameters = new HashMap<String, String>();
-
+    private String baseURL = "http://query.yahooapis.com/v1/";
     private APIReader apiReader;
+    private Map<String, String> parameters = new HashMap<String, String>();
 
-    public BaseMuzu() {
-	this.apiKey = Utils.readMandatoryPropertyFrom("resources/muzu.properties", "APIKey");
-    }
-
-    abstract protected String apiCommand();
-
-    public BaseMuzu buildUrl() {
-	buildAPIReadyToExecute(apiKey, parameters);
+    public Yql withStatement(String statement) {
+	this.parameters.put("q", statement);
 	return this;
     }
 
-    /**
-     * The format of the response can be specified here. The two format types
-     * are rss and xml. Defaults to rss.
-     * 
-     * @param format
-     * @return
-     */
-    public BaseMuzu withFormat(Format format) {
-	parameters.put(FORMAT, format.toString());
+    public Yql withFormat(String format) {
+	this.parameters.put("format", format);
+	return this;
+    }
+
+    public Yql buildUrl() {
+	buildAPIReadyToExecute(parameters);
 	return this;
     }
 
@@ -76,8 +60,9 @@ public abstract class BaseMuzu {
 	return apiReader.executeUrl();
     }
 
-    protected void buildAPIReadyToExecute(String apiKeyValue, Map<String, String> parameters) {
-	UriBuilder uriBuilder = new UriBuilder(BASE_URL).setCommand(apiCommand()).setAPIKey(API_KEY, apiKeyValue);
+    protected void buildAPIReadyToExecute(Map<String, String> parameters) {
+
+	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand("public/yql").setNoAPIKeyRequired();
 
 	for (Map.Entry<String, String> param : parameters.entrySet()) {
 	    uriBuilder.addUrlParameter(param.getKey(), Utils.urlEncode(param.getValue()));
@@ -90,7 +75,6 @@ public abstract class BaseMuzu {
 	    logger.error(e.getMessage());
 	    throw new IllegalStateException("No API Key assigned");
 	}
-
     }
 
 }

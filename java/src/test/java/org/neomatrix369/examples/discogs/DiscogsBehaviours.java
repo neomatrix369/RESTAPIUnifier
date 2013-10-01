@@ -20,35 +20,39 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld.util;
+package org.neomatrix369.examples.discogs;
 
-import java.util.ResourceBundle;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-/**
- * Enum singleton to load a resource bundle to care of all API strings.
- * @author helio frota http://www.heliofrota.com
- *
- */
-public enum Keys {
+import java.io.StringReader;
 
-    /** The instance. */
-    INSTANCE;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
-    private static final String CONSTANT_KEYS = "Keys";
-	/** Static bundle. */
-    private static ResourceBundle bundle;
-    
-    static {
-       bundle = ResourceBundle.getBundle(CONSTANT_KEYS);
+import org.junit.Test;
+import org.neomatrix369.apiworld.APIReader;
+
+public class DiscogsBehaviours {
+
+    // private static final Logger logger =
+    // LoggerFactory.getLogger(DiscogsBehaviours.class);
+
+    @Test
+    public void artist_endpoint_returns_some_json() throws Exception {
+	String request = "http://api.discogs.com/artists/45";
+	APIReader apiReader = new APIReader(request);
+	String response = apiReader.executeUrl();
+	assertThat(isJsonResult(response), is(true));
     }
 
-    /**
-     * Returns the value based on key.
-     * @param key String
-     * @return String
-     */
-    public String getKey(String key) {
-        return bundle.getString(key);
+    private boolean isJsonResult(String response) {
+	// logger.info(response);
+	JsonReader jsonReader = Json.createReader(new StringReader(response));
+	JsonObject json = jsonReader.readObject();
+
+	return json.getString("realname").equals("Richard David James");
     }
 
 }
