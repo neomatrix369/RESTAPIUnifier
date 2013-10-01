@@ -74,19 +74,6 @@ public final class Utils {
     }
 
     /**
-     * Checks if url has a separator using apache commons lang.
-     * 
-     * @param urlString
-     *            String
-     * @param commandUrlSeparator
-     *            String
-     * @return boolean
-     */
-    public static boolean doesHaveSeparator(String urlString, String commandUrlSeparator) {
-	return StringUtils.endsWith(urlString, commandUrlSeparator);
-    }
-
-    /**
      * Converts the token to the application/x-www-form-urlencoded MIME format.
      * 
      * @param value

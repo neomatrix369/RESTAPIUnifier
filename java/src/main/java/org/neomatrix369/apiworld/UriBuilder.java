@@ -22,7 +22,6 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.util.Utils.doesHaveSeparator;
 import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
 
 import java.util.LinkedHashMap;
@@ -35,7 +34,6 @@ import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
  */
 public class UriBuilder {
 
-    private static final String COMMAND_SEPARATOR = "/";
     private static final String PARAM_SEPARATOR = "&";
     private static final String PARAM_START = "?";
 
@@ -109,8 +107,8 @@ public class UriBuilder {
 
 	this.finalURL = baseURL;
 	if ((commandString != null) && (!commandString.isEmpty())) {
-	    if (!doesHaveSeparator(this.finalURL, COMMAND_SEPARATOR)) {
-		this.finalURL = String.format(TWO_TOKENS, finalURL, COMMAND_SEPARATOR);
+	    if (!finalURL.endsWith("/")) {
+		this.finalURL = String.format(TWO_TOKENS, finalURL, "/");
 	    }
 
 	    this.finalURL = String.format(THREE_TOKENS, finalURL, commandString, paramStart);

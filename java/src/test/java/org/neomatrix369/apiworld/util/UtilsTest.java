@@ -20,36 +20,36 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.apiworld;
+package org.neomatrix369.apiworld.util;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neomatrix369.apiworld.util.Utils;
 
 /**
- * Test class UtilityFunctionsTest.
+ * Test class UtilsTest.
  * 
  * @author helio frota http://www.heliofrota.com
  * 
  */
-public class UtilityFunctionsTest {
+public class UtilsTest {
 
     @Test
     public void should_Verify_Invalid_JSON_Text() {
-	Assert.assertEquals(false, Utils.isAValidJSONText("{abcde"));
+	assertThat(Utils.isAValidJSONText("{abcde"), is(false));
     }
 
     @Test
     public void should_Verify_Valid_JSON_Text() {
-	Assert.assertEquals(true, Utils.isAValidJSONText("{color:'green', status: 'good'}"));
+	assertThat(Utils.isAValidJSONText("{color:'green', status: 'good'}"), is(true));
     }
 
     @Test
     public void should_Return_A_Plus_When_Space_Is_Passed_To_Encode_Token() {
-	Assert.assertEquals("+", Utils.urlEncode(" "));
+	assertThat(Utils.urlEncode(" "), is("+"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -59,21 +59,8 @@ public class UtilityFunctionsTest {
     }
 
     @Test
-    public void should_Validate_True_If_String_does_Have_A_Separator() {
-	Assert.assertEquals(false, Utils.doesHaveSeparator("http://search.twitter.com", "/"));
-	Assert.assertEquals(true, Utils.doesHaveSeparator("http://search.twitter.com/", "/"));
-	Assert.assertEquals(true, Utils.doesHaveSeparator("http://search.twitter.com////////", "////////"));
-    }
-
-    @Test
     public void should_Remove_Trailing_Separator_From_String_When_A_Single_Separator_Is_Passed_In() {
-	Assert.assertEquals("http://search.twitter.com", Utils.dropTrailingSeparator("http://search.twitter.com/", "/"));
-    }
-
-    @Test
-    public void should_Remove_Trailing_Separators_From_String_When_Multiple_Separators_Are_Passed_In() {
-	Assert.assertEquals("http://search.twitter.com",
-		Utils.dropTrailingSeparator("http://search.twitter.com///", "///"));
+	assertThat(Utils.dropTrailingSeparator("http://search.twitter.com/", "/"), is("http://search.twitter.com"));
     }
 
     @Test
