@@ -39,16 +39,15 @@ public class Heroku {
 
     private final String urlParameters;
     private final Map<String, String> requestProperties = new HashMap<String, String>();
-    private final String emailaddress;
-    private final String apiKey;
 
     protected APIReader fetchedResults;
+    private String apiKey;
+    private String emailaddress;
 
     public Heroku(String apiKey, String emailaddress) throws IOException {
 	this.apiKey = apiKey;
 	this.emailaddress = emailaddress;
-	String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
-	this.urlParameters = "Accept=application/vnd.heroku+json; version=3&Authorization=" + basic;
+	this.urlParameters = addCommonHeaders();
 	prepareParamObjectWithAuthenticationDetails();
     }
 
@@ -64,18 +63,44 @@ public class Heroku {
 	return authenticate(urlParameters);
     }
 
-    private void prepareParamObjectWithAuthenticationDetails() throws UnsupportedEncodingException {
-	requestProperties.put("Accept", "application/vnd.heroku+json; version=3");
-	String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
-	requestProperties.put("Authorization", basic);
-    }
-
     private String authenticate(String urlParameters) throws IOException, APIKeyNotAssignedException {
 	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "apps"));
 	uriBuilder.setApiKeyIsRequired(false);
 	uriBuilder.build();
 	APIReader apiReader = new APIReader(uriBuilder);
 	return apiReader.executePostUrl(urlParameters);
+    }
+
+    private String addCommonHeaders() {
+	return acceptHeader() + "&" + authorizationHeader();
+    }
+
+    private void prepareParamObjectWithAuthenticationDetails() {
+	requestProperties.put("Accept", acceptHeaderValue());
+	requestProperties.put("Authorization", authorizationHeaderValue());
+    }
+
+    private String acceptHeader() {
+	return "Accept=" + acceptHeaderValue();
+    }
+
+    private String authorizationHeader() {
+	return "Authorization=" + authorizationHeaderValue();
+    }
+
+    private String authorizationHeaderValue() {
+	try {
+	    return String.format("Basic %s", new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII"));
+	} catch (UnsupportedEncodingException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	    throw new IllegalArgumentException(
+		    "Could not encode authorization header value from email address & api key");
+	}
+    }
+
+    private String acceptHeaderValue() {
+	return "application/vnd.heroku+json; version=3";
     }
 
 }
