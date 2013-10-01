@@ -22,21 +22,18 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.util.UtilityFunctions.doesHaveSeparator;
-import static org.neomatrix369.apiworld.util.UtilityFunctions.dropTrailingSeparator;
+import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.exception.BaseURLNotAssignedException;
 
 /**
  * @author Mani Sarkar
  */
 public class UriBuilder {
 
-    private static final String COMMAND_SEPARATOR = "/";
     private static final String PARAM_SEPARATOR = "&";
     private static final String PARAM_START = "?";
 
@@ -44,7 +41,7 @@ public class UriBuilder {
     private static final String TWO_TOKENS = "%s%s";
     private static final String THREE_TOKENS = "%s%s%s";
 
-    private String baseURL;
+    private final String baseURL;
     private String apiKey;
     private String commandString;
     private String finalURL;
@@ -53,10 +50,13 @@ public class UriBuilder {
     private boolean apiKeyIsRequired = true;
 
     public UriBuilder(String baseURL) {
-	this.baseURL = baseURL;
+	if (baseURL == null || baseURL.trim().isEmpty()) {
+	    throw new IllegalArgumentException("base url has to be non empty string");
+	}
+	this.baseURL = baseURL.trim();
     }
 
-    public APIConnection build() throws BaseURLNotAssignedException, APIKeyNotAssignedException {
+    public APIConnection build() throws APIKeyNotAssignedException {
 	buildFinalURLWithCommandString();
 	buildFinalURLWithTheAPIKey();
 	buildFinalURLWithParametersToken();
@@ -103,26 +103,16 @@ public class UriBuilder {
 	}
     }
 
-    private void buildFinalURLWithCommandString() throws BaseURLNotAssignedException {
-	validateBaseURL();
-	baseURL = baseURL.trim();
+    private void buildFinalURLWithCommandString() {
 
-	this.finalURL = baseURL.trim();
+	this.finalURL = baseURL;
 	if ((commandString != null) && (!commandString.isEmpty())) {
-	    if (!doesHaveSeparator(this.finalURL, COMMAND_SEPARATOR)) {
-		this.finalURL = String.format(TWO_TOKENS, finalURL, COMMAND_SEPARATOR);
+	    if (!finalURL.endsWith("/")) {
+		this.finalURL = String.format(TWO_TOKENS, finalURL, "/");
 	    }
 
 	    this.finalURL = String.format(THREE_TOKENS, finalURL, commandString, paramStart);
 	}
-    }
-
-    private boolean validateBaseURL() throws BaseURLNotAssignedException {
-	if ((baseURL == null) || (baseURL.trim().isEmpty())) {
-	    throw new BaseURLNotAssignedException();
-	}
-
-	return true;
     }
 
     /**
@@ -151,7 +141,7 @@ public class UriBuilder {
 	return this;
     }
 
-    public void addAURLParameter(String key, String value) {
+    public void addUrlParameter(String key, String value) {
 	this.urlParameters.put(key, value);
     }
 

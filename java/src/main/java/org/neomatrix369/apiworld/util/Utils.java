@@ -33,31 +33,30 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Util class UtilityFunctions.
+ * Util class Utils.
  * 
  * @author Mani Sarkar
  * 
  */
-public final class UtilityFunctions {
+public final class Utils {
 
-    private static final String GREATER_THAN = ">";
-    private static final String GREATER_THAN_AND_COMMA = ">,";
+    public static final String OPENING_BOX_BRACKET = "[";
+    public static final String CLOSING_BOX_BRACKET = "]";
+
     private static final String INVALID_TOKEN_WARNING = "Invalid token.";
     private static final String UTF_8 = "UTF-8";
     private static final String THE_TOKEN_CANNOT_BE_NULL_MSG = "The token cannot be null.";
-    private static final Logger LOGGER = LoggerFactory.getLogger(UtilityFunctions.class);
+    private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 
     /**
      * Hide Utility Class Constructor - Utility classes should not have a public
      * or default constructor.
      */
-    private UtilityFunctions() {
+    private Utils() {
 
     }
 
@@ -75,26 +74,13 @@ public final class UtilityFunctions {
     }
 
     /**
-     * Checks if url has a separator using apache commons lang.
-     * 
-     * @param urlString
-     *            String
-     * @param commandUrlSeparator
-     *            String
-     * @return boolean
-     */
-    public static boolean doesHaveSeparator(String urlString, String commandUrlSeparator) {
-	return StringUtils.endsWith(urlString, commandUrlSeparator);
-    }
-
-    /**
      * Converts the token to the application/x-www-form-urlencoded MIME format.
      * 
      * @param value
      *            String
      * @return String
      */
-    public static String encodeToken(String token) {
+    public static String urlEncode(String token) {
 
 	if (token == null) {
 	    throw new IllegalArgumentException(THE_TOKEN_CANNOT_BE_NULL_MSG);
@@ -105,7 +91,7 @@ public final class UtilityFunctions {
 	try {
 	    encodedToken = URLEncoder.encode(token, UTF_8);
 	} catch (UnsupportedEncodingException uee) {
-	    LOGGER.warn(INVALID_TOKEN_WARNING);
+	    logger.warn(INVALID_TOKEN_WARNING);
 	}
 
 	return encodedToken;
@@ -120,19 +106,24 @@ public final class UtilityFunctions {
 	}
     }
 
-    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) throws IOException {
+    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) {
 	Properties prop = new Properties();
 	try {
 	    prop.load(new FileReader(new File(propertyFilename)));
 	    return prop.getProperty(propertyName);
 	} catch (FileNotFoundException e) {
-	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
-	    LOGGER.error(e.getMessage());
+	    try {
+		logger.info("Current path: " + new File(".").getCanonicalPath());
+	    } catch (IOException e1) {
+
+	    }
+	    logger.error(e.getMessage());
+	    throw new IllegalStateException("Did not find property file.");
 
 	} catch (IOException e) {
-	    LOGGER.error(e.getMessage());
+	    logger.error(e.getMessage());
+	    throw new IllegalStateException("IO Exception occurred");
 	}
-	return "";
     }
 
     public static String readPropertyFrom(String propertyFilename, String propertyName) throws IOException {
@@ -141,26 +132,15 @@ public final class UtilityFunctions {
 	    prop.load(new FileReader(new File(propertyFilename)));
 	    return prop.getProperty(propertyName);
 	} catch (IOException exception) {
-	    LOGGER.info("Current path: " + new File(".").getCanonicalPath());
-	    LOGGER.error(exception.getMessage());
+	    logger.info("Current path: " + new File(".").getCanonicalPath());
+	    logger.error(exception.getMessage());
 	    throw exception;
 	}
     }
 
-    public static Document stringToXML(String string) {
-	String localString = string.substring(1, string.length() - 1);
-	localString = localString.replaceAll(GREATER_THAN_AND_COMMA, GREATER_THAN);
-	return Jsoup.parse(localString);
-    }
-
-    public static Boolean isAValidXML(String result) {
-	stringToXML(result);
-	return true;
-    }
-
-    public static String dropStartAndEndDelimeters(String inputString, String startDelimiter, String endDelimiter) {
+    public static String dropStartAndEndDelimeters(String inputString) {
 	String result = inputString;
-	if (result.startsWith(startDelimiter)) {
+	if (result.startsWith(OPENING_BOX_BRACKET)) {
 	    if (result.length() == 1) {
 		result = "";
 	    } else {
@@ -168,7 +148,7 @@ public final class UtilityFunctions {
 	    }
 	}
 
-	if (result.endsWith(endDelimiter)) {
+	if (result.endsWith(CLOSING_BOX_BRACKET)) {
 	    result = result.substring(0, result.length() - 1);
 	}
 

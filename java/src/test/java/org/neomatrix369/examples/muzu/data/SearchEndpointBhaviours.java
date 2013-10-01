@@ -20,39 +20,48 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.flickr;
+package org.neomatrix369.examples.muzu.data;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.io.IOException;
+import static org.hamcrest.Matchers.startsWith;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.neomatrix369.apiworld.ResultType;
-import org.neomatrix369.apiworld.util.Utils;
+import org.neomatrix369.examples.muzu.VideoBaseFixture;
+import org.neomatrix369.examples.muzutv.BaseMuzu;
+import org.neomatrix369.examples.muzutv.data.Format;
+import org.neomatrix369.examples.muzutv.data.Search;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class FlickrBehaviours {
+public class SearchEndpointBhaviours extends VideoBaseFixture {
 
-    private String apiKey;
+    @SuppressWarnings("unused")
+    private static final Logger logger = LoggerFactory.getLogger(SearchEndpointBhaviours.class);
 
-    @Before
-    public void setup() throws IOException {
-	apiKey = Utils.readPropertyFrom("resources/flickr.properties", "APIKey");
+    private Search aSearchForArtist() {
+	return new Search().withSearchTerm("beyonce").withLength(1);
     }
 
-    @Test
-    public void recentPhotos() throws IOException {
-	RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
-	String response = recentPhotos.executeUrl();
-	assertThat(recentPhotos.isSuccessfulResponse(response), is(true));
+    @Before
+    public void setup() {
+	super.setup();
     }
 
     @Test
     public void search() throws Exception {
-	Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
+
+	String response = aSearchForArtist().buildUrl().executeUrl();
+	assertResponseIsValidRss(response);
+    }
+
+    @Test
+    public void search_with_format_xml_should_return_xml() throws Exception {
+
+	BaseMuzu search = aSearchForArtist().withFormat(Format.XML).buildUrl();
+
 	String response = search.executeUrl();
-	assertThat(search.isSuccessfulResponse(response), is(true));
+	assertThat(response, startsWith(xmlResponseBeginning));
     }
 
 }

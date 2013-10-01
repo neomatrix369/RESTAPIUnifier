@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
 
 public class TwitterSearchTest {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(TwitterSearchTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(TwitterSearchTest.class);
     
 	private static final String SEARCH_TERM_WITH_SPACES = "  ";
 	private static final String SEARCH_TERMS_FAILURE_ERROR_MESSAGE = "Search with two terms fails.";
@@ -46,7 +46,7 @@ public class TwitterSearchTest {
 		String noSearchTermsSupplied = EMPTY_SEARCH;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(noSearchTermsSupplied);
-		LOGGER.info(searchResult);
+		logger.info(searchResult);
 		assertTrue(searchResult.isEmpty());
 	}
 
@@ -56,7 +56,7 @@ public class TwitterSearchTest {
 		String noSearchTermsSupplied = SEARCH_TERM_WITH_SPACES;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(noSearchTermsSupplied);
-		LOGGER.info(searchResult);
+		logger.info(searchResult);
 		assertTrue(searchResult.isEmpty());
 	}
 	
@@ -65,7 +65,7 @@ public class TwitterSearchTest {
 		String oneSearchTermSupplied = ONE_TERM;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(oneSearchTermSupplied);
-		LOGGER.info(searchResult);
+		logger.info(searchResult);
 		assertFalse(searchResult.isEmpty());
 	}
 	
@@ -74,7 +74,7 @@ public class TwitterSearchTest {
 		String anySearchTermsSupplied = TWO_TERMS;
 		TwitterInterfaceEngine searchTwitter = new TwitterInterfaceEngine();
 		String searchResult = searchTwitter.searchTweets(anySearchTermsSupplied);
-		LOGGER.info(searchResult);
+		logger.info(searchResult);
 		assertEquals(SEARCH_TERMS_FAILURE_ERROR_MESSAGE, false, searchResult.isEmpty());
 	}
 }

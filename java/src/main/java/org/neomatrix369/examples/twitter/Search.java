@@ -22,13 +22,11 @@
  */
 package org.neomatrix369.examples.twitter;
 
+import java.io.IOException;
+
 import org.neomatrix369.apiworld.ResultType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Search {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Search.class);
 
     private Search() {
 	// Hide utility class constructor
@@ -41,25 +39,25 @@ public final class Search {
      * 
      * API provider URL: https://dev.twitter.com/docs/api/1.1
      * 
-     * Required settings file to run this example:
-     * resources/twitter_settings.properties
+     * Required settings file to run this example: resources/twitter.properties
      * 
      * containing APIKey=[xxxxx]
      * 
      * [xxxxx] = is APIKey needed to get authentication from twitter.com to be
      * able to make any API calls.
      * 
+     * @throws IOException
+     * 
      */
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 	TwitterSearch twitterSearch = new TwitterSearch("", "?", ResultType.JSON.toString(), "hello");
-	LOGGER.info(twitterSearch.getFetchedResults());
     }
 }
 
 class TwitterSearch extends BaseTwitter {
 
-    TwitterSearch(String apiKey, String paramStart, String... params) {
+    TwitterSearch(String apiKey, String paramStart, String... params) throws IOException {
 	String apiCommand = String.format("search.%s", params[0]);
 	String[] arrayURLParamCodes = { null, "q" };
 
