@@ -38,17 +38,18 @@ Developers, OpenSource committers, API vendors, API Service Providers, etc... wi
 
 IDE
 ---
-For the java version of the libary, when loading the project into IDEs like Eclipse or IntelliJ please use the pom.xml file within the java sub-folder and not the pom.xml in the root folder.
+ For the java version of the libary, when loading the project into IDEs like Eclipse or IntelliJ please use the pom.xml file within the java sub-folder and not the pom.xml in the root folder.
 
 Examples implemented using RESTAPIUnifier
 -----------------------------------------
 <b>Java</b>
-- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/muzu_tv_api
-- Flickr API (search and getRecent) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/flickr_api
-- Twitter API (search) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/twitter_api
-- Import.IO API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/importio_api (underway)
-- YQL! API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/yql_api
-- Heroku API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/heroku_api
+- MuzuTV API (search, browse, etc...) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/muzutv
+- Flickr API (search and getRecent) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/flickr
+- Twitter API (search) - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/twitter
+- Import.IO API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/importio (underway)
+- YQL! API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/yql
+- Heroku API - https://github.com/neomatrix369/RESTAPIUnifier/tree/master/java/src/main/java/org/neomatrix369/examples/heroku
+- 
 
 <b>C#</b>
 - We have a C# implementation of the Java library which has been written based on the test cases in the Java project, without referring to the model code. 
@@ -80,7 +81,8 @@ You can...
 - ...combine it with other interesting ideas, libraries, etc...
 - ...do the above and submit pull requests.
 - ...create new examples of existing APIs which can be accessed through the library.
-- ...please follow the principles behind the Java project
+- ...as far as file formats are concerned, again follow the existing format illustrated by the code-base of the respective languages i.e. for Java - the existing code-base is a good example.
+- ...please follow the principles illustrated by the Java project
 - ...please use Test-Driven Development (TDD) to spawn out your solutions, ideal a test for each feature / functionality. Behaviour-Driven Development (BDD) based solutions are also welcome.
 
 Getting started
