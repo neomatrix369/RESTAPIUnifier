@@ -28,3 +28,7 @@ bin/
 App.config
 *.sln
 *.json
+
+# IntelliJ IDEA files
+*.iml
+.idea/
