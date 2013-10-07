@@ -36,6 +36,10 @@ To simplify the use and maintainence of dependencies on external or internal API
 
 Developers, OpenSource committers, API vendors, API Service Providers, etc... will benefit from such a library.
 
+IDE
+---
+For the java version of the libary, when loading the project into IDEs like Eclipse or IntelliJ please use the pom.xml file within the java sub-folder and not the pom.xml in the root folder.
+
 Examples implemented using RESTAPIUnifier
 -----------------------------------------
 <b>Java</b>
