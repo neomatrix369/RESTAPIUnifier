@@ -34,14 +34,14 @@ class TwitterAuthenticationCommand {
     private APIConnection connection;
 
     public TwitterAuthenticationCommand(String commandString, String user) {
-
     }
 
     public TwitterAuthenticationCommand(APIConnection connection, String user) {
-	this.connection = connection;
+        this.connection = connection;
     }
 
     public Object execute() throws APIKeyNotAssignedException {
-	return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
+        return new GenericAPICommandBuilder(connection, "authenticate").withParam("user", "alex").build().execute();
     }
+
 }

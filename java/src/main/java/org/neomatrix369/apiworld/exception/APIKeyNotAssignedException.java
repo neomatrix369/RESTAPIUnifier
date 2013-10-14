@@ -24,18 +24,17 @@ package org.neomatrix369.apiworld.exception;
 
 /**
  * Custom exception class APIKeyNotAssignedException.
- * 
- * @author Mani Sarkar
  *
+ * @author Mani Sarkar
  */
 public class APIKeyNotAssignedException extends Exception {
 
     /**
-	 * Generated serialVersionUID.
-	 */
+     * Generated serialVersionUID.
+     */
     private static final long serialVersionUID = 1884454986177063492L;
 
     public APIKeyNotAssignedException() {
-        
     }
+
 }

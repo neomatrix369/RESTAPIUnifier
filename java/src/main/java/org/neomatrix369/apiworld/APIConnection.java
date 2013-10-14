@@ -23,15 +23,14 @@
 package org.neomatrix369.apiworld;
 
 public class APIConnection {
-    @SuppressWarnings("unused")
     private String finalURL = "";
 
     public APIConnection(String finalURL) {
-	this.finalURL = finalURL;
+        this.finalURL = finalURL;
     }
 
     public Object execute() {
-	// TODO Auto-generated method stub
-	return null;
+        return null;
     }
+
 }
