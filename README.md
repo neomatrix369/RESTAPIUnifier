@@ -65,8 +65,10 @@ Timeline
 * 23 April 2013: came across Import.IO (see below)
 * 24 April 2013: further improvements to library - refactoring, tests, tidying up, etc
 * 27 April 2013: more improvements, added examples in Java & inception of C# version at Yahoo! Hack Europe: London
-*    <i>9 May 2013: University student from Brazil is going to use the RestAPIUnifier for his thesis work (with help from the contributors and his professors).</i>
+* <i>9 May 2013: University student from Brazil is going to use the RestAPIUnifier for his thesis work (with help from the contributors and his professors).</i>
 * 20 July  2013: Heroku API implementation, OAuth - first steps in place. <b>Won Heroku "star prize" (1st of 5 winners) at Hacked.IO, O2 Indigo, London.</b>
+* 19-22 Sep '13: Socrates UK 2013 - major refactoring, design improvements with help from @Alex (@Mosaic Works), created more opportunities for further collaborations.
+
 
 Implementations based on the principles behind this idea
 --------------------------------------------------------
