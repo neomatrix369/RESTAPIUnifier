@@ -22,11 +22,13 @@
  */
 package org.neomatrix369.apiworld;
 
+import org.apache.commons.lang3.StringUtils;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static java.lang.String.format;
 import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
 
 /**
@@ -64,27 +66,14 @@ public class UriBuilder {
     }
 
     private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
-        if (!apiKeyIsRequired) {
-            return;
-        }
-
-        validateAPIKey();
-
-        if ((apiKey != null) && (!apiKey.isEmpty())) {
-            this.finalURL = String.format(TWO_TOKENS, finalURL, apiKey);
-        }
+        this.finalURL = format(TWO_TOKENS, finalURL, getValidatedAPIKey(apiKey));
     }
 
-    private boolean validateAPIKey() throws APIKeyNotAssignedException {
-        if (!apiKeyIsRequired) {
-            return true;
-        }
-
-        if ((apiKey == null) || (apiKey.trim().isEmpty())) {
+    private String getValidatedAPIKey(String apiKey) throws APIKeyNotAssignedException {
+        if (apiKeyIsRequired && StringUtils.isBlank(apiKey)) {
             throw new APIKeyNotAssignedException();
         }
-
-        return true;
+        return apiKey;
     }
 
     private void buildFinalURLWithParametersToken() {
@@ -92,14 +81,14 @@ public class UriBuilder {
             String urlParameterTokens = "";
             for (Map.Entry<String, String> eachKeyValuePair : urlParameters.entrySet()) {
                 if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
-                    String eachToken = String.format(THREE_TOKENS, eachKeyValuePair.getKey(), VALUE_SEPARATOR,
+                    String eachToken = format(THREE_TOKENS, eachKeyValuePair.getKey(), VALUE_SEPARATOR,
                             eachKeyValuePair.getValue());
-                    urlParameterTokens = String.format(THREE_TOKENS, urlParameterTokens, eachToken, PARAM_SEPARATOR);
+                    urlParameterTokens = format(THREE_TOKENS, urlParameterTokens, eachToken, PARAM_SEPARATOR);
                 }
             }
 
             urlParameterTokens = dropTrailingSeparator(urlParameterTokens, PARAM_SEPARATOR);
-            this.finalURL = String.format(THREE_TOKENS, finalURL, PARAM_SEPARATOR, urlParameterTokens);
+            this.finalURL = format(THREE_TOKENS, finalURL, PARAM_SEPARATOR, urlParameterTokens);
         }
     }
 
@@ -108,10 +97,10 @@ public class UriBuilder {
         this.finalURL = baseURL;
         if ((commandString != null) && (!commandString.isEmpty())) {
             if (!finalURL.endsWith("/")) {
-                this.finalURL = String.format(TWO_TOKENS, finalURL, "/");
+                this.finalURL = format(TWO_TOKENS, finalURL, "/");
             }
 
-            this.finalURL = String.format(THREE_TOKENS, finalURL, commandString, paramStart);
+            this.finalURL = format(THREE_TOKENS, finalURL, commandString, paramStart);
         }
     }
 
@@ -135,7 +124,7 @@ public class UriBuilder {
     }
 
     public UriBuilder setAPIKey(String apiKey, String apiKeyValue) {
-        this.apiKey = String.format(THREE_TOKENS, apiKey, VALUE_SEPARATOR, apiKeyValue);
+        this.apiKey = format(THREE_TOKENS, apiKey, VALUE_SEPARATOR, apiKeyValue);
         apiKeyIsRequired = true;
         return this;
     }
