@@ -22,12 +22,14 @@
  */
 package org.neomatrix369.apiworld;
 
-import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
+import org.apache.commons.lang3.StringUtils;
+import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
+import static java.lang.String.format;
+import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
 
 /**
  * @author Mani Sarkar
@@ -50,126 +52,110 @@ public class UriBuilder {
     private boolean apiKeyIsRequired = true;
 
     public UriBuilder(String baseURL) {
-	if (baseURL == null || baseURL.trim().isEmpty()) {
-	    throw new IllegalArgumentException("base url has to be non empty string");
-	}
-	this.baseURL = baseURL.trim();
+        if (baseURL == null || baseURL.trim().isEmpty()) {
+            throw new IllegalArgumentException("base url has to be non empty string");
+        }
+        this.baseURL = baseURL.trim();
     }
 
     public APIConnection build() throws APIKeyNotAssignedException {
-	buildFinalURLWithCommandString();
-	buildFinalURLWithTheAPIKey();
-	buildFinalURLWithParametersToken();
-	return new APIConnection(finalURL);
+        buildFinalURLWithCommandString();
+        buildFinalURLWithTheAPIKey();
+        buildFinalURLWithParametersToken();
+        return new APIConnection(finalURL);
     }
 
     private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
-	if (!apiKeyIsRequired) {
-	    return;
-	}
-
-	validateAPIKey();
-
-	if ((apiKey != null) && (!apiKey.isEmpty())) {
-	    this.finalURL = String.format(TWO_TOKENS, finalURL, apiKey);
-	}
+        this.finalURL = format(TWO_TOKENS, finalURL, getValidatedAPIKey(apiKey));
     }
 
-    private boolean validateAPIKey() throws APIKeyNotAssignedException {
-	if (!apiKeyIsRequired) {
-	    return true;
-	}
-
-	if ((apiKey == null) || (apiKey.trim().isEmpty())) {
-	    throw new APIKeyNotAssignedException();
-	}
-
-	return true;
+    private String getValidatedAPIKey(String apiKey) throws APIKeyNotAssignedException {
+        if (apiKeyIsRequired && StringUtils.isBlank(apiKey)) {
+            throw new APIKeyNotAssignedException();
+        }
+        return apiKey;
     }
 
     private void buildFinalURLWithParametersToken() {
-	if (!urlParameters.isEmpty()) {
-	    String urlParameterTokens = "";
-	    for (Map.Entry<String, String> eachKeyValuePair : urlParameters.entrySet()) {
-		if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
-		    String eachToken = String.format(THREE_TOKENS, eachKeyValuePair.getKey(), VALUE_SEPARATOR,
-			    eachKeyValuePair.getValue());
-		    urlParameterTokens = String.format(THREE_TOKENS, urlParameterTokens, eachToken, PARAM_SEPARATOR);
-		}
-	    }
+        if (!urlParameters.isEmpty()) {
+            String urlParameterTokens = "";
+            for (Map.Entry<String, String> eachKeyValuePair : urlParameters.entrySet()) {
+                if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
+                    String eachToken = format(THREE_TOKENS, eachKeyValuePair.getKey(), VALUE_SEPARATOR,
+                            eachKeyValuePair.getValue());
+                    urlParameterTokens = format(THREE_TOKENS, urlParameterTokens, eachToken, PARAM_SEPARATOR);
+                }
+            }
 
-	    urlParameterTokens = dropTrailingSeparator(urlParameterTokens, PARAM_SEPARATOR);
-	    this.finalURL = String.format(THREE_TOKENS, finalURL, PARAM_SEPARATOR, urlParameterTokens);
-	}
+            urlParameterTokens = dropTrailingSeparator(urlParameterTokens, PARAM_SEPARATOR);
+            this.finalURL = format(THREE_TOKENS, finalURL, PARAM_SEPARATOR, urlParameterTokens);
+        }
     }
 
     private void buildFinalURLWithCommandString() {
 
-	this.finalURL = baseURL;
-	if ((commandString != null) && (!commandString.isEmpty())) {
-	    if (!finalURL.endsWith("/")) {
-		this.finalURL = String.format(TWO_TOKENS, finalURL, "/");
-	    }
+        this.finalURL = baseURL;
+        if ((commandString != null) && (!commandString.isEmpty())) {
+            if (!finalURL.endsWith("/")) {
+                this.finalURL = format(TWO_TOKENS, finalURL, "/");
+            }
 
-	    this.finalURL = String.format(THREE_TOKENS, finalURL, commandString, paramStart);
-	}
+            this.finalURL = format(THREE_TOKENS, finalURL, commandString, paramStart);
+        }
     }
 
     /**
      * Gets the finalURL attribute.
-     * 
+     *
      * @return String
      */
     public String getFinalURL() {
-	return finalURL;
+        return finalURL;
     }
 
     /**
      * Sets the commandString attribute.
-     * 
-     * @param commandString
-     *            String
+     *
+     * @param commandString String
      */
     public UriBuilder setCommand(String commandString) {
-	this.commandString = commandString;
-	return this;
+        this.commandString = commandString;
+        return this;
     }
 
     public UriBuilder setAPIKey(String apiKey, String apiKeyValue) {
-	this.apiKey = String.format(THREE_TOKENS, apiKey, VALUE_SEPARATOR, apiKeyValue);
-	apiKeyIsRequired = true;
-	return this;
+        this.apiKey = format(THREE_TOKENS, apiKey, VALUE_SEPARATOR, apiKeyValue);
+        apiKeyIsRequired = true;
+        return this;
     }
 
     public void addUrlParameter(String key, String value) {
-	this.urlParameters.put(key, value);
+        this.urlParameters.put(key, value);
     }
 
     /**
      * Sets the paramStart attribute.
-     * 
-     * @param paramStart
-     *            String
+     *
+     * @param paramStart String
      */
     public UriBuilder setParamStart(String paramStart) {
-	this.paramStart = paramStart;
-	return this;
+        this.paramStart = paramStart;
+        return this;
     }
 
     /**
      * Sets the apiKeyIsRequired attribute.
-     * 
-     * @param apiKeyIsRequired
-     *            boolean
+     *
+     * @param apiKeyIsRequired boolean
      */
     public UriBuilder setApiKeyIsRequired(boolean apiKeyIsRequired) {
-	this.apiKeyIsRequired = apiKeyIsRequired;
-	return this;
+        this.apiKeyIsRequired = apiKeyIsRequired;
+        return this;
     }
 
     public UriBuilder setNoAPIKeyRequired() {
-	this.apiKeyIsRequired = false;
-	return this;
+        this.apiKeyIsRequired = false;
+        return this;
     }
 
 }
