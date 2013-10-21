@@ -37,17 +37,24 @@ public class UriBuilderTest {
     private static final String MUZU_URL_WITH_BROWSE_AND_MUZU_ID = "http://www.muzu.tv/api/browse?muzuid=ANY_KEY";
     private static final String API_BROWSE_COMMAND = "browse";
 
-    private String baseURL;
     private UriBuilder uriBuilder;
 
     @Before
     public void setup() {
+<<<<<<< HEAD
         baseURL = "http://www.muzu.tv/api/";
+=======
+        String baseURL = "http://www.muzu.tv/api/";
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         uriBuilder = new UriBuilder(baseURL);
     }
 
     @Test
+<<<<<<< HEAD
     public void uriBuilder_should_assemble_non_empty_connection_uri() throws Exception {
+=======
+    public void should_Assemble_Non_Empty_Connection_Uri() throws Exception {
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         APIConnection connection = new UriBuilder("http://www.muzu.tv/api/").setNoAPIKeyRequired().build();
         assertNotNull(connection);
     }
@@ -103,10 +110,16 @@ public class UriBuilderTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void should_return_URL_with_API_key_and_skip_params_with_null_keys() throws APIKeyNotAssignedException {
         uriBuilder.setCommand(API_BROWSE_COMMAND);
         uriBuilder.setAPIKey(API_KEY, MUZUID_VALUE);
 
+=======
+    public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Keys() throws APIKeyNotAssignedException {
+        uriBuilder.setCommand(API_BROWSE_COMMAND);
+        uriBuilder.setAPIKey(API_KEY, MUZUID_VALUE);
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         uriBuilder.addUrlParameter(null, "value1");
         uriBuilder.addUrlParameter("key2", "value2");
         uriBuilder.addUrlParameter("key3", "value3");
@@ -120,7 +133,10 @@ public class UriBuilderTest {
     public void should_Return_URL_With_API_Key_And_Skip_Params_With_Null_Values() throws APIKeyNotAssignedException {
         uriBuilder.setCommand(API_BROWSE_COMMAND);
         uriBuilder.setAPIKey(API_KEY, MUZUID_VALUE);
+<<<<<<< HEAD
 
+=======
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         uriBuilder.addUrlParameter("key1", "value1");
         uriBuilder.addUrlParameter("key2", null);
         uriBuilder.addUrlParameter("key3", "value3");
@@ -131,7 +147,11 @@ public class UriBuilderTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void should_return_URL_with_encoded_param() throws APIKeyNotAssignedException {
+=======
+    public void should_Return_URL_With_Encoded_Param() throws APIKeyNotAssignedException {
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         uriBuilder.setCommand(API_BROWSE_COMMAND);
         uriBuilder.setAPIKey(API_KEY, MUZUID_VALUE);
         uriBuilder.addUrlParameter("key", Utils.urlEncode("string with space"));

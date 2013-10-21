@@ -22,11 +22,19 @@
  */
 package org.neomatrix369.apiworld;
 
+<<<<<<< HEAD
+=======
+import org.apache.commons.lang3.StringUtils;
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import static java.lang.String.format;
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
 import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
 
 /**
@@ -50,7 +58,11 @@ public class UriBuilder {
     private boolean apiKeyIsRequired = true;
 
     public UriBuilder(String baseURL) {
+<<<<<<< HEAD
         if (baseURL == null || baseURL.trim().isEmpty()) { //FIXME use StringUtils.isEmpty instead
+=======
+        if (baseURL == null || baseURL.trim().isEmpty()) {
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
             throw new IllegalArgumentException("base url has to be non empty string");
         }
         this.baseURL = baseURL.trim();
@@ -64,6 +76,7 @@ public class UriBuilder {
     }
 
     private void buildFinalURLWithTheAPIKey() throws APIKeyNotAssignedException {
+<<<<<<< HEAD
         //FIXME refactor this, only do the assign if validAPIKey, not need for two ifs and call in the middle which does the same ifs
         if (!apiKeyIsRequired) {
             return;
@@ -86,6 +99,16 @@ public class UriBuilder {
         }
 
         return true;
+=======
+        this.finalURL = format(TWO_TOKENS, finalURL, getValidatedAPIKey(apiKey));
+    }
+
+    private String getValidatedAPIKey(String apiKey) throws APIKeyNotAssignedException {
+        if (apiKeyIsRequired && StringUtils.isBlank(apiKey)) {
+            throw new APIKeyNotAssignedException();
+        }
+        return apiKey;
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
     }
 
     private void buildFinalURLWithParametersToken() {
@@ -93,14 +116,24 @@ public class UriBuilder {
             String urlParameterTokens = "";
             for (Map.Entry<String, String> eachKeyValuePair : urlParameters.entrySet()) {
                 if (eachKeyValuePair.getKey() != null && eachKeyValuePair.getValue() != null) {
+<<<<<<< HEAD
                     String eachToken = String.format(THREE_TOKENS, eachKeyValuePair.getKey(), VALUE_SEPARATOR,
                             eachKeyValuePair.getValue());
                     urlParameterTokens = String.format(THREE_TOKENS, urlParameterTokens, eachToken, PARAM_SEPARATOR);
+=======
+                    String eachToken = format(THREE_TOKENS, eachKeyValuePair.getKey(), VALUE_SEPARATOR,
+                            eachKeyValuePair.getValue());
+                    urlParameterTokens = format(THREE_TOKENS, urlParameterTokens, eachToken, PARAM_SEPARATOR);
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
                 }
             }
 
             urlParameterTokens = dropTrailingSeparator(urlParameterTokens, PARAM_SEPARATOR);
+<<<<<<< HEAD
             this.finalURL = String.format(THREE_TOKENS, finalURL, PARAM_SEPARATOR, urlParameterTokens);
+=======
+            this.finalURL = format(THREE_TOKENS, finalURL, PARAM_SEPARATOR, urlParameterTokens);
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         }
     }
 
@@ -109,10 +142,17 @@ public class UriBuilder {
         this.finalURL = baseURL;
         if ((commandString != null) && (!commandString.isEmpty())) {
             if (!finalURL.endsWith("/")) {
+<<<<<<< HEAD
                 this.finalURL = String.format(TWO_TOKENS, finalURL, "/");
             }
 
             this.finalURL = String.format(THREE_TOKENS, finalURL, commandString, paramStart);
+=======
+                this.finalURL = format(TWO_TOKENS, finalURL, "/");
+            }
+
+            this.finalURL = format(THREE_TOKENS, finalURL, commandString, paramStart);
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         }
     }
 
@@ -136,7 +176,11 @@ public class UriBuilder {
     }
 
     public UriBuilder setAPIKey(String apiKey, String apiKeyValue) {
+<<<<<<< HEAD
         this.apiKey = String.format(THREE_TOKENS, apiKey, VALUE_SEPARATOR, apiKeyValue);
+=======
+        this.apiKey = format(THREE_TOKENS, apiKey, VALUE_SEPARATOR, apiKeyValue);
+>>>>>>> e11ddbb5e7d08f3b10d097eacf36a51b061b16e1
         apiKeyIsRequired = true;
         return this;
     }
