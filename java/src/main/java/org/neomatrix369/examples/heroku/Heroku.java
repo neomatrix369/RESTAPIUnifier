@@ -22,16 +22,15 @@
  */
 package org.neomatrix369.examples.heroku;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.sun.jersey.core.util.Base64;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 
-import com.sun.jersey.core.util.Base64;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Heroku {
 
@@ -40,67 +39,66 @@ public class Heroku {
     private final String urlParameters;
     private final Map<String, String> requestProperties = new HashMap<String, String>();
 
-    protected APIReader fetchedResults;
+    protected APIReader fetchedResults;//FIXME this is not used, do we want to keep it?
     private String apiKey;
     private String emailaddress;
 
     public Heroku(String apiKey, String emailaddress) throws IOException {
-	this.apiKey = apiKey;
-	this.emailaddress = emailaddress;
-	this.urlParameters = addCommonHeaders();
-	prepareParamObjectWithAuthenticationDetails();
+        this.apiKey = apiKey;
+        this.emailaddress = emailaddress;
+        this.urlParameters = addCommonHeaders();
+        prepareParamObjectWithAuthenticationDetails();
     }
 
     public String invokeAccount() throws APIKeyNotAssignedException, IOException {
-	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "account"));
-	uriBuilder.setApiKeyIsRequired(false);
-	uriBuilder.build();
-	APIReader apiReader = new APIReader(uriBuilder);
-	return apiReader.executeGetUrl(requestProperties);
+        UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "account"));
+        uriBuilder.setApiKeyIsRequired(false);
+        uriBuilder.build();
+        APIReader apiReader = new APIReader(uriBuilder);
+        return apiReader.executeGetUrl(requestProperties);
     }
 
     public String authenticate() throws IOException, APIKeyNotAssignedException {
-	return authenticate(urlParameters);
+        return authenticate(urlParameters);
     }
 
     private String authenticate(String urlParameters) throws IOException, APIKeyNotAssignedException {
-	UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "apps"));
-	uriBuilder.setApiKeyIsRequired(false);
-	uriBuilder.build();
-	APIReader apiReader = new APIReader(uriBuilder);
-	return apiReader.executePostUrl(urlParameters);
+        UriBuilder uriBuilder = new UriBuilder(String.format(baseURL, "apps"));
+        uriBuilder.setApiKeyIsRequired(false);
+        uriBuilder.build();
+        APIReader apiReader = new APIReader(uriBuilder);
+        return apiReader.executePostUrl(urlParameters);
     }
 
     private String addCommonHeaders() {
-	return acceptHeader() + "&" + authorizationHeader();
+        return acceptHeader() + "&" + authorizationHeader();
     }
 
     private void prepareParamObjectWithAuthenticationDetails() {
-	requestProperties.put("Accept", acceptHeaderValue());
-	requestProperties.put("Authorization", authorizationHeaderValue());
+        requestProperties.put("Accept", acceptHeaderValue());
+        requestProperties.put("Authorization", authorizationHeaderValue());
     }
 
     private String acceptHeader() {
-	return "Accept=" + acceptHeaderValue();
+        return "Accept=" + acceptHeaderValue();
     }
 
     private String authorizationHeader() {
-	return "Authorization=" + authorizationHeaderValue();
+        return "Authorization=" + authorizationHeaderValue();
     }
 
     private String authorizationHeaderValue() {
-	try {
-	    return String.format("Basic %s", new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII"));
-	} catch (UnsupportedEncodingException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	    throw new IllegalArgumentException(
-		    "Could not encode authorization header value from email address & api key");
-	}
+        try {
+            return String.format("Basic %s", new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException(
+                    "Could not encode authorization header value from email address & api key");
+        }
     }
 
     private String acceptHeaderValue() {
-	return "application/vnd.heroku+json; version=3";
+        return "application/vnd.heroku+json; version=3";
     }
 
 }

@@ -22,16 +22,7 @@
  */
 package org.neomatrix369.examples.heroku;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-
+import com.sun.jersey.core.util.Base64;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,7 +32,14 @@ import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.jersey.core.util.Base64;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.IOException;
+import java.io.StringReader;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /* ***** Heroku API *****
  * Developers Guides
@@ -72,42 +70,43 @@ public class HerokuBehaviours {
     private Heroku heroku;
 
     private boolean isSuccessfulAppCreationResponse(String response) {
-	logger.info("response: " + response);
-	JsonReader jsonReader = Json.createReader(new StringReader(response));
-	JsonObject json = jsonReader.readObject();
+        logger.info("response: " + response);
+        JsonReader jsonReader = Json.createReader(new StringReader(response));
+        JsonObject json = jsonReader.readObject();
 
-	return json.getJsonObject("owner").getString("email").equals(emailaddress);
+        return json.getJsonObject("owner").getString("email").equals(emailaddress);
     }
 
     @Before
     public void setup() throws IOException {
-	apiKey = Utils.readPropertyFrom(HEROKU_SETTINGS_LOCATION, "APIKey");
-	emailaddress = Utils.readPropertyFrom(HEROKU_SETTINGS_LOCATION, "emailaddress");
-	heroku = new Heroku(apiKey, emailaddress);
+        apiKey = Utils.readPropertyFrom(HEROKU_SETTINGS_LOCATION, "APIKey");
+        emailaddress = Utils.readPropertyFrom(HEROKU_SETTINGS_LOCATION, "emailaddress");
+        heroku = new Heroku(apiKey, emailaddress);
     }
 
     @Ignore
     @Test
     public void should_create_an_app_with_correct_email__requires_authentication() throws Exception {
 
-	String accept = "application/vnd.heroku+json; version=3";
-	String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
-	String request = "https://api.heroku.com/apps";
+        String accept = "application/vnd.heroku+json; version=3";
+        String basic = "Basic " + new String(Base64.encode(emailaddress + ":" + apiKey), "ASCII");
+        String request = "https://api.heroku.com/apps";
 
-	APIReader apiReader = new APIReader(request);
-	apiReader.setHeader("Accept", accept).setHeader("Authorization", basic);
+        APIReader apiReader = new APIReader(request);
+        apiReader.setHeader("Accept", accept).setHeader("Authorization", basic);
 
-	String response = apiReader.executePostUrl();
+        String response = apiReader.executePostUrl();
 
-	assertThat(isSuccessfulAppCreationResponse(response), is(true));
+        assertThat(isSuccessfulAppCreationResponse(response), is(true));
     }
 
     @Ignore
     @Test
     public void should_return_a_response_when_the_account_command_is_invoked() throws APIKeyNotAssignedException,
-	    IOException {
-	String actualResponse = heroku.invokeAccount();
-	assertThat("No response was returned from invoking the 'account' command from the Heroku server",
-		actualResponse.isEmpty(), is(false));
+            IOException {
+        String actualResponse = heroku.invokeAccount();
+        assertThat("No response was returned from invoking the 'account' command from the Heroku server",
+                actualResponse.isEmpty(), is(false));
     }
+
 }

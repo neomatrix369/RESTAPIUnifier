@@ -22,37 +22,32 @@
  */
 package org.neomatrix369.examples.discogs;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.io.StringReader;
+import org.junit.Test;
+import org.neomatrix369.apiworld.APIReader;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import java.io.StringReader;
 
-import org.junit.Test;
-import org.neomatrix369.apiworld.APIReader;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class DiscogsBehaviours {
 
-    // private static final Logger logger =
-    // LoggerFactory.getLogger(DiscogsBehaviours.class);
-
     @Test
     public void artist_endpoint_returns_some_json() throws Exception {
-	String request = "http://api.discogs.com/artists/45";
-	APIReader apiReader = new APIReader(request);
-	String response = apiReader.executeUrl();
-	assertThat(isJsonResult(response), is(true));
+        String request = "http://api.discogs.com/artists/45";
+        APIReader apiReader = new APIReader(request);
+        String response = apiReader.executeUrl();
+        assertThat(isJsonResult(response), is(true));
     }
 
     private boolean isJsonResult(String response) {
-	// logger.info(response);
-	JsonReader jsonReader = Json.createReader(new StringReader(response));
-	JsonObject json = jsonReader.readObject();
+        JsonReader jsonReader = Json.createReader(new StringReader(response));
+        JsonObject json = jsonReader.readObject();
 
-	return json.getString("realname").equals("Richard David James");
+        return json.getString("realname").equals("Richard David James");
     }
 
 }

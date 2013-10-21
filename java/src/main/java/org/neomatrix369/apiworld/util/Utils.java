@@ -22,25 +22,20 @@
  */
 package org.neomatrix369.apiworld.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Properties;
-
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.Properties;
+
 /**
  * Util class Utils.
- * 
+ *
  * @author Mani Sarkar
- * 
  */
 public final class Utils {
 
@@ -57,101 +52,98 @@ public final class Utils {
      * or default constructor.
      */
     private Utils() {
-
     }
 
     /**
      * Removes the trailing separator using apache commons lang.
-     * 
-     * @param urlParameterTokens
-     *            String
-     * @param paramSeparator
-     *            String
+     *
+     * @param urlParameterTokens String
+     * @param paramSeparator     String
      * @return String
      */
     public static String dropTrailingSeparator(String urlParameterTokens, String paramSeparator) {
-	return StringUtils.substringBeforeLast(urlParameterTokens, paramSeparator);
+        return StringUtils.substringBeforeLast(urlParameterTokens, paramSeparator);
     }
 
     /**
      * Converts the token to the application/x-www-form-urlencoded MIME format.
-     * 
-     * @param value
-     *            String
+     *
+     * @param token String
      * @return String
      */
     public static String urlEncode(String token) {
 
-	if (token == null) {
-	    throw new IllegalArgumentException(THE_TOKEN_CANNOT_BE_NULL_MSG);
-	}
+        if (token == null) {
+            throw new IllegalArgumentException(THE_TOKEN_CANNOT_BE_NULL_MSG);
+        }
 
-	String encodedToken = token;
+        String encodedToken = token;
 
-	try {
-	    encodedToken = URLEncoder.encode(token, UTF_8);
-	} catch (UnsupportedEncodingException uee) {
-	    logger.warn(INVALID_TOKEN_WARNING);
-	}
+        try {
+            encodedToken = URLEncoder.encode(token, UTF_8);
+        } catch (UnsupportedEncodingException uee) {
+            logger.warn(INVALID_TOKEN_WARNING);
+        }
 
-	return encodedToken;
+        return encodedToken;
     }
 
     public static boolean isAValidJSONText(String resultAsString) {
-	try {
-	    new JSONObject(resultAsString);
-	    return true;
-	} catch (JSONException ex) {
-	    return false;
-	}
+        try {
+            new JSONObject(resultAsString);
+            return true;
+        } catch (JSONException ex) {
+            return false;
+        }
     }
 
     public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) {
-	Properties prop = new Properties();
-	try {
-	    prop.load(new FileReader(new File(propertyFilename)));
-	    return prop.getProperty(propertyName);
-	} catch (FileNotFoundException e) {
-	    try {
-		logger.info("Current path: " + new File(".").getCanonicalPath());
-	    } catch (IOException e1) {
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileReader(new File(propertyFilename)));
+            return prop.getProperty(propertyName);
+        } catch (FileNotFoundException e) {
+            try {
+                logger.info("Current path: " + new File(".").getCanonicalPath());
+            } catch (IOException e1) {
 
-	    }
-	    logger.error(e.getMessage());
-	    throw new IllegalStateException("Did not find property file.");
+            }
+            logger.error(e.getMessage());
+            throw new IllegalStateException("Did not find property file.");
 
-	} catch (IOException e) {
-	    logger.error(e.getMessage());
-	    throw new IllegalStateException("IO Exception occurred");
-	}
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            throw new IllegalStateException("IO Exception occurred");
+        }
     }
 
     public static String readPropertyFrom(String propertyFilename, String propertyName) throws IOException {
-	Properties prop = new Properties();
-	try {
-	    prop.load(new FileReader(new File(propertyFilename)));
-	    return prop.getProperty(propertyName);
-	} catch (IOException exception) {
-	    logger.info("Current path: " + new File(".").getCanonicalPath());
-	    logger.error(exception.getMessage());
-	    throw exception;
-	}
+        Properties prop = new Properties();
+        try {
+            prop.load(new FileReader(new File(propertyFilename)));
+            return prop.getProperty(propertyName);
+        } catch (IOException exception) {
+            logger.info("Current path: " + new File(".").getCanonicalPath());
+            logger.error(exception.getMessage());
+            throw exception;
+        }
     }
 
     public static String dropStartAndEndDelimeters(String inputString) {
-	String result = inputString;
-	if (result.startsWith(OPENING_BOX_BRACKET)) {
-	    if (result.length() == 1) {
-		result = "";
-	    } else {
-		result = result.substring(1, result.length());
-	    }
-	}
+        String result = inputString;
+        if (result.startsWith(OPENING_BOX_BRACKET)) {
+            if (result.length() == 1) {
+                result = "";
+            } else {
+                result = result.substring(1, result.length());
+            }
+        }
 
-	if (result.endsWith(CLOSING_BOX_BRACKET)) {
-	    result = result.substring(0, result.length() - 1);
-	}
+        if (result.endsWith(CLOSING_BOX_BRACKET)) {
+            result = result.substring(0, result.length() - 1);
+        }
 
-	return result;
+        return result;
     }
+
 }
