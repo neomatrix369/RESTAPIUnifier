@@ -67,4 +67,14 @@ public class APIReaderTest {
         assertThat(response, is("response"));
     }
 
+    @Test
+    public void should_Return_Response_Without_Delimeters_To_Http_Get_Request() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("[[response]]"));
+        //When
+        String response = apiReader.executeUrl();
+        //Then
+        assertThat(response, is("response"));
+    }
+
 }
