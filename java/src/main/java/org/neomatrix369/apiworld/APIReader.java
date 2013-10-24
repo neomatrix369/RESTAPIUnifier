@@ -64,6 +64,10 @@ public class APIReader {
         constructUrl(url);
     }
 
+    public APIReader(URL url) {
+        this.url = url;
+    }
+
     private void constructUrl(String url) {
         try {
             this.url = new URL(url);
