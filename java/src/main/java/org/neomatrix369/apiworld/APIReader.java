@@ -162,7 +162,7 @@ public class APIReader {
     private String getFetchedResults() {
         String result = lastHttpResult.toString();
         while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
-            result = Utils.dropStartAndEndDelimeters(result);
+            result = Utils.dropStartAndEndDelimiters(result);
         }
         return result;
     }
