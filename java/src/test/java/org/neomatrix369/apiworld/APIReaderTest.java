@@ -130,4 +130,24 @@ public class APIReaderTest {
         verify(mockConnection).setUseCaches(false);
     }
 
+    @Test
+    public void should_Return_Response_To_Http_Post_Request() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        //When
+        String response = apiReader.executePostUrl();
+        //Then
+        assertThat(response, is("response"));
+    }
+
+    @Test
+    public void should_Return_Response_Without_Delimiters_To_Http_Post_Request() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("[[response]]"));
+        //When
+        String response = apiReader.executePostUrl();
+        //Then
+        assertThat(response, is("response"));
+    }
+
 }
