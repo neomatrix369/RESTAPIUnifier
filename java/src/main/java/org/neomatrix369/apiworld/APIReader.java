@@ -144,6 +144,7 @@ public class APIReader {
 
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
             fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
+            urlConnection.disconnect();
         } catch (IOException ioe) {
             showMessageDueToIOException(url.toString(), ioe);
             throw ioe;

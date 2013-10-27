@@ -104,6 +104,16 @@ public class APIReaderTest {
         verify(mockConnection).setRequestProperty(propertyKey2, propertyValue2);
     }
 
+    @Test
+    public void should_Disconnect_When_Http_Get_Request_Response_Is_Back() throws IOException {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream(""));
+        //When
+        apiReader.executeUrl();
+        //Then
+        verify(mockConnection).disconnect();
+    }
+
     @Test(expected = IOException.class)
     public void should_Throw_Exception() throws Exception {
         //Given
