@@ -108,4 +108,14 @@ public class APIReaderTest {
         verify(mockConnection).setRequestProperty(propertyKey2, propertyValue2);
     }
 
+    @Test(expected = IOException.class)
+    public void should_Throw_Exception() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenThrow(IOException.class);
+        //When
+        apiReader.executeGetUrl(new HashMap<String, String>());
+        //Then
+        //Exception should be thrown
+    }
+
 }
