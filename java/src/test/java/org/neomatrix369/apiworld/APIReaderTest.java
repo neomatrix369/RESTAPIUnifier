@@ -36,6 +36,7 @@ import java.net.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,6 +56,16 @@ public class APIReaderTest {
     public void setUp() throws MalformedURLException {
         url = new URL("http://restapiunifier.com", "restapiunifier.com", -1, "", urlStreamHandler);
         apiReader = new APIReader(url);
+    }
+
+    @Test
+    public void should_Set_Get_Request_Method() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        //When
+        apiReader.executeUrl();
+        //Then
+        verify(mockConnection).setRequestMethod("GET");
     }
 
     @Test
