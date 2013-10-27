@@ -24,10 +24,8 @@ package org.neomatrix369.apiworld;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
@@ -37,7 +35,6 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -45,7 +42,6 @@ import static org.mockito.Mockito.when;
 public class APIReaderTest {
 
     private APIReader apiReader;
-    private URL url;
     @Mock private HttpURLConnection mockConnection;
     private URLStreamHandler urlStreamHandler = new URLStreamHandler() {
         @Override
@@ -56,7 +52,7 @@ public class APIReaderTest {
 
     @Before
     public void setUp() throws MalformedURLException {
-        url = new URL("http://restapiunifier.com", "restapiunifier.com", -1, "", urlStreamHandler);
+        URL url = new URL("http://restapiunifier.com", "restapiunifier.com", -1, "", urlStreamHandler);
         apiReader = new APIReader(url);
     }
 
@@ -116,6 +112,22 @@ public class APIReaderTest {
         apiReader.executeGetUrl(new HashMap<String, String>());
         //Then
         //Exception should be thrown
+    }
+
+    @Test
+    public void should_Send_A_Post_Request_With_Appropriate_Options_And_Content_Type_And_Charset() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        //When
+        apiReader.executePostUrl();
+        //Then
+        verify(mockConnection).setDoOutput(true);
+        verify(mockConnection).setDoInput(true);
+        verify(mockConnection).setInstanceFollowRedirects(false);
+        verify(mockConnection).setRequestMethod("POST");
+        verify(mockConnection).setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        verify(mockConnection).setRequestProperty("charset", "utf-8");
+        verify(mockConnection).setUseCaches(false);
     }
 
 }
