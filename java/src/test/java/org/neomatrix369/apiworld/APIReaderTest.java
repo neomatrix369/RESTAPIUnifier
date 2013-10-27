@@ -32,6 +32,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -59,7 +61,7 @@ public class APIReaderTest {
     }
 
     @Test
-    public void should_Set_Get_Request_Method() throws Exception {
+    public void should_Send_A_Get_Request() throws Exception {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
         //When
@@ -86,6 +88,24 @@ public class APIReaderTest {
         String response = apiReader.executeUrl();
         //Then
         assertThat(response, is("response"));
+    }
+
+    @Test
+    public void should_Send_A_Get_Request_With_RequestProperties() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        Map<String, String> properties = new HashMap<>();
+        String propertyKey1 = "propertyKey1";
+        String propertyValue1 = "propertyValue1";
+        String propertyKey2 = "propertyKey2";
+        String propertyValue2 = "propertyValue2";
+        properties.put(propertyKey1, propertyValue1);
+        properties.put(propertyKey2, propertyValue2);
+        //When
+        apiReader.executeGetUrl(properties);
+        //Then
+        verify(mockConnection).setRequestProperty(propertyKey1, propertyValue1);
+        verify(mockConnection).setRequestProperty(propertyKey2, propertyValue2);
     }
 
 }
