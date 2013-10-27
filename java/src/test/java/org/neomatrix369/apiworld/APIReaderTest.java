@@ -115,7 +115,7 @@ public class APIReaderTest {
     }
 
     @Test(expected = IOException.class)
-    public void should_Throw_Exception() throws Exception {
+    public void should_Throw_Exception_When_Connection_Error_On_Get_Request() throws Exception {
         //Given
         when(mockConnection.getInputStream()).thenThrow(IOException.class);
         //When
@@ -168,6 +168,16 @@ public class APIReaderTest {
         apiReader.executePostUrl();
         //Then
         verify(mockConnection).disconnect();
+    }
+
+    @Test(expected = IOException.class)
+    public void should_Throw_Exception_When_Connection_Error_On_Post_Request() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenThrow(IOException.class);
+        //When
+        apiReader.executePostUrl();
+        //Then
+        //Exception should be thrown
     }
 
 }

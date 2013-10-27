@@ -124,7 +124,7 @@ public class APIReader {
             urlConnection.disconnect();
         } catch (IOException ioe) {
             showMessageDueToIOException(url.toString(), ioe);
-            // throw ioe;
+            throw ioe;
         }
 
         return getFetchedResults();
