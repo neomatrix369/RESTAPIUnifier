@@ -87,7 +87,7 @@ public class APIReaderTest {
     }
 
     @Test
-    public void should_Send_A_Get_Request_With_RequestProperties() throws Exception {
+    public void should_Send_A_Get_Request_With_Request_Properties() throws Exception {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
         Map<String, String> properties = new HashMap<>();
@@ -148,6 +148,16 @@ public class APIReaderTest {
         String response = apiReader.executePostUrl();
         //Then
         assertThat(response, is("response"));
+    }
+
+    @Test
+    public void should_Disconnect_When_Http_Post_Request_Response_Is_Back() throws IOException {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream(""));
+        //When
+        apiReader.executePostUrl();
+        //Then
+        verify(mockConnection).disconnect();
     }
 
 }
