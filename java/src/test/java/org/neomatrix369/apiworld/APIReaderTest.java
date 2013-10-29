@@ -29,12 +29,16 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -43,6 +47,8 @@ public class APIReaderTest {
 
     private APIReader apiReader;
     @Mock private HttpURLConnection mockConnection;
+    @Mock private OutputStream mockOutputStream;
+    @Mock private Writer mockWriter;
     private URLStreamHandler urlStreamHandler = new URLStreamHandler() {
         @Override
         protected URLConnection openConnection(URL url) throws IOException {
@@ -53,7 +59,12 @@ public class APIReaderTest {
     @Before
     public void setUp() throws MalformedURLException {
         URL url = new URL("http://restapiunifier.com", "restapiunifier.com", -1, "", urlStreamHandler);
-        apiReader = new APIReader(url);
+        apiReader = new APIReader(url){
+            @Override
+            Writer createWriter(OutputStream outputStream) {
+                return mockWriter;
+            }
+        };
     }
 
     @Test
@@ -160,6 +171,19 @@ public class APIReaderTest {
         String response = apiReader.executePostUrl();
         //Then
         assertThat(response, is("response"));
+    }
+
+    @Test
+    public void should_Fire_Http_Post_Request_With_Appropriate_Url_Parameters() throws Exception {
+        //Given
+        String urlParameters = "urlParameters";
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        //When
+        apiReader.executePostUrl(urlParameters);
+        //Then
+        verify(mockWriter).write(urlParameters);
+        verify(mockWriter).flush();
+        verify(mockWriter).close();
     }
 
     @Test

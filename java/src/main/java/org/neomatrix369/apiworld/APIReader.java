@@ -26,10 +26,7 @@ import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -154,10 +151,15 @@ public class APIReader {
 
     private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
         logger.info("url parameter: " + urlParameters);
-        DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-        wr.writeBytes(urlParameters);
+        Writer wr = createWriter(urlConnection.getOutputStream());
+        wr.write(urlParameters);
         wr.flush();
         wr.close();
+    }
+
+    //access level package for testing purposes
+    Writer createWriter(OutputStream outputStream) {
+        return new PrintWriter(outputStream);
     }
 
     private String getFetchedResults() {
