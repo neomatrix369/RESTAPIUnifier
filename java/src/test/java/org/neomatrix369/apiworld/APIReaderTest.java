@@ -125,9 +125,10 @@ public class APIReaderTest {
     }
 
     @Test
-    public void should_Send_A_Post_Request_With_Appropriate_Options_And_Content_Type_And_Charset() throws Exception {
+    public void should_Send_A_Post_Request_With_Appropriate_Options_And_Properties_And_Content_Type_And_Charset() throws Exception {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        apiReader.setHeader("headerKey", "headerValue");
         //When
         apiReader.executePostUrl();
         //Then
@@ -138,6 +139,7 @@ public class APIReaderTest {
         verify(mockConnection).setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         verify(mockConnection).setRequestProperty("charset", "utf-8");
         verify(mockConnection).setUseCaches(false);
+        verify(mockConnection).setRequestProperty("headerKey", "headerValue");
     }
 
     @Test
