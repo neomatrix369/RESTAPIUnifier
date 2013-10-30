@@ -61,6 +61,7 @@ public class APIReader {
         constructUrl(url);
     }
 
+    //FIXME This constructor is used only in APIReaderTest, but it should probably be the only constructor for this class if we want the class to be easy to test
     public APIReader(URL url) {
         this.url = url;
     }
