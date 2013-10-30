@@ -211,13 +211,25 @@ public class APIReaderTest {
     }
 
     @Test
-    public void should_Only_Return_Response_For_Last_Request() throws IOException {
+    public void should_Only_Return_Response_For_Last_Get_Request() throws IOException {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response 1"));
         apiReader.executeGetUrl();
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response 2"));
         //When
         String response = apiReader.executeGetUrl();
+        //Then
+        assertThat(response, is("response 2"));
+    }
+
+    @Test
+    public void should_Only_Return_Response_For_Last_Post_Request() throws IOException {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response 1"));
+        apiReader.executePostUrl();
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response 2"));
+        //When
+        String response = apiReader.executePostUrl();
         //Then
         assertThat(response, is("response 2"));
     }
