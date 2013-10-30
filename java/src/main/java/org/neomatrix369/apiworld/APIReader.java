@@ -80,7 +80,6 @@ public class APIReader {
 
     public String executePostUrl(String urlParameters) throws IOException {
 
-        clearHttpResults();
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
         urlConnection.setDoOutput(true);
@@ -107,7 +106,6 @@ public class APIReader {
     }
 
     public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
-        clearHttpResults();
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
         urlConnection.setRequestMethod("GET");
@@ -157,6 +155,7 @@ public class APIReader {
 
     private String getFetchedResults() {
         String result = lastHttpResult.toString();
+        clearHttpResults();
         while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
             result = Utils.dropStartAndEndDelimiters(result);
         }
