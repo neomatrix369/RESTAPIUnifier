@@ -49,7 +49,6 @@ public class APIReader {
     private static final String MSG_READING_RESULTS_RETURNED = ">>> Reading results returned, this may take a moment...";
 
     private static final Logger logger = LoggerFactory.getLogger(APIReader.class);
-    private List<String> lastHttpResult = new ArrayList<String>();
     private URL url;
 
     private Map<String, String> headers = new HashMap<String, String>();
@@ -142,15 +141,16 @@ public class APIReader {
     }
 
     private String fireRequest(HttpURLConnection urlConnection) throws IOException {
+        List<String> response;
         try {
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
-            fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
+            response = fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.disconnect();
         } catch (IOException ioException) {
             showMessageDueToIOException(url.toString(), ioException);
             throw ioException;
         }
-        return getFetchedResults();
+        return getFetchedResults(response);
     }
 
     private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
@@ -166,9 +166,8 @@ public class APIReader {
         return new PrintWriter(outputStream);
     }
 
-    private String getFetchedResults() {
-        String result = lastHttpResult.toString();
-        clearHttpResults();
+    private String getFetchedResults(List<String> response) {
+        String result = response.toString();
         while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
             result = Utils.dropStartAndEndDelimiters(result);
         }
@@ -177,13 +176,14 @@ public class APIReader {
 
     private List<String> fetchDataFromURL(InputStreamReader isr) throws IOException {
         BufferedReader httpResult = null;
+        List<String> lastHttpResult = new ArrayList<String>();
         try {
             httpResult = new BufferedReader(isr);
             logger.info(MSG_READING_RESULTS_RETURNED);
 
             String inputLine;
             while ((inputLine = httpResult.readLine()) != null) {
-                addToLastHttpResults(inputLine);
+                lastHttpResult.add(inputLine);
             }
 
             logger.info(MSG_READING_COMPLETED);
@@ -200,16 +200,6 @@ public class APIReader {
     private void showMessageDueToIOException(String urlText, IOException ioe) {
         logger.error(String.format(MSG_ERROR_CONNECTING, urlText));
         logger.error(String.format(MSG_ERROR_DUE_TO, ioe.getMessage()));
-    }
-
-    private void clearHttpResults() {
-        if (lastHttpResult != null) {
-            lastHttpResult.clear();
-        }
-    }
-
-    private void addToLastHttpResults(String inputLine) {
-        lastHttpResult.add(inputLine);
     }
 
 }
