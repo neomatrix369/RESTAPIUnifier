@@ -115,6 +115,10 @@ public class APIReader {
 
     private void prepareGetRequest(HttpURLConnection urlConnection, Map<String, String> requestProperties) throws ProtocolException {
         urlConnection.setRequestMethod("GET");
+        setRequestProperties(urlConnection, requestProperties);
+    }
+
+    private void setRequestProperties(HttpURLConnection urlConnection, Map<String, String> requestProperties) {
         if (requestProperties != null) {
             for (Map.Entry<String, String> property : requestProperties.entrySet()) {
                 urlConnection.setRequestProperty(property.getKey(), property.getValue());
