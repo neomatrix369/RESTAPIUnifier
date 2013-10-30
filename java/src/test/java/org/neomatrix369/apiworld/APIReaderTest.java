@@ -69,7 +69,7 @@ public class APIReaderTest {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
         //When
-        apiReader.executeUrl();
+        apiReader.executeGetUrl();
         //Then
         verify(mockConnection).setRequestMethod("GET");
     }
@@ -79,7 +79,7 @@ public class APIReaderTest {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
         //When
-        String response = apiReader.executeUrl();
+        String response = apiReader.executeGetUrl();
         //Then
         assertThat(response, is("response"));
     }
@@ -89,7 +89,7 @@ public class APIReaderTest {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("[[response]]"));
         //When
-        String response = apiReader.executeUrl();
+        String response = apiReader.executeGetUrl();
         //Then
         assertThat(response, is("response"));
     }
@@ -117,7 +117,7 @@ public class APIReaderTest {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream(""));
         //When
-        apiReader.executeUrl();
+        apiReader.executeGetUrl();
         //Then
         verify(mockConnection).disconnect();
     }

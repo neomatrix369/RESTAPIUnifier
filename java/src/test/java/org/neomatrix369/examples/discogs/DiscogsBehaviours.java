@@ -39,7 +39,7 @@ public class DiscogsBehaviours {
     public void artist_endpoint_returns_some_json() throws Exception {
         String request = "http://api.discogs.com/artists/45";
         APIReader apiReader = new APIReader(request);
-        String response = apiReader.executeUrl();
+        String response = apiReader.executeGetUrl();
         assertThat(isJsonResult(response), is(true));
     }
 

@@ -80,7 +80,7 @@ public class APIReader {
         return this;
     }
 
-    public String executeUrl() throws IOException {
+    public String executeGetUrl() throws IOException {
         return executeGetUrl(null);
     }
 

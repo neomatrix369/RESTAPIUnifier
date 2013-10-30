@@ -62,6 +62,6 @@ class TwitterSearch extends BaseTwitter {
 	String[] arrayURLParamCodes = { null, "q" };
 
 	fetchedResults = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
-	fetchedResults.executeUrl();
+	fetchedResults.executeGetUrl();
     }
 }

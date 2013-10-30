@@ -73,7 +73,7 @@ public abstract class BaseMuzu {
     }
 
     public String executeUrl() throws IOException {
-	return apiReader.executeUrl();
+	return apiReader.executeGetUrl();
     }
 
     protected void buildAPIReadyToExecute(String apiKeyValue, Map<String, String> parameters) {
