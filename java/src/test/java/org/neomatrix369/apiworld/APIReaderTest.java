@@ -30,7 +30,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.*;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,25 +44,24 @@ import static org.mockito.Mockito.when;
 public class APIReaderTest {
 
     private APIReader apiReader;
-    @Mock private HttpURLConnection mockConnection;
-    @Mock private OutputStream mockOutputStream;
-    @Mock private Writer mockWriter;
+    @Mock
+    private HttpURLConnection mockConnection;
+    @Mock
+    private OutputStream mockOutputStream;
+    @Mock
+    private Writer mockWriter;
     private URLStreamHandler urlStreamHandler = new URLStreamHandler() {
         @Override
         protected URLConnection openConnection(URL url) throws IOException {
             return mockConnection;
         }
     };
+    private URL url;
 
     @Before
     public void setUp() throws MalformedURLException {
-        URL url = new URL("http://restapiunifier.com", "restapiunifier.com", -1, "", urlStreamHandler);
-        apiReader = new APIReader(url){
-            @Override
-            Writer createWriter(OutputStream outputStream) {
-                return mockWriter;
-            }
-        };
+        url = new URL("http://restapiunifier.com", "restapiunifier.com", -1, "", urlStreamHandler);
+        apiReader = new APIReader(url);
     }
 
     @Test
@@ -178,6 +175,13 @@ public class APIReaderTest {
         //Given
         String urlParameters = "urlParameters";
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        APIReader apiReader = new APIReader(url) {
+            @Override
+            Writer createWriter(OutputStream outputStream) {
+                return mockWriter;
+            }
+        };
+
         //When
         apiReader.executePostUrl(urlParameters);
         //Then
