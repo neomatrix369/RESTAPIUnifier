@@ -65,16 +65,6 @@ public class APIReader {
         this.url = url;
     }
 
-    private void constructUrl(String url) {
-        try {
-            this.url = new URL(url);
-        } catch (MalformedURLException e) {
-            logger.error(String.format(MSG_INPUT_URL_STRING, url));
-            logger.error(String.format(MSG_ERROR_DUE_TO, e.getMessage()));
-            throw new IllegalArgumentException("Final URL does not exist.");
-        }
-    }
-
     public APIReader setHeader(String header, String value) {
         headers.put(header, value);
         return this;
@@ -91,7 +81,6 @@ public class APIReader {
     public String executePostUrl(String urlParameters) throws IOException {
 
         clearHttpResults();
-        try {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setDoOutput(true);
@@ -114,22 +103,11 @@ public class APIReader {
             if (urlParameters != null) {
                 writeUrlParameters(urlParameters, urlConnection);
             }
-
-            logger.info(String.format(MSG_CONNECTING_TO_URL, url));
-            fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
-
-            urlConnection.disconnect();
-        } catch (IOException ioe) {
-            showMessageDueToIOException(url.toString(), ioe);
-            throw ioe;
-        }
-
-        return getFetchedResults();
+        return fireRequest(urlConnection);
     }
 
     public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
         clearHttpResults();
-        try {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setRequestMethod("GET");
@@ -139,6 +117,21 @@ public class APIReader {
                 }
             }
 
+        return fireRequest(urlConnection);
+    }
+
+    private void constructUrl(String url) {
+        try {
+            this.url = new URL(url);
+        } catch (MalformedURLException e) {
+            logger.error(String.format(MSG_INPUT_URL_STRING, url));
+            logger.error(String.format(MSG_ERROR_DUE_TO, e.getMessage()));
+            throw new IllegalArgumentException("Final URL does not exist.");
+        }
+    }
+
+    private String fireRequest(HttpURLConnection urlConnection) throws IOException {
+        try {
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
             fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.disconnect();
