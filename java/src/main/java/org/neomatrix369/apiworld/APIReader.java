@@ -81,41 +81,41 @@ public class APIReader {
     public String executePostUrl(String urlParameters) throws IOException {
 
         clearHttpResults();
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(true);
-            urlConnection.setInstanceFollowRedirects(false);
+        urlConnection.setDoOutput(true);
+        urlConnection.setDoInput(true);
+        urlConnection.setInstanceFollowRedirects(false);
 
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            urlConnection.setRequestProperty("charset", "utf-8");
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        urlConnection.setRequestProperty("charset", "utf-8");
 
-            for (Map.Entry<String, String> header : headers.entrySet()) {
-                urlConnection.setRequestProperty(header.getKey(), header.getValue());
-            }
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            urlConnection.setRequestProperty(header.getKey(), header.getValue());
+        }
 
-            // TODO: work with null
-            // urlConnection.setRequestProperty("Content-Length", "" +
-            // Integer.toString(urlParameters.getBytes().length));
-            urlConnection.setUseCaches(false);
+        // TODO: work with null
+        // urlConnection.setRequestProperty("Content-Length", "" +
+        // Integer.toString(urlParameters.getBytes().length));
+        urlConnection.setUseCaches(false);
 
-            if (urlParameters != null) {
-                writeUrlParameters(urlParameters, urlConnection);
-            }
+        if (urlParameters != null) {
+            writeUrlParameters(urlParameters, urlConnection);
+        }
         return fireRequest(urlConnection);
     }
 
     public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
         clearHttpResults();
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-            urlConnection.setRequestMethod("GET");
-            if (requestProperties != null) {
-                for (Map.Entry<String, String> property : requestProperties.entrySet()) {
-                    urlConnection.setRequestProperty(property.getKey(), property.getValue());
-                }
+        urlConnection.setRequestMethod("GET");
+        if (requestProperties != null) {
+            for (Map.Entry<String, String> property : requestProperties.entrySet()) {
+                urlConnection.setRequestProperty(property.getKey(), property.getValue());
             }
+        }
 
         return fireRequest(urlConnection);
     }
@@ -135,9 +135,9 @@ public class APIReader {
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
             fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.disconnect();
-        } catch (IOException ioe) {
-            showMessageDueToIOException(url.toString(), ioe);
-            throw ioe;
+        } catch (IOException ioException) {
+            showMessageDueToIOException(url.toString(), ioException);
+            throw ioException;
         }
         return getFetchedResults();
     }
