@@ -81,29 +81,14 @@ public class APIReader {
     }
 
     public String executePostUrl(String urlParameters) throws IOException {
-
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-        urlConnection.setDoOutput(true);
-        urlConnection.setDoInput(true);
-        urlConnection.setInstanceFollowRedirects(false);
-
-        urlConnection.setRequestMethod("POST");
-        urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        urlConnection.setRequestProperty("charset", "utf-8");
-
-        for (Map.Entry<String, String> header : headers.entrySet()) {
-            urlConnection.setRequestProperty(header.getKey(), header.getValue());
-        }
+        preparePostUrl(urlConnection);
 
         // TODO: work with null
         // urlConnection.setRequestProperty("Content-Length", "" +
         // Integer.toString(urlParameters.getBytes().length));
-        urlConnection.setUseCaches(false);
 
-        if (urlParameters != null) {
-            writeUrlParameters(urlParameters, urlConnection);
-        }
+        setUrlParameters(urlConnection, urlParameters);
         return fireRequest(urlConnection);
     }
 
@@ -111,6 +96,26 @@ public class APIReader {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         prepareGetRequest(urlConnection, requestProperties);
         return fireRequest(urlConnection);
+    }
+
+    private void preparePostUrl(HttpURLConnection urlConnection) throws ProtocolException {
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setDoOutput(true);
+        urlConnection.setDoInput(true);
+        urlConnection.setInstanceFollowRedirects(false);
+        urlConnection.setUseCaches(false);
+
+        Map<String, String> requestProperties = new HashMap<String, String>();
+        requestProperties.put("Content-Type", "application/x-www-form-urlencoded");
+        requestProperties.put("charset", "utf-8");
+        requestProperties.putAll(headers);
+        setRequestProperties(urlConnection, requestProperties);
+    }
+
+    private void setUrlParameters(HttpURLConnection urlConnection, String urlParameters) throws IOException {
+        if (urlParameters != null) {
+            writeUrlParameters(urlParameters, urlConnection);
+        }
     }
 
     private void prepareGetRequest(HttpURLConnection urlConnection, Map<String, String> requestProperties) throws ProtocolException {
