@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,15 +109,17 @@ public class APIReader {
 
     public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        prepareGetRequest(urlConnection, requestProperties);
+        return fireRequest(urlConnection);
+    }
 
+    private void prepareGetRequest(HttpURLConnection urlConnection, Map<String, String> requestProperties) throws ProtocolException {
         urlConnection.setRequestMethod("GET");
         if (requestProperties != null) {
             for (Map.Entry<String, String> property : requestProperties.entrySet()) {
                 urlConnection.setRequestProperty(property.getKey(), property.getValue());
             }
         }
-
-        return fireRequest(urlConnection);
     }
 
     private void constructUrl(String url) {
