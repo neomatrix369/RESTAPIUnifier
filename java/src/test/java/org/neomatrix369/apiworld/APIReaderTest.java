@@ -122,6 +122,21 @@ public class APIReaderTest {
         verify(mockConnection).disconnect();
     }
 
+    @Test
+    public void should_Disconnect_When_Http_Get_Request_Throws_An_Error() throws IOException {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream(""));
+        //When
+        try {
+            apiReader.executeGetUrl();
+        } catch (IOException e) {
+            //IOException should be thrown
+        } finally {
+            //Then
+            verify(mockConnection).disconnect();
+        }
+    }
+
     @Test(expected = IOException.class)
     public void should_Throw_Exception_When_Connection_Error_On_Get_Request() throws Exception {
         //Given
