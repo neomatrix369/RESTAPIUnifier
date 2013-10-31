@@ -141,17 +141,15 @@ public class APIReader {
     }
 
     private String fireRequest(HttpURLConnection urlConnection) throws IOException {
-        List<String> response;
         try {
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
-            response = fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
+            return getResponse(new InputStreamReader(urlConnection.getInputStream()));
         } catch (IOException ioException) {
             showMessageDueToIOException(url.toString(), ioException);
             throw ioException;
         } finally {
             urlConnection.disconnect();
         }
-        return getFetchedResults(response);
     }
 
     private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
@@ -167,35 +165,37 @@ public class APIReader {
         return new PrintWriter(outputStream);
     }
 
-    private String getFetchedResults(List<String> response) {
-        String result = response.toString();
+    private String getResponse(InputStreamReader isr) throws IOException {
+        return dropDelimitersFromResponse(readResponse(isr).toString());
+    }
+
+    private String dropDelimitersFromResponse(String result) {
         while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
             result = Utils.dropStartAndEndDelimiters(result);
         }
         return result;
     }
 
-    private List<String> fetchDataFromURL(InputStreamReader isr) throws IOException {
-        BufferedReader httpResult = null;
-        List<String> lastHttpResult = new ArrayList<String>();
+    private List<String> readResponse(InputStreamReader inputStreamReader) throws IOException {
+        BufferedReader httpResponse = null;
+        List<String> response = new ArrayList<String>();
         try {
-            httpResult = new BufferedReader(isr);
+            httpResponse = new BufferedReader(inputStreamReader);
             logger.info(MSG_READING_RESULTS_RETURNED);
 
             String inputLine;
-            while ((inputLine = httpResult.readLine()) != null) {
-                lastHttpResult.add(inputLine);
+            while ((inputLine = httpResponse.readLine()) != null) {
+                response.add(inputLine);
             }
 
             logger.info(MSG_READING_COMPLETED);
         } finally {
-            if (httpResult != null) {
-                httpResult.close();
+            if (httpResponse != null) {
+                httpResponse.close();
             }
             logger.info(">>> Connection closed!");
         }
-
-        return lastHttpResult;
+        return response;
     }
 
     private void showMessageDueToIOException(String urlText, IOException ioe) {
