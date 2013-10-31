@@ -211,6 +211,21 @@ public class APIReaderTest {
     }
 
     @Test
+    public void should_Disconnect_When_Http_Post_Request_Throws_An_Error() throws IOException {
+        //Given
+        when(mockConnection.getInputStream()).thenThrow(IOException.class);
+        //When
+        try {
+            apiReader.executePostUrl();
+        } catch (IOException exception) {
+            //IOException should be thrown
+        } finally {
+            //Then
+            verify(mockConnection).disconnect();
+        }
+    }
+
+    @Test
     public void should_Only_Return_Response_For_Last_Get_Request() throws IOException {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response 1"));

@@ -145,10 +145,11 @@ public class APIReader {
         try {
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
             response = fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
-            urlConnection.disconnect();
         } catch (IOException ioException) {
             showMessageDueToIOException(url.toString(), ioException);
             throw ioException;
+        } finally {
+            urlConnection.disconnect();
         }
         return getFetchedResults(response);
     }
