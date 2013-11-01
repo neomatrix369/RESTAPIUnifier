@@ -37,6 +37,8 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -110,6 +112,17 @@ public class APIReaderTest {
         //Then
         verify(mockConnection).setRequestProperty(propertyKey1, propertyValue1);
         verify(mockConnection).setRequestProperty(propertyKey2, propertyValue2);
+    }
+
+    @Test
+    public void should_Send_A_Get_Request_With_No_Request_Properties() throws Exception {
+        //Given
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        Map<String, String> properties = new HashMap<>();
+        //When
+        apiReader.executeGetUrl(properties);
+        //Then
+        verify(mockConnection, never()).setRequestProperty(anyString(), anyString());
     }
 
     @Test
