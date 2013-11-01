@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 /**
  * @author Mani Sarkar
  */
@@ -112,7 +114,7 @@ public class APIReader {
     }
 
     private void setUrlParameters(HttpURLConnection urlConnection, String urlParameters) throws IOException {
-        if (urlParameters != null) {
+        if (!isBlank(urlParameters)) {
             writeUrlParameters(urlParameters, urlConnection);
         }
     }

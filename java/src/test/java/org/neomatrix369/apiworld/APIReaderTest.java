@@ -38,9 +38,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class APIReaderTest {
@@ -216,6 +214,24 @@ public class APIReaderTest {
         verify(mockWriter).write(urlParameters);
         verify(mockWriter).flush();
         verify(mockWriter).close();
+    }
+
+    @Test
+    public void should_Fire_Http_Post_Request_With_No_Url_Parameters() throws Exception {
+        //Given
+        String urlParameters = "";
+        when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
+        APIReader apiReader = new APIReader(url) {
+            @Override
+            Writer createWriter(OutputStream outputStream) {
+                return mockWriter;
+            }
+        };
+
+        //When
+        apiReader.executePostUrl(urlParameters);
+        //Then
+        verifyZeroInteractions(mockWriter);
     }
 
     @Test
