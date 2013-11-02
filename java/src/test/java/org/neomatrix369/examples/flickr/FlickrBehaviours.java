@@ -38,7 +38,7 @@ public class FlickrBehaviours {
 
     @Before
     public void setup() throws IOException {
-	apiKey = Utils.readPropertyFrom("resources/flickr.properties", "APIKey");
+	apiKey = Utils.readPropertyFrom("resources/apiKeys/flickr.properties", "APIKey");
     }
 
     @Test

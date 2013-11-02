@@ -39,7 +39,7 @@ public final class Search {
      * 
      * API provider URL: https://dev.twitter.com/docs/api/1.1
      * 
-     * Required settings file to run this example: resources/twitter.properties
+     * Required settings file to run this example: resources/apiKeys/twitter.properties
      * 
      * containing APIKey=[xxxxx]
      * 

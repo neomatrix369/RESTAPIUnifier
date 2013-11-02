@@ -13,13 +13,11 @@
 # Ignore . & ~ files except .gitignore #
 *~
 .*
+!/.gitignore
 sonar-project.properties
 target/
-!/.gitignore
-#resources/
 res/
-*.properties
-!Keys.properties
+java/resources/apiKeys/*.properties
 !logback.xml
 
 # Csharp files

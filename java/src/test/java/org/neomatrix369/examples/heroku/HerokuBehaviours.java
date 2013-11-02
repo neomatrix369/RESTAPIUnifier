@@ -62,7 +62,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class HerokuBehaviours {
 
     private static final Logger logger = LoggerFactory.getLogger(HerokuBehaviours.class);
-    private static final String HEROKU_SETTINGS_LOCATION = "resources/heroku.properties";
+    private static final String HEROKU_SETTINGS_LOCATION = "resources/apiKeys/heroku.properties";
 
     private String emailaddress;
     private String apiKey;

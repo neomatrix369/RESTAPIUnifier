@@ -39,8 +39,8 @@ public class ImportIoBehaviours {
 
     @Before
     public void setup() throws IOException {
-	username = Utils.readPropertyFrom("resources/importio.properties", "username");
-	password = Utils.readPropertyFrom("resources/importio.properties", "password");
+	username = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "username");
+	password = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "password");
     }
 
     @Test
