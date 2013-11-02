@@ -51,7 +51,7 @@ public class UtilsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void should_Return_IllegalArgmentException_If_Null_Is_Passed_To_Encode_Token() {
+    public void should_Return_IllegalArgumentException_If_Null_Is_Passed_To_Encode_Token() {
         Utils.urlEncode(null);
         Assert.fail();
     }
@@ -62,37 +62,37 @@ public class UtilsTest {
     }
 
     @Test
-    public void should_drop_begin_and_end_delimeters_in_an_Empty_String() {
+    public void should_Drop_Begin_And_End_Delimiters_In_An_Empty_String() {
         String inputString = "[]";
         String actualString = Utils.dropStartAndEndDelimeters(inputString);
         String expectedString = "";
-        assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
+        assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
 
     @Test
-    public void should_drop_double_begin_and_end_delimeters_in_an_Empty_String() {
+    public void should_Drop_Double_Begin_And_End_Delimiters_In_An_Empty_String() {
         String inputString = "[[]]";
         String actualString = Utils.dropStartAndEndDelimeters(inputString);
         actualString = Utils.dropStartAndEndDelimeters(actualString);
         String expectedString = "";
-        assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
+        assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
 
     @Test
-    public void should_drop_begin_and_end_delimeters_in_a_Simple_String() {
+    public void should_Drop_Begin_And_End_Delimiters_In_A_Simple_String() {
         String inputString = "[{'some': 'value'}]";
         String actualString = Utils.dropStartAndEndDelimeters(inputString);
         String expectedString = "{'some': 'value'}";
-        assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
+        assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
 
     @Test
-    public void should_drop_double_begin_and_end_delimeters_in_a_Simple_String() {
+    public void should_Drop_Double_Begin_And_End_Delimiters_In_A_Simple_String() {
         String inputString = "[[{'some': 'value'}]]";
         String actualString = Utils.dropStartAndEndDelimeters(inputString);
         actualString = Utils.dropStartAndEndDelimeters(actualString);
         String expectedString = "{'some': 'value'}";
-        assertThat("Begin & End delimeters haven't been dropped", actualString, is(expectedString));
+        assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
 
 }
