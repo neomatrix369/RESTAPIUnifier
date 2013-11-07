@@ -50,7 +50,7 @@ public abstract class BaseMuzu {
     private APIReader apiReader;
 
     public BaseMuzu() {
-	this.apiKey = Utils.readMandatoryPropertyFrom("resources/muzu.properties", "APIKey");
+	this.apiKey = Utils.readMandatoryPropertyFrom("resources/apiKeys/muzu.properties", "APIKey");
     }
 
     abstract protected String apiCommand();
