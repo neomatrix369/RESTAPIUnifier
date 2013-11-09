@@ -98,18 +98,12 @@ public class APIReaderTest {
     public void should_Send_A_Get_Request_With_Request_Properties() throws Exception {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
-        Map<String, String> properties = new HashMap<>();
-        String propertyKey1 = "propertyKey1";
-        String propertyValue1 = "propertyValue1";
-        String propertyKey2 = "propertyKey2";
-        String propertyValue2 = "propertyValue2";
-        properties.put(propertyKey1, propertyValue1);
-        properties.put(propertyKey2, propertyValue2);
+        Map<String, String> properties = createProperties();
         //When
         apiReader.executeGetUrl(properties);
         //Then
-        verify(mockConnection).setRequestProperty(propertyKey1, propertyValue1);
-        verify(mockConnection).setRequestProperty(propertyKey2, propertyValue2);
+        verify(mockConnection).setRequestProperty("propertyKey1", "propertyValue1");
+        verify(mockConnection).setRequestProperty("propertyKey2", "propertyValue2");
     }
 
     @Test
@@ -291,6 +285,17 @@ public class APIReaderTest {
         String response = apiReader.executePostUrl();
         //Then
         assertThat(response, is("response 2"));
+    }
+
+    private Map<String, String> createProperties() {
+        Map<String, String> properties = new HashMap<>();
+        String propertyKey1 = "propertyKey1";
+        String propertyValue1 = "propertyValue1";
+        String propertyKey2 = "propertyKey2";
+        String propertyValue2 = "propertyValue2";
+        properties.put(propertyKey1, propertyValue1);
+        properties.put(propertyKey2, propertyValue2);
+        return properties;
     }
 
 }
