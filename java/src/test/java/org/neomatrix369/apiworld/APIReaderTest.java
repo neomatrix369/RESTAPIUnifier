@@ -209,12 +209,7 @@ public class APIReaderTest {
         //Given
         String urlParameters = "urlParameters";
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
-        APIReader apiReader = new APIReader(url) {
-            @Override
-            Writer createWriter(OutputStream outputStream) {
-                return mockWriter;
-            }
-        };
+        APIReader apiReader = createAPIReaderWithMockWriter();
 
         //When
         apiReader.executePostUrl(urlParameters);
@@ -229,12 +224,7 @@ public class APIReaderTest {
         //Given
         String urlParameters = "";
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
-        APIReader apiReader = new APIReader(url) {
-            @Override
-            Writer createWriter(OutputStream outputStream) {
-                return mockWriter;
-            }
-        };
+        APIReader apiReader = createAPIReaderWithMockWriter();
 
         //When
         apiReader.executePostUrl(urlParameters);
@@ -310,6 +300,15 @@ public class APIReaderTest {
         properties.put(propertyKey1, propertyValue1);
         properties.put(propertyKey2, propertyValue2);
         return properties;
+    }
+
+    private APIReader createAPIReaderWithMockWriter() {
+        return new APIReader(url) {
+            @Override
+            Writer createWriter(OutputStream outputStream) {
+                return mockWriter;
+            }
+        };
     }
 
 }
