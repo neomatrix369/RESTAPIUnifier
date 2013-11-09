@@ -129,7 +129,7 @@ public final class Utils {
         }
     }
 
-    public static String dropStartAndEndDelimeters(String inputString) {
+    public static String dropStartAndEndDelimiters(String inputString) {
         String result = inputString;
         if (result.startsWith(OPENING_BOX_BRACKET)) {
             if (result.length() == 1) {

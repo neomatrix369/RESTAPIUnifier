@@ -57,7 +57,7 @@ public class Yql {
     }
 
     public String executeUrl() throws IOException {
-	return apiReader.executeUrl();
+	return apiReader.executeGetUrl();
     }
 
     protected void buildAPIReadyToExecute(Map<String, String> parameters) {
