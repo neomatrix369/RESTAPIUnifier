@@ -43,6 +43,20 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class APIReaderTest {
 
+    public static final boolean DO_INPUT = true;
+    public static final boolean DO_OUTPUT = true;
+    public static final boolean USE_CACHES = false;
+    public static final boolean INSTANCE_FOLLOW_REDIRECTS = false;
+
+    public static final String UTF_8 = "utf-8";
+    public static final String CHARSET = "charset";
+    public static final String HEADER_KEY = "headerKey";
+    public static final String HEADER_VALUE = "headerValue";
+    public static final String CONTENT_TYPE = "Content-Type";
+    public static final String GET_REQUEST_METHOD = "GET";
+    public static final String POST_REQUEST_METHOD = "POST";
+    public static final String APPLICATION_X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
+
     private APIReader apiReader;
     @Mock
     private HttpURLConnection mockConnection;
@@ -71,7 +85,7 @@ public class APIReaderTest {
         //When
         apiReader.executeGetUrl();
         //Then
-        verify(mockConnection).setRequestMethod("GET");
+        verify(mockConnection).setRequestMethod(GET_REQUEST_METHOD);
     }
 
     @Test
@@ -156,18 +170,18 @@ public class APIReaderTest {
     public void should_Send_A_Post_Request_With_Appropriate_Options_And_Properties_And_Content_Type_And_Charset() throws Exception {
         //Given
         when(mockConnection.getInputStream()).thenReturn(IOUtils.toInputStream("response"));
-        apiReader.setHeader("headerKey", "headerValue");
+        apiReader.setHeader(HEADER_KEY, HEADER_VALUE);
         //When
         apiReader.executePostUrl();
         //Then
-        verify(mockConnection).setDoOutput(true);
-        verify(mockConnection).setDoInput(true);
-        verify(mockConnection).setInstanceFollowRedirects(false);
-        verify(mockConnection).setRequestMethod("POST");
-        verify(mockConnection).setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        verify(mockConnection).setRequestProperty("charset", "utf-8");
-        verify(mockConnection).setUseCaches(false);
-        verify(mockConnection).setRequestProperty("headerKey", "headerValue");
+        verify(mockConnection).setDoOutput(DO_OUTPUT);
+        verify(mockConnection).setDoInput(DO_INPUT);
+        verify(mockConnection).setInstanceFollowRedirects(INSTANCE_FOLLOW_REDIRECTS);
+        verify(mockConnection).setRequestMethod(POST_REQUEST_METHOD);
+        verify(mockConnection).setRequestProperty(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED);
+        verify(mockConnection).setRequestProperty(CHARSET, UTF_8);
+        verify(mockConnection).setUseCaches(USE_CACHES);
+        verify(mockConnection).setRequestProperty(HEADER_KEY, HEADER_VALUE);
     }
 
     @Test
