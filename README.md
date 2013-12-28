@@ -7,16 +7,13 @@ Build status
 ------------
 
 Overall build status (multiple JDKs)
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+[![Build Status](https://adopt-openjdk.ci.cloudbees.com/buildStatus/icon?job=RESTAPIUnifier)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
 
 JDK 1.7 Build status
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/)
+[![Build Status](https://adopt-openjdk.ci.cloudbees.com/buildStatus/icon?job=RESTAPIUnifier/jdk=JDK_1.7)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/)
 
 OpenJDK 8 Build status
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/)
+[![Build Status](https://adopt-openjdk.ci.cloudbees.com/buildStatus/icon?job=RESTAPIUnifier/jdk=OpenJDK8)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/)
 
 
 [![Built on CloudBees](http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
