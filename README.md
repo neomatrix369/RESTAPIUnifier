@@ -125,3 +125,13 @@ Quotes
 * Alone we can do so little; together we can do so much - Helen Keller
 * Long live social coding! - @neomatrix369
 
+
+Build status
+------------
+
+Cloudbees Jenkins
+
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+
+<a target="_blank" href=" https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/"  title="Jenkins@CloudBees">Jenkins@CloudBees + Tests</a>
