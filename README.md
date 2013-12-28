@@ -129,9 +129,10 @@ Quotes
 Build status
 ------------
 
-Cloudbees Jenkins
+
+[![Built on CloudBees](http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
 
 [![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
 
 <a target="_blank" href=" https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/"  title="Jenkins@CloudBees">Jenkins@CloudBees + Tests</a>
