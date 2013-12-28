@@ -16,6 +16,8 @@ OpenJDK 8 Build status
 [![Build Status](https://adopt-openjdk.ci.cloudbees.com/buildStatus/icon?job=RESTAPIUnifier/jdk=OpenJDK8)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/)
 
 
+[![Built on CloudBees](http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+
 License
 -------
 Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RESTAPIUnifier/blob/master/LICENSE) in root and other directories.
