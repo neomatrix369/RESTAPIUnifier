@@ -3,6 +3,26 @@ RESTAPIUnifier
 
 <b>RESTAPIUnifier</b> - lightweight Java library that brings together RESTful APIs under one roof! Eventually making such libraries available for different programming enviornments like Javascript, PHP, Python, etc...
 
+Build status
+------------
+
+Overall build status (multiple JDKs)
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+
+JDK 1.7 Build status
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/)
+
+OpenJDK 8 Build status
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/)
+
+
+[![Built on CloudBees](http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+
+<a target="_blank" href=" https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/"  title="Jenkins@CloudBees">Jenkins@CloudBees + Tests</a>
+
 License
 -------
 Currently covered by GPLv2. See LICENSE file (https://github.com/neomatrix369/RESTAPIUnifier/blob/master/LICENSE) in root and other directories.
@@ -126,22 +146,3 @@ Quotes
 * Long live social coding! - @neomatrix369
 
 
-Build status
-------------
-
-Overall build status (multiple JDKs)
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
-
-JDK 1.7 Build status
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/)
-
-OpenJDK 8 Build status
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/)
-
-
-[![Built on CloudBees](http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
-
-<a target="_blank" href=" https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/"  title="Jenkins@CloudBees">Jenkins@CloudBees + Tests</a>
