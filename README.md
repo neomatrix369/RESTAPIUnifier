@@ -129,10 +129,19 @@ Quotes
 Build status
 ------------
 
+Overall build status (all JDKs)
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
+
+JDK 1.7 Build status
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=JDK_1.7/)
+
+OpenJDK 8 Build status
+[![Build
+Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/)
+
 
 [![Built on CloudBees](http://www.cloudbees.com/sites/default/files/Button-Built-on-CB-1.png)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
-
-[![Build
-Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/jdk=OpenJDK8/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
 
 <a target="_blank" href=" https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/"  title="Jenkins@CloudBees">Jenkins@CloudBees + Tests</a>
