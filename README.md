@@ -129,7 +129,7 @@ Quotes
 Build status
 ------------
 
-Overall build status (all JDKs)
+Overall build status (multiple JDKs)
 [![Build
 Status](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/badge/icon)](https://adopt-openjdk.ci.cloudbees.com/job/RESTAPIUnifier/)
 
