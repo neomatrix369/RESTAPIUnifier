@@ -53,7 +53,7 @@ public class BaseFlickr {
     protected APIReader apiReader;
 
     public String executeUrl() throws IOException {
-	return apiReader.executeUrl();
+	return apiReader.executeGetUrl();
     }
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,

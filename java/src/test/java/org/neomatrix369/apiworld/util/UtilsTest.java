@@ -64,7 +64,7 @@ public class UtilsTest {
     @Test
     public void should_Drop_Begin_And_End_Delimiters_In_An_Empty_String() {
         String inputString = "[]";
-        String actualString = Utils.dropStartAndEndDelimeters(inputString);
+        String actualString = Utils.dropStartAndEndDelimiters(inputString);
         String expectedString = "";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -72,8 +72,8 @@ public class UtilsTest {
     @Test
     public void should_Drop_Double_Begin_And_End_Delimiters_In_An_Empty_String() {
         String inputString = "[[]]";
-        String actualString = Utils.dropStartAndEndDelimeters(inputString);
-        actualString = Utils.dropStartAndEndDelimeters(actualString);
+        String actualString = Utils.dropStartAndEndDelimiters(inputString);
+        actualString = Utils.dropStartAndEndDelimiters(actualString);
         String expectedString = "";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -81,7 +81,7 @@ public class UtilsTest {
     @Test
     public void should_Drop_Begin_And_End_Delimiters_In_A_Simple_String() {
         String inputString = "[{'some': 'value'}]";
-        String actualString = Utils.dropStartAndEndDelimeters(inputString);
+        String actualString = Utils.dropStartAndEndDelimiters(inputString);
         String expectedString = "{'some': 'value'}";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -89,8 +89,8 @@ public class UtilsTest {
     @Test
     public void should_Drop_Double_Begin_And_End_Delimiters_In_A_Simple_String() {
         String inputString = "[[{'some': 'value'}]]";
-        String actualString = Utils.dropStartAndEndDelimeters(inputString);
-        actualString = Utils.dropStartAndEndDelimeters(actualString);
+        String actualString = Utils.dropStartAndEndDelimiters(inputString);
+        actualString = Utils.dropStartAndEndDelimiters(actualString);
         String expectedString = "{'some': 'value'}";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }

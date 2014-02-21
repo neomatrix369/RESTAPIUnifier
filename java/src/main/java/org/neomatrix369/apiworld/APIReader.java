@@ -26,17 +26,18 @@ import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * @author Mani Sarkar
@@ -51,7 +52,6 @@ public class APIReader {
     private static final String MSG_READING_RESULTS_RETURNED = ">>> Reading results returned, this may take a moment...";
 
     private static final Logger logger = LoggerFactory.getLogger(APIReader.class);
-    private List<String> lastHttpResult = new ArrayList<String>();
     private URL url;
 
     private Map<String, String> headers = new HashMap<String, String>();
@@ -64,6 +64,75 @@ public class APIReader {
         constructUrl(url);
     }
 
+    //FIXME This constructor is used only in APIReaderTest, but it should probably be the only constructor for this class if we want the class to be easy to test
+    public APIReader(URL url) {
+        this.url = url;
+    }
+
+    public APIReader setHeader(String header, String value) {
+        headers.put(header, value);
+        return this;
+    }
+
+    public String executeGetUrl() throws IOException {
+        return executeGetUrl(null);
+    }
+
+    public String executePostUrl() throws IOException {
+        return executePostUrl(null);
+    }
+
+    public String executePostUrl(String urlParameters) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        preparePostUrl(urlConnection);
+
+        // TODO: work with null
+        // urlConnection.setRequestProperty("Content-Length", "" +
+        // Integer.toString(urlParameters.getBytes().length));
+
+        setUrlParameters(urlConnection, urlParameters);
+        return fireRequest(urlConnection);
+    }
+
+    public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        prepareGetRequest(urlConnection, requestProperties);
+        return fireRequest(urlConnection);
+    }
+
+    private void preparePostUrl(HttpURLConnection urlConnection) throws ProtocolException {
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setDoOutput(true);
+        urlConnection.setDoInput(true);
+        urlConnection.setInstanceFollowRedirects(false);
+        urlConnection.setUseCaches(false);
+
+        Map<String, String> requestProperties = new HashMap<String, String>();
+        requestProperties.put("Content-Type", "application/x-www-form-urlencoded");
+        requestProperties.put("charset", "utf-8");
+        requestProperties.putAll(headers);
+        setRequestProperties(urlConnection, requestProperties);
+    }
+
+    private void setUrlParameters(HttpURLConnection urlConnection, String urlParameters) throws IOException {
+        if (isNotBlank(urlParameters)) {
+            writeUrlParameters(urlParameters, urlConnection);
+        }
+    }
+
+    private void prepareGetRequest(HttpURLConnection urlConnection, Map<String, String> requestProperties) throws ProtocolException {
+        urlConnection.setRequestMethod("GET");
+        setRequestProperties(urlConnection, requestProperties);
+    }
+
+    private void setRequestProperties(HttpURLConnection urlConnection, Map<String, String> requestProperties) {
+        if (requestProperties != null) {
+            for (Map.Entry<String, String> property : requestProperties.entrySet()) {
+                urlConnection.setRequestProperty(property.getKey(), property.getValue());
+            }
+        }
+    }
+
     private void constructUrl(String url) {
         try {
             this.url = new URL(url);
@@ -74,130 +143,67 @@ public class APIReader {
         }
     }
 
-    public APIReader setHeader(String header, String value) {
-        headers.put(header, value);
-        return this;
-    }
-
-    public String executeUrl() throws IOException {
-        return executeGetUrl(null);
-    }
-
-    public String executePostUrl() throws IOException {
-        return executePostUrl(null);
-    }
-
-    public String executePostUrl(String urlParameters) throws IOException {
-
-        clearHttpResults();
+    private String fireRequest(HttpURLConnection urlConnection) throws IOException {
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setDoOutput(true);
-            urlConnection.setDoInput(true);
-            urlConnection.setInstanceFollowRedirects(false);
-
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            urlConnection.setRequestProperty("charset", "utf-8");
-
-            for (Map.Entry<String, String> header : headers.entrySet()) {
-                urlConnection.setRequestProperty(header.getKey(), header.getValue());
-            }
-
-            // TODO: work with null
-            // urlConnection.setRequestProperty("Content-Length", "" +
-            // Integer.toString(urlParameters.getBytes().length));
-            urlConnection.setUseCaches(false);
-
-            if (urlParameters != null) {
-                writeUrlParameters(urlParameters, urlConnection);
-            }
-
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
-            fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
-
+            return getResponse(new InputStreamReader(urlConnection.getInputStream()));
+        } catch (IOException ioException) {
+            showMessageDueToIOException(url.toString(), ioException);
+            throw ioException;
+        } finally {
             urlConnection.disconnect();
-        } catch (IOException ioe) {
-            showMessageDueToIOException(url.toString(), ioe);
-            // throw ioe;
         }
-
-        return getFetchedResults();
-    }
-
-    public String executeGetUrl(Map<String, String> requestProperties) throws IOException {
-        clearHttpResults();
-        try {
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setRequestMethod("GET");
-            if (requestProperties != null) {
-                for (Map.Entry<String, String> property : requestProperties.entrySet()) {
-                    urlConnection.setRequestProperty(property.getKey(), property.getValue());
-                }
-            }
-
-            logger.info(String.format(MSG_CONNECTING_TO_URL, url));
-            fetchDataFromURL(new InputStreamReader(urlConnection.getInputStream()));
-        } catch (IOException ioe) {
-            showMessageDueToIOException(url.toString(), ioe);
-            throw ioe;
-        }
-        return getFetchedResults();
     }
 
     private void writeUrlParameters(String urlParameters, HttpURLConnection urlConnection) throws IOException {
         logger.info("url parameter: " + urlParameters);
-        DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-        wr.writeBytes(urlParameters);
+        Writer wr = createWriter(urlConnection.getOutputStream());
+        wr.write(urlParameters);
         wr.flush();
         wr.close();
     }
 
-    private String getFetchedResults() {
-        String result = lastHttpResult.toString();
+    //access level package for testing purposes
+    Writer createWriter(OutputStream outputStream) {
+        return new PrintWriter(outputStream);
+    }
+
+    private String getResponse(InputStreamReader isr) throws IOException {
+        return dropDelimitersFromResponse(readResponse(isr).toString());
+    }
+
+    private String dropDelimitersFromResponse(String result) {
         while (result.startsWith(Utils.OPENING_BOX_BRACKET) && result.endsWith(Utils.CLOSING_BOX_BRACKET)) {
-            result = Utils.dropStartAndEndDelimeters(result);
+            result = Utils.dropStartAndEndDelimiters(result);
         }
         return result;
     }
 
-    private List<String> fetchDataFromURL(InputStreamReader isr) throws IOException {
-        BufferedReader httpResult = null;
+    private List<String> readResponse(InputStreamReader inputStreamReader) throws IOException {
+        BufferedReader httpResponse = null;
+        List<String> response = new ArrayList<String>();
         try {
-            httpResult = new BufferedReader(isr);
+            httpResponse = new BufferedReader(inputStreamReader);
             logger.info(MSG_READING_RESULTS_RETURNED);
 
             String inputLine;
-            while ((inputLine = httpResult.readLine()) != null) {
-                addToLastHttpResults(inputLine);
+            while ((inputLine = httpResponse.readLine()) != null) {
+                response.add(inputLine);
             }
 
             logger.info(MSG_READING_COMPLETED);
         } finally {
-            if (httpResult != null) {
-                httpResult.close();
+            if (httpResponse != null) {
+                httpResponse.close();
             }
             logger.info(">>> Connection closed!");
         }
-
-        return lastHttpResult;
+        return response;
     }
 
     private void showMessageDueToIOException(String urlText, IOException ioe) {
         logger.error(String.format(MSG_ERROR_CONNECTING, urlText));
         logger.error(String.format(MSG_ERROR_DUE_TO, ioe.getMessage()));
-    }
-
-    private void clearHttpResults() {
-        if (lastHttpResult != null) {
-            lastHttpResult.clear();
-        }
-    }
-
-    private void addToLastHttpResults(String inputLine) {
-        lastHttpResult.add(inputLine);
     }
 
 }

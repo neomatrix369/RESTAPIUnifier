@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static java.lang.String.format;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.neomatrix369.apiworld.util.Utils.dropTrailingSeparator;
 
 /**
@@ -52,7 +53,7 @@ public class UriBuilder {
     private boolean apiKeyIsRequired = true;
 
     public UriBuilder(String baseURL) {
-        if (baseURL == null || baseURL.trim().isEmpty()) { //FIXME use StringUtils.isEmpty instead
+        if (isBlank(baseURL)) {
             throw new IllegalArgumentException("base url has to be non empty string");
         }
         this.baseURL = baseURL.trim();
@@ -70,7 +71,7 @@ public class UriBuilder {
     }
 
     private String getValidatedAPIKey(String apiKey) throws APIKeyNotAssignedException {
-        if (apiKeyIsRequired && StringUtils.isBlank(apiKey)) {
+        if (apiKeyIsRequired && isBlank(apiKey)) {
             throw new APIKeyNotAssignedException();
         }
         return apiKey;
