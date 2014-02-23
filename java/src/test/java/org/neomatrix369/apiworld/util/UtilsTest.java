@@ -28,6 +28,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -111,6 +112,14 @@ public class UtilsTest {
         Utils.readPropertyFrom("non-existing-path", "propertyKey");
         //Then
         //Exception should have been thrown
+    }
+
+    @Test
+    public void should_Return_No_Value_If_Property_Does_Not_Exist() throws IOException {
+        //When
+        String propertyValue = Utils.readPropertyFrom("java/src/test/resources/test.properties", "nonExistingPropertyKey");
+        //Then
+        assertThat("The key value is not the expected one", propertyValue, is(nullValue()));
     }
 
 }
