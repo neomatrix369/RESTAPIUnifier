@@ -103,4 +103,12 @@ public class UtilsTest {
         assertThat("The property value is not the expected one", propertyValue, is("propertyValue"));
     }
 
+    @Test(expected = IOException.class)
+    public void should_Fail_If_File_Does_Not_Exist() throws IOException {
+        //When
+        Utils.readPropertyFrom("non-existing-path", "propertyKey");
+        //Then
+        //Exception should have been thrown
+    }
+
 }
