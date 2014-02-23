@@ -25,6 +25,8 @@ package org.neomatrix369.apiworld.util;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -93,6 +95,14 @@ public class UtilsTest {
         actualString = Utils.dropStartAndEndDelimiters(actualString);
         String expectedString = "{'some': 'value'}";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
+    }
+
+    @Test
+    public void should_Return_Property_Value() throws IOException {
+        //When
+        String propertyValue = Utils.readPropertyFrom("java/src/test/resources/test.properties", "propertyKey");
+        //Then
+        assertThat("The property value is not the expected one", propertyValue, is("propertyValue"));
     }
 
 }
