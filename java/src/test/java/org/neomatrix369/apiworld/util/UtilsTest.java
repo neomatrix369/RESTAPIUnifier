@@ -29,6 +29,7 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.neomatrix369.apiworld.util.Utils.*;
 
 /**
  * Test class UtilsTest.
@@ -39,17 +40,17 @@ public class UtilsTest {
 
     @Test
     public void should_Verify_Invalid_JSON_Text() {
-        assertThat(Utils.isAValidJSONText("{abcde"), is(false));
+        assertThat(isAValidJSONText("{abcde"), is(false));
     }
 
     @Test
     public void should_Verify_Valid_JSON_Text() {
-        assertThat(Utils.isAValidJSONText("{color:'green', status: 'good'}"), is(true));
+        assertThat(isAValidJSONText("{color:'green', status: 'good'}"), is(true));
     }
 
     @Test
     public void should_Return_A_Plus_When_Space_Is_Passed_To_Encode_Token() {
-        assertThat(Utils.urlEncode(" "), is("+"));
+        assertThat(urlEncode(" "), is("+"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -59,13 +60,13 @@ public class UtilsTest {
 
     @Test
     public void should_Remove_Trailing_Separator_From_String_When_A_Single_Separator_Is_Passed_In() {
-        assertThat(Utils.dropTrailingSeparator("http://search.twitter.com/", "/"), is("http://search.twitter.com"));
+        assertThat(dropTrailingSeparator("http://search.twitter.com/", "/"), is("http://search.twitter.com"));
     }
 
     @Test
     public void should_Drop_Begin_And_End_Delimiters_In_An_Empty_String() {
         String inputString = "[]";
-        String actualString = Utils.dropStartAndEndDelimiters(inputString);
+        String actualString = dropStartAndEndDelimiters(inputString);
         String expectedString = "";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -73,8 +74,8 @@ public class UtilsTest {
     @Test
     public void should_Drop_Double_Begin_And_End_Delimiters_In_An_Empty_String() {
         String inputString = "[[]]";
-        String actualString = Utils.dropStartAndEndDelimiters(inputString);
-        actualString = Utils.dropStartAndEndDelimiters(actualString);
+        String actualString = dropStartAndEndDelimiters(inputString);
+        actualString = dropStartAndEndDelimiters(actualString);
         String expectedString = "";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -82,7 +83,7 @@ public class UtilsTest {
     @Test
     public void should_Drop_Begin_And_End_Delimiters_In_A_Simple_String() {
         String inputString = "[{'some': 'value'}]";
-        String actualString = Utils.dropStartAndEndDelimiters(inputString);
+        String actualString = dropStartAndEndDelimiters(inputString);
         String expectedString = "{'some': 'value'}";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -90,8 +91,8 @@ public class UtilsTest {
     @Test
     public void should_Drop_Double_Begin_And_End_Delimiters_In_A_Simple_String() {
         String inputString = "[[{'some': 'value'}]]";
-        String actualString = Utils.dropStartAndEndDelimiters(inputString);
-        actualString = Utils.dropStartAndEndDelimiters(actualString);
+        String actualString = dropStartAndEndDelimiters(inputString);
+        actualString = dropStartAndEndDelimiters(actualString);
         String expectedString = "{'some': 'value'}";
         assertThat("Begin & End delimiters haven't been dropped", actualString, is(expectedString));
     }
@@ -99,7 +100,7 @@ public class UtilsTest {
     @Test
     public void should_Return_Property_Value() throws IOException {
         //When
-        String propertyValue = Utils.readPropertyFrom("java/src/test/resources/test.properties", "propertyKey");
+        String propertyValue = readPropertyFrom("java/src/test/resources/test.properties", "propertyKey");
         //Then
         assertThat("The property value is not the expected one", propertyValue, is("propertyValue"));
     }
@@ -107,7 +108,7 @@ public class UtilsTest {
     @Test(expected = IOException.class)
     public void should_Fail_If_File_Does_Not_Exist() throws IOException {
         //When
-        Utils.readPropertyFrom("non-existing-path", "propertyKey");
+        readPropertyFrom("non-existing-path", "propertyKey");
         //Then
         //Exception should have been thrown
     }
@@ -115,7 +116,7 @@ public class UtilsTest {
     @Test
     public void should_Return_No_Value_If_Property_Does_Not_Exist() throws IOException {
         //When
-        String propertyValue = Utils.readPropertyFrom("java/src/test/resources/test.properties", "nonExistingPropertyKey");
+        String propertyValue = readPropertyFrom("java/src/test/resources/test.properties", "nonExistingPropertyKey");
         //Then
         assertThat("The key value is not the expected one", propertyValue, is(nullValue()));
     }
