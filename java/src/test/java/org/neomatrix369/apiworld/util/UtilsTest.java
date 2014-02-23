@@ -22,7 +22,6 @@
  */
 package org.neomatrix369.apiworld.util;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -53,7 +52,6 @@ public class UtilsTest {
     @Test(expected = IllegalArgumentException.class)
     public void should_Return_IllegalArgumentException_If_Null_Is_Passed_To_Encode_Token() {
         Utils.urlEncode(null);
-        Assert.fail();
     }
 
     @Test
