@@ -1,4 +1,5 @@
 *.class
+out/
 
 # Eclipse stuff #
 .settings/
