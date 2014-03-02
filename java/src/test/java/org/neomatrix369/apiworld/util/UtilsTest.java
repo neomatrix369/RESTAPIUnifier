@@ -100,7 +100,7 @@ public class UtilsTest {
     @Test
     public void should_Return_Property_Value() throws IOException {
         //When
-        String propertyValue = readPropertyFrom("java/src/test/resources/test.properties", "propertyKey");
+        String propertyValue = readPropertyFrom("src/test/resources/test.properties", "propertyKey");
         //Then
         assertThat("The property value is not the expected one", propertyValue, is("propertyValue"));
     }
@@ -116,7 +116,7 @@ public class UtilsTest {
     @Test
     public void should_Return_No_Value_If_Property_Does_Not_Exist() throws IOException {
         //When
-        String propertyValue = readPropertyFrom("java/src/test/resources/test.properties", "nonExistingPropertyKey");
+        String propertyValue = readPropertyFrom("src/test/resources/test.properties", "nonExistingPropertyKey");
         //Then
         assertThat("The key value is not the expected one", propertyValue, is(nullValue()));
     }
