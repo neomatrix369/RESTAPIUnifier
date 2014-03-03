@@ -29,10 +29,11 @@ public enum Format {
     private String format;
 
     private Format(String format) {
-	this.format = format;
+        this.format = format;
     }
 
     public String toString() {
-	return this.format;
+        return this.format;
     }
+
 }

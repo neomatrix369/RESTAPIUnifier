@@ -28,9 +28,9 @@ public abstract class VideoBaseFixture extends BaseFixture {
 
     @Before
     public void setup() {
-	xmlResponseType = "videos";
-	rssDescription = "MUZU Music Videos";
-	super.setup();
+        xmlResponseType = "videos";
+        rssDescription = "MUZU Music Videos";
+        super.setup();
     }
 
 }
