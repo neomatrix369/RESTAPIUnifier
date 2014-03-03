@@ -22,11 +22,11 @@
  */
 package org.neomatrix369.examples.muzu;
 
+import org.junit.Before;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.startsWith;
-
-import org.junit.Before;
 
 public abstract class BaseFixture {
 
@@ -39,13 +39,17 @@ public abstract class BaseFixture {
 
     @Before
     public void setup() {
-	xmlResponseBeginning = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <" + xmlResponseType + ">,";
-	rssDescriptionTag = "<description>" + rssDescription + "</description>";
+        xmlResponseBeginning = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <" + xmlResponseType + ">,";
+        rssDescriptionTag = "<description>" + rssDescription + "</description>";
     }
 
     protected void assertResponseIsValidRss(String response) {
-	assertThat(response, startsWith(RSS_RESPONSE_BEGINNING));
-	assertThat(response, containsString(rssDescriptionTag));
+        assertThat("The beginning of the response does not match RSS start", response, startsWith(RSS_RESPONSE_BEGINNING));
+        assertThat("The rss description tag is not correct", response, containsString(rssDescriptionTag));
+    }
+
+    protected void assertResponseIsValidXml(String response) {
+        assertThat("The beginning of the response does not match XML start", response, startsWith(xmlResponseBeginning));
     }
 
 }

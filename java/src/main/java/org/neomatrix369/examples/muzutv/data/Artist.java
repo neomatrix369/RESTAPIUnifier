@@ -23,41 +23,39 @@
 package org.neomatrix369.examples.muzutv.data;
 
 import org.neomatrix369.examples.muzutv.BaseMuzu;
-
 /**
  * documentation: http://www.muzu.tv/api/artistLookupDoc/
- * 
+ * <p/>
  * http://www.muzu.tv/api/artist/details/?aname=[ARTIST_NAME]&muzuid=[ MUZU_ID]
- * 
+ * <p/>
  * e.g:
- * 
+ * <p/>
  * http://www.muzu.tv/api/artist/details/?muzuid=[MUZU_ID]&aname=yello
  * http://www.muzu.tv/api/artist/details/?aname=yello&muzuid=[MUZU_ID]&soundoff
  * =y
- * 
  */
 public class Artist extends BaseMuzu {
 
     @Override
     protected String apiCommand() {
-	return "artist/details/";
+        return "artist/details/";
     }
 
     public Artist withName(String name) {
-	parameters.put("aname", name);
-	return this;
+        parameters.put("aname", name);
+        return this;
     }
 
     /**
      * The number of items to return. Maximum allowed value is 1000. Defaults to
      * 500.
-     * 
-     * @param i
-     * @return
+     *
+     * @param length number of items to return
+     * @return Artist command with a particular length
      */
-    public Artist withLength(int i) {
-	parameters.put(LENGTH, String.valueOf(i));
-	return this;
+    public Artist withLength(int length) {
+        parameters.put(LENGTH, String.valueOf(length));
+        return this;
     }
 
 }
