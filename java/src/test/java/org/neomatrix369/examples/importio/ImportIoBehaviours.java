@@ -22,15 +22,13 @@
  */
 package org.neomatrix369.examples.importio;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.util.Utils;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class ImportIoBehaviours {
 
@@ -38,21 +36,21 @@ public class ImportIoBehaviours {
     private String password;
 
     @Before
-    public void setup() throws IOException {
-	username = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "username");
-	password = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "password");
+    public void setup() {
+        username = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "username");
+        password = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "password");
     }
 
     @Test
     public void login_with_POST_method() throws Exception {
 
-	String urlParameters = String.format("username=%s&password=%s", username, password);
-	String request = "https://api.import.io/auth/login";
+        String urlParameters = String.format("username=%s&password=%s", username, password);
+        String request = "https://api.import.io/auth/login";
 
-	APIReader apiReader = new APIReader(request);
+        APIReader apiReader = new APIReader(request);
 
-	String response = apiReader.executePostUrl(urlParameters);
-	assertThat(ImportIO.isSuccessfulResponse(response), is(true));
+        String response = apiReader.executePostUrl(urlParameters);
+        assertThat(ImportIO.isSuccessfulResponse(response), is(true));
     }
 
     // TODO: add test that does login first and stores cookie and then reuses
