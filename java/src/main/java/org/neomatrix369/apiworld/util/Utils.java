@@ -97,35 +97,19 @@ public final class Utils {
         }
     }
 
-    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) {
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileReader(new File(propertyFilename)));
-            return prop.getProperty(propertyName);
-        } catch (FileNotFoundException e) {
-            try {
-                logger.info("Current path: " + new File(".").getCanonicalPath());
-            } catch (IOException e1) {
-
-            }
-            logger.error(e.getMessage());
-            throw new IllegalStateException("Did not find property file.");
-
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            throw new IllegalStateException("IO Exception occurred");
-        }
-    }
-
-    public static String readPropertyFrom(String propertyFilename, String propertyName) throws IOException {
+    public static String readPropertyFrom(String propertyFilename, String propertyName) {
         Properties prop = new Properties();
         try {
             prop.load(new FileReader(new File(propertyFilename)));
             return prop.getProperty(propertyName);
         } catch (IOException exception) {
-            logger.info("Current path: " + new File(".").getCanonicalPath());
+            try {
+                logger.info("Current path: " + new File(".").getCanonicalPath());
+            } catch (IOException e) {
+                logger.info("Could not determine the current path");
+            }
             logger.error(exception.getMessage());
-            throw exception;
+            throw new IllegalStateException("IO Exception occurred");
         }
     }
 

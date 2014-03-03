@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.neomatrix369.apiworld.util.Utils.readPropertyFrom;
+
 public abstract class BaseMuzu {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseMuzu.class);
@@ -50,7 +52,7 @@ public abstract class BaseMuzu {
     private APIReader apiReader;
 
     public BaseMuzu() {
-        this.apiKey = Utils.readMandatoryPropertyFrom("resources/apiKeys/muzu.properties", "APIKey");
+        this.apiKey = readPropertyFrom("resources/apiKeys/muzu.properties", "APIKey");
     }
 
     abstract protected String apiCommand();

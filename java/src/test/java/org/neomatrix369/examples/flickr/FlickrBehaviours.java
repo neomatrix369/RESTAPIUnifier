@@ -22,37 +22,37 @@
  */
 package org.neomatrix369.examples.flickr;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.util.Utils;
+
+import java.io.IOException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class FlickrBehaviours {
 
     private String apiKey;
 
     @Before
-    public void setup() throws IOException {
-	apiKey = Utils.readPropertyFrom("resources/apiKeys/flickr.properties", "APIKey");
+    public void setup() {
+        apiKey = Utils.readPropertyFrom("resources/apiKeys/flickr.properties", "APIKey");
     }
 
     @Test
     public void recentPhotos() throws IOException {
-	RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
-	String response = recentPhotos.executeUrl();
-	assertThat(recentPhotos.isSuccessfulResponse(response), is(true));
+        RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
+        String response = recentPhotos.executeUrl();
+        assertThat(recentPhotos.isSuccessfulResponse(response), is(true));
     }
 
     @Test
     public void search() throws Exception {
-	Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
-	String response = search.executeUrl();
-	assertThat(search.isSuccessfulResponse(response), is(true));
+        Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
+        String response = search.executeUrl();
+        assertThat(search.isSuccessfulResponse(response), is(true));
     }
 
 }
