@@ -22,45 +22,41 @@
  */
 package org.neomatrix369.examples.muzu.data;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzu.VideoBaseFixture;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.neomatrix369.examples.muzutv.data.Browse;
 import org.neomatrix369.examples.muzutv.data.Format;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BrowseEndpointBehaviours extends VideoBaseFixture {
 
-    @SuppressWarnings("unused")
-    private static final Logger logger = LoggerFactory.getLogger(BrowseEndpointBehaviours.class);
-
-    private Browse aBrowser() {
-	return new Browse().withGenre("pop").withLength(1);
+    private Browse aBrowser() throws PropertyNotDefinedException {
+        return new Browse().withGenre("pop").withLength(1);
     }
 
     @Before
     public void setup() {
-	super.setup();
+        super.setup();
     }
 
     @Test
-    public void should_be_rss_result_when_no_format_is_given_for_browse_endpoint() throws Exception {
-
-	String response = aBrowser().buildUrl().executeUrl();
-	assertResponseIsValidRss(response);
+    public void should_default_to_rss_format() throws Exception {
+        //Given/When
+        String response = aBrowser().buildUrl().executeUrl();
+        //Then
+        assertResponseIsValidRss(response);
     }
 
     @Test
-    public void should_be_xml_result_when_format_is_given_as_xml() throws Exception {
-	BaseMuzu muzuBrowse = aBrowser().withFormat(Format.XML).buildUrl();
-
-	String response = muzuBrowse.executeUrl();
-	assertThat(response, startsWith(xmlResponseBeginning));
+    public void should_retrieve_appropriate_format() throws Exception {
+        //Given
+        BaseMuzu muzuBrowse = aBrowser().withFormat(Format.XML).buildUrl();
+        //When
+        String response = muzuBrowse.executeUrl();
+        //Then
+        assertResponseIsValidXml(response);
     }
 
 }

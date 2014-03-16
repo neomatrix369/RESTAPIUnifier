@@ -25,6 +25,7 @@ package org.neomatrix369.apiworld.util;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,35 +98,23 @@ public final class Utils {
         }
     }
 
-    public static String readMandatoryPropertyFrom(String propertyFilename, String propertyName) {
+    public static String readPropertyFrom(String propertyFilename, String propertyName) throws PropertyNotDefinedException {
         Properties prop = new Properties();
         try {
             prop.load(new FileReader(new File(propertyFilename)));
-            return prop.getProperty(propertyName);
-        } catch (FileNotFoundException e) {
+            String propertyValue = prop.getProperty(propertyName);
+            if(propertyValue != null) {
+                return propertyValue;
+            }
+            throw new PropertyNotDefinedException("There is no property " + propertyName + " defined on file " + propertyFilename);
+        } catch (IOException exception) {
             try {
                 logger.info("Current path: " + new File(".").getCanonicalPath());
-            } catch (IOException e1) {
-
+            } catch (IOException e) {
+                logger.info("Could not determine the current path");
             }
-            logger.error(e.getMessage());
-            throw new IllegalStateException("Did not find property file.");
-
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            throw new IllegalStateException("IO Exception occurred");
-        }
-    }
-
-    public static String readPropertyFrom(String propertyFilename, String propertyName) throws IOException {
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileReader(new File(propertyFilename)));
-            return prop.getProperty(propertyName);
-        } catch (IOException exception) {
-            logger.info("Current path: " + new File(".").getCanonicalPath());
             logger.error(exception.getMessage());
-            throw exception;
+            throw new IllegalStateException("IO Exception occurred");
         }
     }
 

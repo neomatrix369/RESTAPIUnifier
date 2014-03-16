@@ -22,46 +22,41 @@
  */
 package org.neomatrix369.examples.muzu.data;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzu.VideoBaseFixture;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.neomatrix369.examples.muzutv.data.Format;
 import org.neomatrix369.examples.muzutv.data.Search;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class SearchEndpointBhaviours extends VideoBaseFixture {
+public class SearchEndpointBehaviours extends VideoBaseFixture {
 
-    @SuppressWarnings("unused")
-    private static final Logger logger = LoggerFactory.getLogger(SearchEndpointBhaviours.class);
-
-    private Search aSearchForArtist() {
-	return new Search().withSearchTerm("beyonce").withLength(1);
+    private Search aSearchForArtist() throws PropertyNotDefinedException {
+        return new Search().withSearchTerm("beyonce").withLength(1);
     }
 
     @Before
     public void setup() {
-	super.setup();
+        super.setup();
     }
 
     @Test
-    public void search() throws Exception {
-
-	String response = aSearchForArtist().buildUrl().executeUrl();
-	assertResponseIsValidRss(response);
+    public void should_default_to_rss_format() throws Exception {
+        //Given/When
+        String response = aSearchForArtist().buildUrl().executeUrl();
+        //Then
+        assertResponseIsValidRss(response);
     }
 
     @Test
-    public void search_with_format_xml_should_return_xml() throws Exception {
-
-	BaseMuzu search = aSearchForArtist().withFormat(Format.XML).buildUrl();
-
-	String response = search.executeUrl();
-	assertThat(response, startsWith(xmlResponseBeginning));
+    public void should_retrieve_appropriate_format() throws Exception {
+        //Given
+        BaseMuzu search = aSearchForArtist().withFormat(Format.XML).buildUrl();
+        //When
+        String response = search.executeUrl();
+        //Then
+        assertResponseIsValidXml(response);
     }
 
 }

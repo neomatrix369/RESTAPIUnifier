@@ -22,49 +22,47 @@
  */
 package org.neomatrix369.examples.muzutv.data;
 
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
-
 /**
  * http://www.muzu.tv/api/browseDoc/
- * 
+ * <p/>
  * Examples:
- * 
+ * <p/>
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&ob=views e.g.
- * 
+ * <p/>
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&ob=recent&l=200&of=50
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&af=b&g=pop
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&g=rock
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&g=rock&soundoff=y
- * 
  */
 public class Browse extends BaseMuzu {
 
+    public Browse() throws PropertyNotDefinedException {
+        super();
+    }
+
     @Override
     protected String apiCommand() {
-	return "browse";
+        return "browse";
     }
 
     public Browse withGenre(String value) {
-	parameters.put("g", value);
-	return this;
-    }
-
-    public Browse withAlphaFilter(String value) {
-	parameters.put("af", value);
-	return this;
+        parameters.put("g", value);
+        return this;
     }
 
     /**
      * The number of items to return. Maximum allowed value is 1000. Defaults to
      * 500.
-     * 
-     * @param i
-     * @return
+     *
+     * @param length number of items to return
+     * @return Browse command with a particular length
      */
-    public Browse withLength(int i) {
-	parameters.put(LENGTH, String.valueOf(i));
-	return this;
+    public Browse withLength(int length) {
+        parameters.put(LENGTH, String.valueOf(length));
+        return this;
     }
 
 }

@@ -20,17 +20,12 @@
  *  2 along with this work; if not, write to the Free Software Foundation,
  *  Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package org.neomatrix369.examples.muzu;
+package org.neomatrix369.apiworld.exception;
 
-import org.junit.Before;
+public class PropertyNotDefinedException extends Exception {
 
-public abstract class VideoBaseFixture extends BaseFixture {
-
-    @Before
-    public void setup() {
-        xmlResponseType = "videos";
-        rssDescription = "MUZU Music Videos";
-        super.setup();
+    public PropertyNotDefinedException(String message) {
+        super(message);
     }
 
 }

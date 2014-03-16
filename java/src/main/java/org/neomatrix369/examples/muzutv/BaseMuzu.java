@@ -22,17 +22,20 @@
  */
 package org.neomatrix369.examples.muzutv;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.apiworld.util.Utils;
 import org.neomatrix369.examples.muzutv.data.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.neomatrix369.apiworld.util.Utils.readPropertyFrom;
 
 public abstract class BaseMuzu {
 
@@ -49,48 +52,45 @@ public abstract class BaseMuzu {
 
     private APIReader apiReader;
 
-    public BaseMuzu() {
-	this.apiKey = Utils.readMandatoryPropertyFrom("resources/apiKeys/muzu.properties", "APIKey");
+    public BaseMuzu() throws PropertyNotDefinedException {
+        this.apiKey = readPropertyFrom("resources/apiKeys/muzu.properties", "APIKey");
     }
 
     abstract protected String apiCommand();
 
     public BaseMuzu buildUrl() {
-	buildAPIReadyToExecute(apiKey, parameters);
-	return this;
+        buildAPIReadyToExecute(apiKey, parameters);
+        return this;
     }
 
     /**
      * The format of the response can be specified here. The two format types
      * are rss and xml. Defaults to rss.
-     * 
-     * @param format
-     * @return
+     *
+     * @param format of the response
+     * @return BaseMuzu with a format set
      */
     public BaseMuzu withFormat(Format format) {
-	parameters.put(FORMAT, format.toString());
-	return this;
+        parameters.put(FORMAT, format.toString());
+        return this;
     }
 
     public String executeUrl() throws IOException {
-	return apiReader.executeGetUrl();
+        return apiReader.executeGetUrl();
     }
 
     protected void buildAPIReadyToExecute(String apiKeyValue, Map<String, String> parameters) {
-	UriBuilder uriBuilder = new UriBuilder(BASE_URL).setCommand(apiCommand()).setAPIKey(API_KEY, apiKeyValue);
-
-	for (Map.Entry<String, String> param : parameters.entrySet()) {
-	    uriBuilder.addUrlParameter(param.getKey(), Utils.urlEncode(param.getValue()));
-	}
-
-	try {
-	    uriBuilder.build();
-	    this.apiReader = new APIReader(uriBuilder);
-	} catch (APIKeyNotAssignedException e) {
-	    logger.error(e.getMessage());
-	    throw new IllegalStateException("No API Key assigned");
-	}
-
+        UriBuilder uriBuilder = new UriBuilder(BASE_URL).setCommand(apiCommand()).setAPIKey(API_KEY, apiKeyValue);
+        for (Map.Entry<String, String> param : parameters.entrySet()) {
+            uriBuilder.addUrlParameter(param.getKey(), Utils.urlEncode(param.getValue()));
+        }
+        try {
+            uriBuilder.build();
+            this.apiReader = new APIReader(uriBuilder);
+        } catch (APIKeyNotAssignedException e) {
+            logger.error(e.getMessage());
+            throw new IllegalStateException("No API Key assigned");
+        }
     }
 
 }
