@@ -25,6 +25,7 @@ package org.neomatrix369.examples.flickr;
 import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.ResultType;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.apiworld.util.Utils;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class FlickrBehaviours {
     private String apiKey;
 
     @Before
-    public void setup() {
+    public void setup() throws PropertyNotDefinedException {
         apiKey = Utils.readPropertyFrom("resources/apiKeys/flickr.properties", "APIKey");
     }
 

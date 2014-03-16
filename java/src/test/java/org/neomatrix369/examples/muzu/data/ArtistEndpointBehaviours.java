@@ -24,6 +24,7 @@ package org.neomatrix369.examples.muzu.data;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzu.BaseFixture;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.neomatrix369.examples.muzutv.data.Artist;
@@ -40,15 +41,15 @@ public class ArtistEndpointBehaviours extends BaseFixture {
     private String validArtistName = "yello";
     private String invalidArtistName = "yellooooooo";
 
-    private Artist anArtist() {
+    private Artist anArtist() throws PropertyNotDefinedException {
         return new Artist().withLength(1);
     }
 
-    private Artist aValidArtist() {
+    private Artist aValidArtist() throws PropertyNotDefinedException {
         return anArtist().withName(validArtistName);
     }
 
-    private Artist anInvalidArtist() {
+    private Artist anInvalidArtist() throws PropertyNotDefinedException {
         return anArtist().withName(invalidArtistName);
     }
 

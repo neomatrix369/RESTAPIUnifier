@@ -24,6 +24,7 @@ package org.neomatrix369.examples.muzu.data;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzu.VideoBaseFixture;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.neomatrix369.examples.muzutv.data.Browse;
@@ -31,7 +32,7 @@ import org.neomatrix369.examples.muzutv.data.Format;
 
 public class BrowseEndpointBehaviours extends VideoBaseFixture {
 
-    private Browse aBrowser() {
+    private Browse aBrowser() throws PropertyNotDefinedException {
         return new Browse().withGenre("pop").withLength(1);
     }
 

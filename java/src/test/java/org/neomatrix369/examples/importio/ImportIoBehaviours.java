@@ -25,6 +25,7 @@ package org.neomatrix369.examples.importio;
 import org.junit.Before;
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.apiworld.util.Utils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,7 +37,7 @@ public class ImportIoBehaviours {
     private String password;
 
     @Before
-    public void setup() {
+    public void setup() throws PropertyNotDefinedException {
         username = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "username");
         password = Utils.readPropertyFrom("resources/apiKeys/importio.properties", "password");
     }

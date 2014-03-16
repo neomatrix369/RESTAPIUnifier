@@ -23,6 +23,7 @@
 package org.neomatrix369.apiworld.util;
 
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 
 import java.io.IOException;
 
@@ -98,7 +99,7 @@ public class UtilsTest {
     }
 
     @Test
-    public void should_Return_Property_Value() {
+    public void should_Return_Property_Value() throws PropertyNotDefinedException {
         //When
         String propertyValue = readPropertyFrom("src/test/resources/test.properties", "propertyKey");
         //Then
@@ -106,19 +107,19 @@ public class UtilsTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void should_Fail_If_File_Does_Not_Exist() {
+    public void should_Fail_If_File_Does_Not_Exist() throws PropertyNotDefinedException {
         //When
         readPropertyFrom("non-existing-path", "propertyKey");
         //Then
         //Exception should have been thrown
     }
 
-    @Test
-    public void should_Return_No_Value_If_Property_Does_Not_Exist() {
+    @Test(expected = PropertyNotDefinedException.class)
+    public void should_Fail_If_Property_Does_Not_Exist() throws PropertyNotDefinedException {
         //When
-        String propertyValue = readPropertyFrom("src/test/resources/test.properties", "nonExistingPropertyKey");
+        readPropertyFrom("src/test/resources/test.properties", "nonExistingPropertyKey");
         //Then
-        assertThat("The key value is not the expected one", propertyValue, is(nullValue()));
+        //Exception should have been thrown
     }
 
 }

@@ -22,6 +22,7 @@
  */
 package org.neomatrix369.examples.muzutv.data;
 
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 /**
  * http://www.muzu.tv/api/browseDoc/
@@ -37,6 +38,10 @@ import org.neomatrix369.examples.muzutv.BaseMuzu;
  * http://www.muzu.tv/api/browse?muzuid=[MUZU_ID]&g=rock&soundoff=y
  */
 public class Browse extends BaseMuzu {
+
+    public Browse() throws PropertyNotDefinedException {
+        super();
+    }
 
     @Override
     protected String apiCommand() {

@@ -25,6 +25,7 @@ package org.neomatrix369.examples.muzutv;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.apiworld.util.Utils;
 import org.neomatrix369.examples.muzutv.data.Format;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public abstract class BaseMuzu {
 
     private APIReader apiReader;
 
-    public BaseMuzu() {
+    public BaseMuzu() throws PropertyNotDefinedException {
         this.apiKey = readPropertyFrom("resources/apiKeys/muzu.properties", "APIKey");
     }
 

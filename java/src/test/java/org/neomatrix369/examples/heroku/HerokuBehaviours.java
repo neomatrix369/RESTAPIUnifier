@@ -28,7 +28,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
-import org.neomatrix369.apiworld.util.Utils;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +40,7 @@ import java.io.StringReader;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.neomatrix369.apiworld.util.Utils.readPropertyFrom;
 
 /* ***** Heroku API *****
  * Developers Guides
@@ -78,9 +79,9 @@ public class HerokuBehaviours {
     }
 
     @Before
-    public void setup() throws IOException {
-        apiKey = Utils.readPropertyFrom(HEROKU_SETTINGS_LOCATION, "APIKey");
-        emailaddress = Utils.readPropertyFrom(HEROKU_SETTINGS_LOCATION, "emailaddress");
+    public void setup() throws IOException, PropertyNotDefinedException {
+        apiKey = readPropertyFrom(HEROKU_SETTINGS_LOCATION, "APIKey");
+        emailaddress = readPropertyFrom(HEROKU_SETTINGS_LOCATION, "emailaddress");
         heroku = new Heroku(apiKey, emailaddress);
     }
 

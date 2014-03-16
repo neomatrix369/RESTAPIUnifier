@@ -24,6 +24,7 @@ package org.neomatrix369.examples.muzu.data;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzu.VideoBaseFixture;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 import org.neomatrix369.examples.muzutv.data.Format;
@@ -31,7 +32,7 @@ import org.neomatrix369.examples.muzutv.data.Search;
 
 public class SearchEndpointBehaviours extends VideoBaseFixture {
 
-    private Search aSearchForArtist() {
+    private Search aSearchForArtist() throws PropertyNotDefinedException {
         return new Search().withSearchTerm("beyonce").withLength(1);
     }
 

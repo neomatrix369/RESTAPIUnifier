@@ -22,6 +22,7 @@
  */
 package org.neomatrix369.examples.muzutv.data;
 
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 
 /**
@@ -37,6 +38,10 @@ import org.neomatrix369.examples.muzutv.BaseMuzu;
 public class Search extends BaseMuzu {
 
     private static final String MY_SEARCH = "mySearch";
+
+    public Search() throws PropertyNotDefinedException {
+        super();
+    }
 
     @Override
     protected String apiCommand() {

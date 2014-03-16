@@ -22,6 +22,7 @@
  */
 package org.neomatrix369.examples.muzutv.data;
 
+import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.examples.muzutv.BaseMuzu;
 /**
  * documentation: http://www.muzu.tv/api/artistLookupDoc/
@@ -35,6 +36,10 @@ import org.neomatrix369.examples.muzutv.BaseMuzu;
  * =y
  */
 public class Artist extends BaseMuzu {
+
+    public Artist() throws PropertyNotDefinedException {
+        super();
+    }
 
     @Override
     protected String apiCommand() {
