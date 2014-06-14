@@ -22,15 +22,29 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import org.neomatrix369.apiworld.APIReader;
+
 import java.io.IOException;
 
-public class RecentPhotos extends BaseFlickr {
+public class RecentPhotos{
 
-    RecentPhotos(String apiKey, String paramStart, String... params) throws IOException {
-	String apiCommand = "?method=flickr.photos.getRecent";
-	String[] arrayURLParamCodes = { "format" };
+    private final FlickrAPI flickrAPI;
+    private final String apiKey;
+    private final String paramStart;
+    private final String[] params;
 
-	apiReader = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+    RecentPhotos(FlickrAPI flickrAPI, String apiKey, String paramStart, String... params) throws IOException {
+        this.flickrAPI = flickrAPI;
+        this.apiKey = apiKey;
+        this.paramStart = paramStart;
+        this.params = params;
+    }
+
+    public String execute() throws IOException {
+        String apiCommand = "?method=flickr.photos.getRecent";
+        String[] arrayURLParamCodes = { "format" };
+        APIReader reader = flickrAPI.buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+        return reader.executeGetUrl();
     }
 
 }

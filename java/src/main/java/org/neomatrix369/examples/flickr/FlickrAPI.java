@@ -38,11 +38,11 @@ import java.io.IOException;
 // "format":{"_content":"json"},
 // "api_key":{"_content":"4cccadecce65a39cfcfee90b1c01c6a4"}, "stat":"ok"})
 
-public class BaseFlickr {
+public class FlickrAPI {
 
     private static final String FLICKR_API_PARAM = "api_key";
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseFlickr.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlickrAPI.class);
 
     private String baseURL = "http://api.flickr.com/services/rest";
     protected APIReader apiReader;

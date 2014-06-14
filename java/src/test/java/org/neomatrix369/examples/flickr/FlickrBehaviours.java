@@ -45,8 +45,11 @@ public class FlickrBehaviours {
 
     @Test
     public void recentPhotos() throws IOException {
-        RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
-        String response = recentPhotos.executeUrl();
+        FlickrAPI flickrAPI = new FlickrAPI();
+        RecentPhotos recentPhotos = new RecentPhotos(flickrAPI, apiKey, "&", ResultType.JSON.toString());
+
+        String response = recentPhotos.execute();
+
         assertThat(TestUtilities.isSuccessfulResponse(response), is(true));
     }
 

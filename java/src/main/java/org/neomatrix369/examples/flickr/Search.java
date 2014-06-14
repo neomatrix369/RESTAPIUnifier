@@ -24,7 +24,7 @@ package org.neomatrix369.examples.flickr;
 
 import java.io.IOException;
 
-public class Search extends BaseFlickr {
+public class Search extends FlickrAPI {
 
     Search(String apiKey, String paramStart, String... params) throws IOException {
 	String apiCommand = "?method=flickr.photos.search";

@@ -37,7 +37,7 @@ public class FlickrTest {
 	assertThat(extractJson(flickrResponse), is(jsonResponse));
     }
 
-    private BaseFlickr aFlickrRestApi() {
-	return new BaseFlickr();
+    private FlickrAPI aFlickrRestApi() {
+	return new FlickrAPI();
     }
 }
