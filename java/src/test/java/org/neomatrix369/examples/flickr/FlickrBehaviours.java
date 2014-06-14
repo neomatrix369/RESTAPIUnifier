@@ -37,15 +37,16 @@ import static org.hamcrest.Matchers.is;
 public class FlickrBehaviours {
 
     private String apiKey;
+    private FlickrAPI flickrAPI;
 
     @Before
     public void setup() throws PropertyNotDefinedException {
         apiKey = Utils.readPropertyFrom("resources/apiKeys/flickr.properties", "APIKey");
+        flickrAPI = new FlickrAPI();
     }
 
     @Test
     public void recentPhotos() throws IOException {
-        FlickrAPI flickrAPI = new FlickrAPI();
         RecentPhotos recentPhotos = new RecentPhotos(flickrAPI, apiKey, "&", ResultType.JSON.toString());
 
         String response = recentPhotos.execute();
@@ -55,8 +56,8 @@ public class FlickrBehaviours {
 
     @Test
     public void search() throws Exception {
-        Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
-        String response = search.executeUrl();
+        Search search = new Search(flickrAPI, apiKey, "&", ResultType.JSON.toString(), "hello");
+        String response = search.execute();
         assertThat(TestUtilities.isSuccessfulResponse(response), is(true));
     }
 

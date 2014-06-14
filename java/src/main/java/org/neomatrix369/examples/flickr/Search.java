@@ -22,15 +22,28 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import org.neomatrix369.apiworld.APIReader;
+
 import java.io.IOException;
 
-public class Search extends FlickrAPI {
+public class Search {
 
-    Search(String apiKey, String paramStart, String... params) throws IOException {
-	String apiCommand = "?method=flickr.photos.search";
-	String[] arrayURLParamCodes = { "format", "text" };
+    private final FlickrAPI flickrAPI;
+    private final String apiKey;
+    private final String paramStart;
+    private final String[] params;
 
-	apiReader = buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
-	apiReader.executeGetUrl();
+    Search(FlickrAPI flickrAPI, String apiKey, String paramStart, String... params) throws IOException {
+        this.flickrAPI = flickrAPI;
+        this.apiKey = apiKey;
+        this.paramStart = paramStart;
+        this.params = params;
+   }
+
+    public String execute() throws IOException {
+        String apiCommand = "?method=flickr.photos.search";
+        String[] arrayURLParamCodes = { "format", "text" };
+        APIReader apiReader = flickrAPI.buildAPIReadyToExecute(apiKey, apiCommand, paramStart, arrayURLParamCodes, params);
+        return apiReader.executeGetUrl();
     }
 }

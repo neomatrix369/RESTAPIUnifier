@@ -48,25 +48,25 @@ public class FlickrAPI {
     protected APIReader apiReader;
 
     public String executeUrl() throws IOException {
-	return apiReader.executeGetUrl();
+        return apiReader.executeGetUrl();
     }
 
     protected APIReader buildAPIReadyToExecute(String apiKey, String apiCommand, String paramStart,
-	    String[] arrayURLParamCodes, String... params) {
-	UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
-		.setAPIKey(FLICKR_API_PARAM, apiKey);
-	int paramCtr = 0;
-	for (String eachValue : params) {
-	    uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.urlEncode(eachValue));
-	}
+                                               String[] arrayURLParamCodes, String... params) {
+        UriBuilder uriBuilder = new UriBuilder(baseURL).setCommand(apiCommand).setParamStart(paramStart)
+                .setAPIKey(FLICKR_API_PARAM, apiKey);
+        int paramCtr = 0;
+        for (String eachValue : params) {
+            uriBuilder.addUrlParameter(arrayURLParamCodes[paramCtr++], Utils.urlEncode(eachValue));
+        }
 
-	try {
-	    uriBuilder.build();
-	    return new APIReader(uriBuilder);
-	} catch (APIKeyNotAssignedException e) {
-	    logger.error(e.getMessage());
-	    return new APIReader(baseURL);
-	}
+        try {
+            uriBuilder.build();
+            return new APIReader(uriBuilder);
+        } catch (APIKeyNotAssignedException e) {
+            logger.error(e.getMessage());
+            return new APIReader(baseURL);
+        }
     }
 
 }
