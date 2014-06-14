@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
@@ -75,11 +74,11 @@ public class APIReader {
     }
 
     public String executeGetUrl() throws IOException {
-        return executeGetUrl(null);
+        return executeGetUrl(new HashMap<String, String>());
     }
 
     public String executePostUrl() throws IOException {
-        return executePostUrl(null);
+        return executePostUrl("");
     }
 
     public String executePostUrl(String urlParameters) throws IOException {
