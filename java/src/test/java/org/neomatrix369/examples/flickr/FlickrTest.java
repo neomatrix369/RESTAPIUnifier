@@ -22,10 +22,11 @@
  */
 package org.neomatrix369.examples.flickr;
 
+import org.junit.Test;
+import static org.neomatrix369.utilities.TestUtilities.*;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import org.junit.Test;
 
 public class FlickrTest {
 
@@ -33,7 +34,7 @@ public class FlickrTest {
     public void should_remove_jsonFlickrApi_to_receive_json_response() {
 	String flickrResponse = "jsonFlickrApi({\"method\":{\"_content\":\"flickr.test.echo\"}, \"format\":{\"_content\":\"json\"}, \"api_key\":{\"_content\":\"4cccadecce65a39cfcfee90b1c01c6a4\"}, \"stat\":\"ok\"})";
 	String jsonResponse = "{\"method\":{\"_content\":\"flickr.test.echo\"}, \"format\":{\"_content\":\"json\"}, \"api_key\":{\"_content\":\"4cccadecce65a39cfcfee90b1c01c6a4\"}, \"stat\":\"ok\"}";
-	assertThat(aFlickrRestApi().extractJson(flickrResponse), is(jsonResponse));
+	assertThat(extractJson(flickrResponse), is(jsonResponse));
     }
 
     private BaseFlickr aFlickrRestApi() {

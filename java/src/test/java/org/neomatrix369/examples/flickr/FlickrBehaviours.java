@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.neomatrix369.apiworld.ResultType;
 import org.neomatrix369.apiworld.exception.PropertyNotDefinedException;
 import org.neomatrix369.apiworld.util.Utils;
+import org.neomatrix369.utilities.TestUtilities;
 
 import java.io.IOException;
 
@@ -46,14 +47,14 @@ public class FlickrBehaviours {
     public void recentPhotos() throws IOException {
         RecentPhotos recentPhotos = new RecentPhotos(apiKey, "&", ResultType.JSON.toString());
         String response = recentPhotos.executeUrl();
-        assertThat(recentPhotos.isSuccessfulResponse(response), is(true));
+        assertThat(TestUtilities.isSuccessfulResponse(response), is(true));
     }
 
     @Test
     public void search() throws Exception {
         Search search = new Search(apiKey, "&", ResultType.JSON.toString(), "hello");
         String response = search.executeUrl();
-        assertThat(search.isSuccessfulResponse(response), is(true));
+        assertThat(TestUtilities.isSuccessfulResponse(response), is(true));
     }
 
 }

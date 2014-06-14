@@ -22,19 +22,14 @@
  */
 package org.neomatrix369.examples.flickr;
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-
 import org.neomatrix369.apiworld.APIReader;
 import org.neomatrix369.apiworld.UriBuilder;
 import org.neomatrix369.apiworld.exception.APIKeyNotAssignedException;
 import org.neomatrix369.apiworld.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 //http://www.flickr.com/services/api/response.json.html
 
@@ -72,26 +67,6 @@ public class BaseFlickr {
 	    logger.error(e.getMessage());
 	    return new APIReader(baseURL);
 	}
-
     }
 
-    public boolean isSuccessfulResponse(String response) {
-	JsonReader jsonReader = Json.createReader(new StringReader(extractJson(response)));
-	JsonObject json = jsonReader.readObject();
-	return json.getString("stat").equals("ok");
-    }
-
-    public String extractJson(String flickrResponse) {
-	int beginIndex = flickrResponse.indexOf("{\"");
-	if (beginIndex == -1) {
-	    logger.error(flickrResponse);
-	    throw new IllegalStateException("begin index not found");
-	}
-	int endIndex = flickrResponse.lastIndexOf(")");
-	if (endIndex == -1) {
-	    logger.error("response: " + flickrResponse);
-	    throw new IllegalStateException("end index not found");
-	}
-	return flickrResponse.substring(beginIndex, endIndex);
-    }
 }

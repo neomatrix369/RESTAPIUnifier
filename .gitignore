@@ -32,3 +32,5 @@ App.config
 # IntelliJ IDEA files
 *.iml
 .idea/
+
+expectedMuzuBrowseCommandResults.txt
