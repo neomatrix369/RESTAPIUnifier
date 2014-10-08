@@ -52,6 +52,8 @@ Developers, OpenSource committers, API vendors, API Service Providers, etc... wi
 IDE
 ---
  For the java version of the libary, when loading the project into IDEs like Eclipse or IntelliJ please use the pom.xml file within the java sub-folder and not the pom.xml in the root folder.
+ 
+ <b> Powered by ![IntelliJ IDEA - @JetBrains](http://www.jetbrains.com/company/docs/logo_jetbrains.png) and we are proud of it - thank you for your support ! </b>
 
 Examples implemented using RESTAPIUnifier
 -----------------------------------------
@@ -137,5 +139,3 @@ Quotes
 ------
 * Alone we can do so little; together we can do so much - Helen Keller
 * Long live social coding! - @neomatrix369
-
-
