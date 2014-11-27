@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.startsWith;
 
 public abstract class BaseFixture {
 
-    protected static final String RSS_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <rss version=\"2.0\"";
+    protected static final String RSS_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <rss xmlns:muzu=";
 
     protected String xmlResponseType;
     protected String xmlResponseBeginning;
