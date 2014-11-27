@@ -74,7 +74,9 @@ public class APIReader {
     }
 
     public String executeGetUrl() throws IOException {
-        return executeGetUrl(new HashMap<String, String>());
+        Map<String, String> requestProperties = new HashMap<String, String>();
+        requestProperties.put("User-Agent", "RestAPIUnifier/1.0 +https://github.com/mbateman");
+        return executeGetUrl(requestProperties);
     }
 
     public String executePostUrl() throws IOException {
@@ -145,7 +147,8 @@ public class APIReader {
     private String fireRequest(HttpURLConnection urlConnection) throws IOException {
         try {
             logger.info(String.format(MSG_CONNECTING_TO_URL, url));
-            return getResponse(new InputStreamReader(urlConnection.getInputStream()));
+            InputStream inputStream = urlConnection.getInputStream();
+            return getResponse(new InputStreamReader(inputStream));
         } catch (IOException ioException) {
             showMessageDueToIOException(url.toString(), ioException);
             throw ioException;
