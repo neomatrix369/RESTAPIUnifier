@@ -44,7 +44,7 @@ public class FlickrAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(FlickrAPI.class);
 
-    private String baseURL = "http://api.flickr.com/services/rest";
+    private String baseURL = "https://api.flickr.com/services/rest";
     protected APIReader apiReader;
 
     public String executeUrl() throws IOException {
