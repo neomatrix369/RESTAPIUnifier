@@ -114,7 +114,7 @@ public final class Utils {
                 logger.info("Could not determine the current path");
             }
             logger.error(exception.getMessage());
-            throw new IllegalStateException("IO Exception occurred");
+            throw new IllegalStateException("IO Exception occurred due to the following: " + exception.getMessage());
         }
     }
 
