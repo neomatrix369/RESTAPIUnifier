@@ -75,7 +75,7 @@ public class APIReader {
 
     public String executeGetUrl() throws IOException {
         Map<String, String> requestProperties = new HashMap<String, String>();
-        requestProperties.put("User-Agent", "RestAPIUnifier/1.0 +https://github.com/mbateman");
+        requestProperties.put("User-Agent", "RestAPIUnifier");
         return executeGetUrl(requestProperties);
     }
 
