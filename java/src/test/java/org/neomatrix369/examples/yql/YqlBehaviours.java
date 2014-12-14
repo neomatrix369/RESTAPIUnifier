@@ -55,7 +55,7 @@ public class YqlBehaviours {
 	assertThat(
 		response,
 		startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <query xmlns:yahoo=\"http://www.yahooapis.com/v1/base.rng\" yahoo:count=\""));
-	assertThat(response, containsString("<table security=\"ANY\">answers.getbycategory</table>"));
+	assertThat(response, containsString("<table security=\"ANY\">flickr.people.publicphotos</table>"));
 
     }
 
@@ -69,14 +69,14 @@ public class YqlBehaviours {
     }
 
     private boolean isJsonResult(String response) {
-	// logger.info(response);
+	logger.info(response);
 	JsonReader jsonReader = Json.createReader(new StringReader(response));
 	JsonObject json = jsonReader.readObject();
 
 	JsonArray table = json.getJsonObject("query").getJsonObject("results").getJsonArray("table");
 
 	JsonObject firstResult = table.getJsonObject(0);
-	return firstResult.getString("security").equals("ANY")
-		&& firstResult.getString("content").equals("answers.getbycategory");
+	return firstResult.getString("security").equals("APP")
+		&& firstResult.getString("content").equals("appdb.application");
     }
 }
