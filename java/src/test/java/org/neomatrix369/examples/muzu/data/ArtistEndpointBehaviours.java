@@ -38,8 +38,8 @@ public class ArtistEndpointBehaviours extends BaseFixture {
 
     private static final String XML_ERROR_RESPONSE_BEGINNING = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>, <error code=";
 
-    private String validArtistName = "yello";
-    private String invalidArtistName = "yellooooooo";
+    private String validArtistName = "coldplay";
+    private String invalidArtistName = "hotplay";
 
     private Artist anArtist() throws PropertyNotDefinedException {
         return new Artist().withLength(1);
