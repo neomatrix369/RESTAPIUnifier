@@ -21,7 +21,7 @@
         <license.licenseResolver>${project.baseUri}/</license.licenseResolver>
 
         <slf4j.version>1.6.4</slf4j.version>
-        <logback.version>1.2.0</logback.version>
+        <logback.version>1.2.7</logback.version>
     </properties>
 
     <prerequisites>
